@@ -1,4 +1,5 @@
 const path = require("path");
+const NodemonPlugin = require("nodemon-webpack-plugin");
 
 enum ENV {
   PROD = "production",
@@ -25,4 +26,5 @@ module.exports = {
       },
     ],
   },
+  plugins: [new NodemonPlugin()],
 };
