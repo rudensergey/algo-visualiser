@@ -1,19 +1,21 @@
 {
-  "name": "fin",
-  "version": "0.0.2",
+  "name": "env-analyzer",
+  "version": "0.0.3",
   "description": "Financial application",
   "main": "index.ts",
   "scripts": {
-    "start:dev": "npm run build:dev && nodemon ./build/server.js",
-    "start:prod": "npm run build:prod && nodemon ./build/server.js",
-    "build:dev": "rimraf ./build && NODE_ENV=development webpack --watch --config ./src/webpack.config.ts",
-    "build:prod": "rimraf ./build && NODE_ENV=production webpack --watch --config ./src/webpack.config.ts",
+    "clean": "rimraf ./build",
+    "start:dev": "npm run build:dev",
+    "start:prod": "npm run build:prod",
+    "build:dev": "npm run clean && NODE_ENV=development webpack --watch --config ./src/webpack.config.ts",
+    "build:prod": "npm run clean && NODE_ENV=production webpack --config ./src/webpack.config.ts",
     "test": "test"
   },
   "author": "rudensergey",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "16.3.3",
+    "@types/webpack": "5.28.0",
     "nodemon": "2.0.12",
     "nodemon-webpack-plugin": "4.5.2",
     "prettier": "2.3.2",
@@ -25,6 +27,6 @@
     "webpack-cli": "4.7.2"
   },
   "dependencies": {
-    "node": "^16.5.0"
+    "node": "16.5.0"
   }
 }

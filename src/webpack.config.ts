@@ -1,5 +1,7 @@
-const path = require("path");
-const NodemonPlugin = require("nodemon-webpack-plugin");
+import { resolve } from "path";
+import { Configuration } from "webpack";
+
+const NodemonWebpackPlugin = require("nodemon-webpack-plugin");
 
 enum ENV {
   PROD = "production",
@@ -8,14 +10,14 @@ enum ENV {
 
 const isDev = process.env.NODE_ENV === ENV.DEV;
 
-module.exports = {
+const config: Configuration = {
   target: "node",
   mode: isDev ? ENV.DEV : ENV.PROD,
   entry: {
-    server: path.resolve(__dirname, "server/index.ts"),
+    server: resolve(__dirname, "server/index.ts"),
   },
   output: {
-    path: path.resolve("build"),
+    path: resolve("build"),
   },
   module: {
     rules: [
@@ -26,5 +28,7 @@ module.exports = {
       },
     ],
   },
-  plugins: [new NodemonPlugin()],
+  plugins: [new NodemonWebpackPlugin()],
 };
+
+module.exports = config;
