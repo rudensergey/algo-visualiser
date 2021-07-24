@@ -1,12 +1,8 @@
 import { resolve } from "path";
 import { Configuration } from "webpack";
+import { ENTRY_PATH, ENV, OUTPUT_PATH } from "./types";
 
 const NodemonWebpackPlugin = require("nodemon-webpack-plugin");
-
-enum ENV {
-  PROD = "production",
-  DEV = "development",
-}
 
 const isDev = process.env.NODE_ENV === ENV.DEV;
 
@@ -14,10 +10,11 @@ const config: Configuration = {
   target: "node",
   mode: isDev ? ENV.DEV : ENV.PROD,
   entry: {
-    server: resolve(__dirname, "server/index.ts"),
+    server: resolve(ENTRY_PATH.SERVER),
   },
   output: {
-    path: resolve("build"),
+    clean: true,
+    path: resolve(OUTPUT_PATH.SERVER),
   },
   module: {
     rules: [
