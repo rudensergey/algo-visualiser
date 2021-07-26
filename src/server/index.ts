@@ -5,7 +5,7 @@ const port = process.env.PORT || 3000;
 const server = createServer((req, res) => {
   res.statusCode = 200;
   res.setHeader("Content-Type", "text/html");
-  res.end(`<h1>Hello, World!</h1>`);
+  res.end(`<h1>Hello from server!</h1>`);
 });
 
 server.listen(port, () => {
