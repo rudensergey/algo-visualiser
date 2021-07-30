@@ -10,12 +10,7 @@ Collaborators: [Sergey Rudenko](https://github.com/rudensergey)
 Fork the project and then clone your fork. [Read more about Fork & PR strategy](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/working-with-forks)
 
 
-Start server:
+Start full application:
 ```
-npm run server:dev
-```
-
-In separate console run application.
-```
-npm run app:dev
+npm run start
 ```
