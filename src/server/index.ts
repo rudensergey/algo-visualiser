@@ -1,13 +1,18 @@
-import { createServer } from "http";
+// Absolute imports
+import * as express from "express";
 
-const port = process.env.PORT || 3000;
+// Routes
+import auth from "./routes/auth.route";
 
-const server = createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader("Content-Type", "text/html");
-  res.end(`<h1>Hello from server!</h1>`);
-});
+// Middlewares
+import { logger } from "./middlewares/helpers.middleware";
 
-server.listen(port, () => {
-  console.log(`Server running at port ${port} / mode: ${process.env.NODE_ENV}`);
+const PORT = process.env.PORT || 3000;
+const app = express();
+
+app.use(logger);
+app.use("/api/auth", auth);
+
+app.listen(PORT, () => {
+  console.log(`App has been started on port ${PORT}...`);
 });

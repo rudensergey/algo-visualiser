@@ -20,7 +20,6 @@ const config: Configuration = {
     contentBase: path.resolve(OUTPUT_PATH.APP),
     compress: true,
     hot: true,
-    open: true,
     port: 9000,
   },
   module: {
