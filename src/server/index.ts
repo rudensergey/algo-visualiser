@@ -6,13 +6,23 @@ import auth from "./routes/auth.route";
 
 // Middlewares
 import { logger } from "./middlewares/helpers.middleware";
+import { connectDB } from "./utils/db";
 
-const PORT = process.env.PORT || 3000;
+const {
+  MYSQL_PASSWORD,
+  MYSQL_HOST,
+  MYSQL_USER,
+  MYSQL_PORT,
+  SERVER_PORT = 8000,
+} = process.env;
+
+connectDB({ MYSQL_PASSWORD, MYSQL_HOST, MYSQL_USER, MYSQL_PORT });
+
 const app = express();
 
 app.use(logger);
 app.use("/api/auth", auth);
 
-app.listen(PORT, () => {
-  console.log(`App has been started on port ${PORT}...`);
+app.listen(SERVER_PORT, () => {
+  console.log(`App has been started on port ${SERVER_PORT}...`);
 });
