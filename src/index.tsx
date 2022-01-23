@@ -3,12 +3,11 @@ import * as ReactDOM from "react-dom";
 
 import "./app.css";
 
-import { Menu } from "./components/menu/Menu";
-import { Visualizer } from "./components/visualizer/Visualizer";
+import { Visualiser } from "./components/visualiser/Visualiser";
 
 class App extends React.Component {
   render() {
-    return <Visualizer></Visualizer>;
+    return <Visualiser></Visualiser>;
   }
 }
 

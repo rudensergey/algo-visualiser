@@ -5,7 +5,7 @@ import * as React from "react";
 import { Bar } from "../bar/Bar";
 
 // Types
-import { SUPPORTED_ALGORITMS, TItems, TVisualizerState } from "./types";
+import { SUPPORTED_ALGORITMS, TItems, TVisualiserState } from "./types";
 
 // Utils
 import { wait } from "../../utils/common";
@@ -14,8 +14,8 @@ import { wait } from "../../utils/common";
 import "./style.css";
 import { Button } from "../button/Button";
 
-export class Visualizer extends React.Component {
-  state: TVisualizerState;
+export class Visualiser extends React.Component {
+  state: TVisualiserState;
 
   constructor(props: any) {
     super(props);
@@ -61,7 +61,7 @@ export class Visualizer extends React.Component {
     else this.setState({ sorting: true });
 
     const arr = this.state?.items?.slice() || [];
-    await this?.[this.state.currentAlgorithm as keyof Visualizer]?.(arr);
+    await this?.[this.state.currentAlgorithm as keyof Visualiser]?.(arr);
 
     this.setState({ selected: null, sorting: false });
   }
@@ -115,9 +115,9 @@ export class Visualizer extends React.Component {
 
   render() {
     return (
-      <div className="visualizer">
-        <div className="visualizer__buttons">
-          <Button classNames="visualizer__button" onClick={this.shuffleItems}>
+      <div className="visualiser">
+        <div className="visualiser__buttons">
+          <Button classNames="visualiser__button" onClick={this.shuffleItems}>
             Shuffle
           </Button>
           <select name="algorithm" onChange={this.changeAlgorithm}>
@@ -125,11 +125,11 @@ export class Visualizer extends React.Component {
               <option value={name}>{`${name} sort`}</option>
             ))}
           </select>
-          <Button classNames="visualizer__button" onClick={this.sort}>
+          <Button classNames="visualiser__button" onClick={this.sort}>
             Sort
           </Button>
         </div>
-        <div className="visualizer__box">
+        <div className="visualiser__box">
           {this.state.items.map((num) => (
             <Bar value={num} selected={num === this.state.selected}></Bar>
           ))}

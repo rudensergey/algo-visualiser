@@ -1,4 +1,4 @@
-export type TVisualizerState = Readonly<{
+export type TVisualiserState = Readonly<{
   items: number[];
   selected: number;
   sorting: boolean;
