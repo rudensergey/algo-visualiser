@@ -1,5 +1,7 @@
 # Sorting algorithms visualiser
 
+![Sorting](https://github.com/rudensergey/sorting/blob/main/media/Screenshot%202022-01-24%20at%2000.55.17.png?raw=true)<br/>
+
 
 Main stack: TypeScript, React <br/>
 Collaborators: [Sergey Rudenko](https://github.com/rudensergey)
