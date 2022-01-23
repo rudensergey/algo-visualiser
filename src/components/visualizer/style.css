@@ -1,0 +1,31 @@
+.visualizer {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.visualizer__box {
+  height: 70%;
+  width: 80%;
+  padding: 20px;
+  box-sizing: border-box;
+
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 5px 10px var(--light-shadow);
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.visualizer__item {
+  flex-basis: 0px;
+  flex-grow: 1;
+  background-color: rgb(49, 49, 49);
+}
