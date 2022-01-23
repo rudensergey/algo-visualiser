@@ -191,6 +191,7 @@ export class Visualiser extends React.Component {
             Shuffle
           </Button>
           <Dropdown
+            classNames="visualiser__dropdown"
             onChange={this.changeAlgorithm}
             list={Object.values(SUPPORTED_ALGORITMS)}
           ></Dropdown>

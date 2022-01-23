@@ -3,5 +3,5 @@ export const wait = (time: number) =>
 
 export const getUniqueId = (function () {
   let id = 1;
-  return () => `id${id++}`;
+  return () => [`id${id++}`, `id${id++}-dropdown`];
 })();

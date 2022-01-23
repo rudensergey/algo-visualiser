@@ -77,6 +77,21 @@
   cursor: pointer;
 }
 
+.visualiser__dropdown {
+  flex-basis: 140px;
+  background-color: coral;
+  border: 0;
+  border-radius: 5px;
+  box-shadow: 0px 2px 3px var(--mid-shadow);
+
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+
+  transition: all;
+  transition-duration: 0.2s;
+}
+
 .visualiser__button:hover {
   background-color: rgb(37, 140, 201);
 }

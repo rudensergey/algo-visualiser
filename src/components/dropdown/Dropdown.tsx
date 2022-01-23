@@ -11,22 +11,34 @@ import { getUniqueId } from "../../utils/common";
 
 // Style
 import "./style.css";
+import { SUPPORTED_ALGORITMS } from "../visualiser/types";
 
 export const Dropdown: TDropdown = ({ list, classNames, onChange }) => {
-  const id = getUniqueId();
+  const [id, dropdownId] = getUniqueId();
+  const [algorithm, setAlgorithm] = React.useState(list[0]);
+  const [hidden, setHidedStatus] = React.useState(true);
 
-  const showList = () => {};
-
-  const hideList = () => {};
+  const showList = () => setHidedStatus(false);
+  const hideList = () => setHidedStatus(true);
+  const setValue = (value: SUPPORTED_ALGORITMS) => () => setAlgorithm(value);
 
   return (
-    <div
-      className={classNames}
-      id={id}
-      onMouseOver={showList}
-      onMouseLeave={hideList}
-    >
-      {list[0]}
-    </div>
+    <>
+      <button
+        id={id}
+        className={"dropdown__button" + ` ${classNames}`}
+        onMouseOver={showList}
+        onMouseLeave={hideList}
+      >
+        {algorithm + " sort"}
+      </button>
+      {!hidden && (
+        <ul id={dropdownId} className={"dropdown__list"}>
+          {list.map((value) => (
+            <li onClick={setValue(value)}>{`${value} sort`}</li>
+          ))}
+        </ul>
+      )}
+    </>
   );
 };
