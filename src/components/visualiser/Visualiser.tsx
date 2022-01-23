@@ -3,6 +3,8 @@ import * as React from "react";
 
 // Components
 import { Bar } from "../bar/Bar";
+import { Button } from "../button/Button";
+import { Dropdown } from "../dropdown/Dropdown";
 
 // Types
 import { SUPPORTED_ALGORITMS, TItems, TVisualiserState } from "./types";
@@ -12,13 +14,6 @@ import { wait } from "../../utils/common";
 
 // Style
 import "./style.css";
-import { Button } from "../button/Button";
-
-export type TPartition = (
-  arr: number[],
-  left: number,
-  right: number,
-) => Promise<number>;
 
 export class Visualiser extends React.Component {
   state: TVisualiserState;
@@ -57,9 +52,8 @@ export class Visualiser extends React.Component {
     this.setState({ items: items });
   }
 
-  changeAlgorithm(event: React.ChangeEvent) {
-    const target = event.target as HTMLTextAreaElement;
-    if (target.value) this.setState({ currentAlgorithm: target.value });
+  changeAlgorithm(value: SUPPORTED_ALGORITMS) {
+    this.setState({ currentAlgorithm: value });
   }
 
   async sort() {
@@ -190,14 +184,16 @@ export class Visualiser extends React.Component {
     return (
       <div className="visualiser">
         <div className="visualiser__buttons">
+          <p className="visualiser__title">
+            {this.state.sorting ? "Sorting..." : "Choose your algorithm"}
+          </p>
           <Button classNames="visualiser__button" onClick={this.shuffleItems}>
             Shuffle
           </Button>
-          <select name="algorithm" onChange={this.changeAlgorithm}>
-            {Object.values(SUPPORTED_ALGORITMS).map((name) => (
-              <option value={name}>{`${name} sort`}</option>
-            ))}
-          </select>
+          <Dropdown
+            onChange={this.changeAlgorithm}
+            list={Object.values(SUPPORTED_ALGORITMS)}
+          ></Dropdown>
           <Button classNames="visualiser__button" onClick={this.sort}>
             Sort
           </Button>
