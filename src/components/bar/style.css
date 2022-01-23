@@ -2,6 +2,7 @@
   flex-basis: 0px;
   flex-grow: 1;
   background-color: rgb(49, 49, 49);
+  border-radius: 3px;
 }
 
 .bar--selected {

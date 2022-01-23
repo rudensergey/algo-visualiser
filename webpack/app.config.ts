@@ -16,7 +16,7 @@ const config: Configuration = {
   },
   devServer: {
     contentBase: path.resolve(OUTPUT_PATH.APP),
-    compress: true,
+    compress: false,
     hot: true,
     port: 9000,
   },

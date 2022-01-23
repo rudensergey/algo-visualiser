@@ -8,12 +8,7 @@ import { Visualizer } from "./components/visualizer/Visualizer";
 
 class App extends React.Component {
   render() {
-    return (
-      <>
-        <Menu></Menu>
-        <Visualizer></Visualizer>
-      </>
-    );
+    return <Visualizer></Visualizer>;
   }
 }
 
