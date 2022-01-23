@@ -60,8 +60,10 @@ export class Visualizer extends React.Component {
     if (this.state.sorting) return;
     else this.setState({ sorting: true });
 
-    const arr = this.state.items.slice();
+    const arr = this.state?.items?.slice() || [];
     await this?.[this.state.currentAlgorithm as keyof Visualizer]?.(arr);
+
+    this.setState({ selected: null, sorting: false });
   }
 
   async bubble(arr: TItems) {
@@ -69,14 +71,16 @@ export class Visualizer extends React.Component {
       let sorted = true;
 
       for (let j = 1; j < arr.length; j++) {
-        this.setState({ selected: arr[j] });
+        const prev = arr[j - 1];
+        const curr = arr[j];
+
+        this.setState({ selected: curr });
 
         await wait(10).then(() => {
-          if (arr[j - 1] >= arr[j]) {
+          if (prev >= curr) {
             sorted = false;
-            const swap = arr[j];
-            arr[j] = arr[j - 1];
-            arr[j - 1] = swap;
+            arr[j] = prev;
+            arr[j - 1] = curr;
             this.setState({ items: arr });
           }
         });
@@ -84,28 +88,29 @@ export class Visualizer extends React.Component {
 
       if (sorted) break;
     }
-
-    this.setState({ selected: null, sorting: false });
   }
 
   async selection(arr: TItems) {
     for (let i = arr.length - 1; i >= 0; i--) {
+      let sorted = true;
       let max = i;
 
       for (let j = i; j >= 0; j--) {
         this.setState({ selected: arr[j] });
         await wait(10).then(() => {
           if (arr[j] > arr[max]) max = j;
+          if (arr[j] > arr[j + 1]) sorted = false;
         });
       }
 
       const swap = arr[i];
       arr[i] = arr[max];
       arr[max] = swap;
-      this.setState({ items: arr });
-    }
 
-    this.setState({ selected: null, sorting: false });
+      this.setState({ items: arr });
+
+      if (sorted) break;
+    }
   }
 
   render() {
