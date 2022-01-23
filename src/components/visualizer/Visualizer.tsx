@@ -12,6 +12,7 @@ import { wait } from "../../utils/common";
 
 // Style
 import "./style.css";
+import { Button } from "../button/Button";
 
 export class Visualizer extends React.Component {
   state: TVisualizerState;
@@ -20,7 +21,7 @@ export class Visualizer extends React.Component {
     super(props);
 
     const items = [];
-    for (let i = 1; i <= 50; i++) items.push({ value: i });
+    for (let i = 1; i <= 50; i++) items.push(i);
 
     this.state = {
       items: items,
@@ -42,9 +43,9 @@ export class Visualizer extends React.Component {
 
     while (idx) {
       const randomIndex = Math.floor(Math.random() * idx--);
-      const swap = items[idx].value;
-      items[idx].value = items[randomIndex].value;
-      items[randomIndex].value = swap;
+      const swap = items[idx];
+      items[idx] = items[randomIndex];
+      items[randomIndex] = swap;
     }
 
     this.setState({ items: items });
@@ -68,14 +69,15 @@ export class Visualizer extends React.Component {
       let sorted = true;
 
       for (let j = 1; j < arr.length; j++) {
-        this.setState({ selected: arr[j].value });
+        this.setState({ selected: arr[j] });
 
         await wait(10).then(() => {
-          if (arr[j - 1].value >= arr[j].value) {
+          if (arr[j - 1] >= arr[j]) {
             sorted = false;
-            const swap = arr[j].value;
-            arr[j].value = arr[j - 1].value;
-            arr[j - 1].value = swap;
+            const swap = arr[j];
+            arr[j] = arr[j - 1];
+            arr[j - 1] = swap;
+            this.setState({ items: arr });
           }
         });
       }
@@ -83,7 +85,7 @@ export class Visualizer extends React.Component {
       if (sorted) break;
     }
 
-    this.setState({ items: arr, selected: null, sorting: false });
+    this.setState({ selected: null, sorting: false });
   }
 
   async selection(arr: TItems) {
@@ -91,61 +93,40 @@ export class Visualizer extends React.Component {
       let max = i;
 
       for (let j = i; j >= 0; j--) {
-        this.setState({ selected: arr[j].value });
-
+        this.setState({ selected: arr[j] });
         await wait(10).then(() => {
-          if (arr[j].value > arr[max].value) max = j;
+          if (arr[j] > arr[max]) max = j;
         });
       }
 
-      const swap = arr[i].value;
-      arr[i].value = arr[max].value;
-      arr[max].value = swap;
+      const swap = arr[i];
+      arr[i] = arr[max];
+      arr[max] = swap;
+      this.setState({ items: arr });
     }
 
-    this.setState({ items: arr, selected: null, sorting: false });
-  }
-
-  async insertion(arr: TItems) {
-    for (let i = arr.length - 1; i >= 0; i--) {
-      let max = i;
-
-      for (let j = i; j >= 0; j--) {
-        this.setState({ selected: arr[j].value });
-
-        await wait(10).then(() => {
-          if (arr[j].value > arr[max].value) max = j;
-        });
-      }
-
-      const swap = arr[i].value;
-      arr[i].value = arr[max].value;
-      arr[max].value = swap;
-    }
-
-    this.setState({ items: arr, selected: null, sorting: false });
+    this.setState({ selected: null, sorting: false });
   }
 
   render() {
     return (
       <div className="visualizer">
         <div className="visualizer__buttons">
-          <button className="visualizer__button" onClick={this.shuffleItems}>
+          <Button classNames="visualizer__button" onClick={this.shuffleItems}>
             Shuffle
-          </button>
-
+          </Button>
           <select name="algorithm" onChange={this.changeAlgorithm}>
             {Object.values(SUPPORTED_ALGORITMS).map((name) => (
               <option value={name}>{`${name} sort`}</option>
             ))}
           </select>
-          <button className="visualizer__button" onClick={this.sort}>
+          <Button classNames="visualizer__button" onClick={this.sort}>
             Sort
-          </button>
+          </Button>
         </div>
         <div className="visualizer__box">
-          {this.state.items.map(({ value }) => (
-            <Bar value={value} selected={value === this.state.selected}></Bar>
+          {this.state.items.map((num) => (
+            <Bar value={num} selected={num === this.state.selected}></Bar>
           ))}
         </div>
       </div>

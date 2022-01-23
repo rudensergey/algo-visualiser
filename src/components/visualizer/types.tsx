@@ -1,5 +1,5 @@
 export type TVisualizerState = Readonly<{
-  items: TItems;
+  items: number[];
   selected: number;
   sorting: boolean;
   currentAlgorithm: SUPPORTED_ALGORITMS;
