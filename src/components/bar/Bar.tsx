@@ -1,4 +1,5 @@
 import * as React from "react";
+import "./style.css";
 
 export const Bar: React.FC<{ value: number; selected: boolean }> = ({
   value,
@@ -6,8 +7,6 @@ export const Bar: React.FC<{ value: number; selected: boolean }> = ({
 }) => (
   <div
     style={{ height: value * 2 + "%" }}
-    className={
-      "visualizer__item " + (selected ? "visualizer__item--selected" : "")
-    }
+    className={"bar" + (selected ? " bar--selected" : "")}
   ></div>
 );
