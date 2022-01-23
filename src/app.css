@@ -17,6 +17,8 @@ h6 {
 
 :root {
   --light-shadow: rgba(54, 54, 54, 0.2);
+  --mid-shadow: rgba(54, 54, 54, 0.5);
+  --dark-shadow: rgba(54, 54, 54, 0.8);
 }
 
 #root {
