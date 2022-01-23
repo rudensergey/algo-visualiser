@@ -3,6 +3,7 @@
   height: 100vh;
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -28,4 +29,8 @@
   flex-basis: 0px;
   flex-grow: 1;
   background-color: rgb(49, 49, 49);
+}
+
+.visualizer__item--selected {
+  background-color: tomato;
 }
