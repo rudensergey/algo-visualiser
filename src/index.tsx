@@ -2,13 +2,14 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 import "./app.css";
+import { Menu } from "./components/menu/Menu";
 
 class App extends React.Component {
   render() {
     return (
-      <div>
-        <h1>Hello from app!</h1>
-      </div>
+      <>
+        <Menu></Menu>
+      </>
     );
   }
 }

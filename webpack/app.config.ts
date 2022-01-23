@@ -1,7 +1,5 @@
 import * as path from "path";
-
 import { Configuration, ENTRY_PATH, ENV, OUTPUT_PATH } from "./types";
-
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const isDev = process.env.NODE_ENV === ENV.DEV;
@@ -22,10 +20,13 @@ const config: Configuration = {
     hot: true,
     port: 9000,
   },
+  resolve: {
+    extensions: [".ts", ".tsx", ".js", ".json"],
+  },
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
+        test: /\.tsx$/,
         use: "ts-loader",
         exclude: /node_modules/,
       },
