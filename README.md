@@ -1,8 +1,7 @@
-# Book Service
+# Sorting algorithms visualiser
 
-#### Book Service is my pet proect for improving backend skills
 
-Main stack: Nodejs, TypeScript, MySQL, React, GraphQL <br/>
+Main stack: TypeScript, React <br/>
 Collaborators: [Sergey Rudenko](https://github.com/rudensergey)
 
 ## Collaboration
