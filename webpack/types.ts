@@ -2,13 +2,11 @@ import { Configuration as WebpackConfiguration } from "webpack";
 import { Configuration as WebpackDevServerConfiguration } from "webpack-dev-server";
 
 export enum ENTRY_PATH {
-  SERVER = "./src/server/index.ts",
-  APP_TS = "./src/app/index.tsx",
-  APP_HTML = "./src/app/index.html",
+  APP_TS = "./src/index.tsx",
+  APP_HTML = "./src/index.html",
 }
 
 export enum OUTPUT_PATH {
-  SERVER = "build/server",
   APP = "build/app",
 }
 

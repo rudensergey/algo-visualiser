@@ -1,23 +1,19 @@
 {
-  "name": "env-analyzer",
+  "name": "sorting-app",
   "version": "0.0.3",
-  "description": "Financial application",
+  "description": "",
   "main": "index.ts",
   "scripts": {
-    "server:dev": "NODE_ENV=development webpack --watch --config ./webpack/server.config.ts",
     "app:dev": "NODE_ENV=development webpack --config ./webpack/app.config.ts && webpack serve --config ./webpack/app.config.ts",
-    "start": "concurrently \"npm run server:dev\" \"npm run app:dev\""
+    "start": "npm run app:dev"
   },
   "author": "rudensergey",
   "license": "ISC",
   "devDependencies": {
-    "@types/mysql": "2.15.19",
-    "@types/node": "16.3.3",
     "@types/react": "17.0.14",
     "@types/react-dom": "17.0.9",
     "@types/webpack": "5.28.0",
     "@types/webpack-dev-server": "3.11.5",
-    "concurrently": "6.2.0",
     "css-loader": "6.2.0",
     "dotenv": "10.0.0",
     "html-webpack-plugin": "5.3.2",
@@ -26,17 +22,12 @@
     "prettier": "2.3.2",
     "style-loader": "3.2.1",
     "ts-loader": "9.2.3",
-    "ts-node": "10.1.0",
     "typescript": "4.3.5",
     "webpack": "5.45.1",
     "webpack-cli": "4.7.2",
     "webpack-dev-server": "3.11.2"
   },
   "dependencies": {
-    "express": "^4.17.1",
-    "mysql": "^2.18.1",
-    "node": "^16.5.0",
-    "node-webcam": "^0.8.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "webpack-node-externals": "^3.0.0"
