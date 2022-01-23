@@ -3,6 +3,7 @@
   flex-grow: 1;
   background-color: rgb(49, 49, 49);
   border-radius: 3px;
+  margin: 0 1px;
 }
 
 .bar--selected {
