@@ -11,4 +11,5 @@ export enum SUPPORTED_ALGORITMS {
   BUBBLE = "bubble",
   SELECTION = "selection",
   INSERTION = "insertion",
+  QUICK = "quick",
 }

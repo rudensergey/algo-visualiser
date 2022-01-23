@@ -14,6 +14,12 @@ import { wait } from "../../utils/common";
 import "./style.css";
 import { Button } from "../button/Button";
 
+export type TPartition = (
+  arr: number[],
+  left: number,
+  right: number,
+) => Promise<number>;
+
 export class Visualiser extends React.Component {
   state: TVisualiserState;
 
@@ -110,6 +116,73 @@ export class Visualiser extends React.Component {
       this.setState({ items: arr });
 
       if (sorted) break;
+    }
+  }
+
+  async insertion(arr: TItems) {
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = i; j > 0; j--) {
+        this.setState({ selected: arr[j] });
+
+        await wait(10).then(() => {
+          if (arr[j - 1] > arr[j]) {
+            const swap = arr[j];
+            arr[j] = arr[j - 1];
+            arr[j - 1] = swap;
+            this.setState({ items: arr });
+          }
+        });
+      }
+    }
+  }
+
+  async quick(arr: TItems) {
+    const self = this;
+
+    await quickSort(arr, 0, arr.length - 1);
+
+    async function quickSort(
+      arr: TItems,
+      left: number,
+      right: number,
+    ): Promise<void> {
+      if (left <= right) {
+        const pivot = await partition(arr, left, right);
+        await quickSort(arr, left, pivot - 1);
+        await quickSort(arr, pivot + 1, right);
+        self.setState({ items: arr });
+      }
+    }
+
+    async function partition(
+      arr: TItems,
+      left: number,
+      right: number,
+    ): Promise<number> {
+      if (left <= right) {
+        let pivot = right;
+        let pivotIndex = left;
+
+        for (let i = left; i <= right; i++) {
+          self.setState({ selected: arr[i] });
+
+          await wait(10).then(() => {
+            if (arr[i] < arr[pivot]) {
+              const swap = arr[i];
+              arr[i] = arr[pivotIndex];
+              arr[pivotIndex] = swap;
+              pivotIndex++;
+              self.setState({ items: arr });
+            }
+          });
+        }
+
+        const swap = arr[pivot];
+        arr[pivot] = arr[pivotIndex];
+        arr[pivotIndex] = swap;
+
+        return pivotIndex;
+      }
     }
   }
 
