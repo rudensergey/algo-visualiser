@@ -137,10 +137,12 @@
 
   .visualiser__title {
     width: 100%;
+    margin: 0;
     flex: 0, 0, 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    user-select: none;
   }
 
   .visualiser__button {
