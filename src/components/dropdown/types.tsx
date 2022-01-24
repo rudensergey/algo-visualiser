@@ -5,3 +5,8 @@ export type TDropdown = React.FC<{
   classNames: string;
   onChange: (value: string) => void;
 }>;
+
+export enum DROPDOWN {
+  BUTTON = "dropdown__button",
+  LIST = "dropdown__list",
+}

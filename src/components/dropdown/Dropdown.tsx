@@ -4,13 +4,13 @@ import * as React from "react";
 // Components
 
 // Types
-import { TDropdown } from "./types";
+import { DROPDOWN, TDropdown } from "./types";
+import { SUPPORTED_ALGORITMS } from "../visualiser/types";
 
 // Utils
 
 // Style
 import "./style.css";
-import { SUPPORTED_ALGORITMS } from "../visualiser/types";
 
 export const Dropdown: TDropdown = ({ list, classNames, onChange }) => {
   const [algorithm, setAlgorithm] = React.useState(list[0]);
@@ -21,17 +21,16 @@ export const Dropdown: TDropdown = ({ list, classNames, onChange }) => {
   const listRef = React.useRef(null);
 
   const toogleList = () => {
-    if (hidden) {
-      const { bottom, left, width } = buttonRef.current.getBoundingClientRect();
+    if (!hidden) return setHiddenStatus(true);
 
-      setCoordinates({
-        x: left + width / 2 - 100,
-        y: bottom + document.documentElement.scrollTop,
-      });
-      setHiddenStatus(false);
-    } else {
-      setHiddenStatus(true);
-    }
+    const { bottom, left, width } = buttonRef.current.getBoundingClientRect();
+
+    setCoordinates({
+      x: left + width / 2 - 100,
+      y: bottom + document.documentElement.scrollTop,
+    });
+
+    return setHiddenStatus(false);
   };
 
   const setValue = (value: SUPPORTED_ALGORITMS) => () => {
@@ -44,16 +43,17 @@ export const Dropdown: TDropdown = ({ list, classNames, onChange }) => {
     <>
       <button
         ref={buttonRef}
-        className={"dropdown__button" + ` ${classNames}`}
+        className={DROPDOWN.BUTTON + " " + classNames}
         onClick={toogleList}
       >
         {algorithm + " sort"}
       </button>
+
       {!hidden && (
         <ul
           ref={listRef}
           style={{ top: coordinates.y + "px", left: coordinates.x + "px" }}
-          className={"dropdown__list"}
+          className={DROPDOWN.LIST}
         >
           {list.map((value) => (
             <li onClick={setValue(value)}>{`${value} sort`}</li>

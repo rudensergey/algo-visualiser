@@ -7,7 +7,12 @@ import { Button } from "../button/Button";
 import { Dropdown } from "../dropdown/Dropdown";
 
 // Types
-import { SUPPORTED_ALGORITMS, TVisualiserState } from "./types";
+import {
+  STATUS,
+  SUPPORTED_ALGORITMS,
+  TVisualiserState,
+  VISUALISER,
+} from "./types";
 
 // Utils
 import { wait } from "../../utils/common";
@@ -184,6 +189,14 @@ export class Visualiser extends React.Component {
     const self = this;
     await mergeSort(arr, 0, arr.length - 1);
 
+    async function mergeSort(arr: number[], left: number, right: number) {
+      if (left >= right) return;
+      var mid = left + Math.floor((right - left) / 2);
+      await mergeSort(arr, left, mid);
+      await mergeSort(arr, mid + 1, right);
+      await mergeArrays(arr, left, mid, right);
+    }
+
     async function mergeArrays(
       arr: number[],
       left: number,
@@ -202,9 +215,9 @@ export class Visualiser extends React.Component {
           L[i] = arr[left + i];
         });
       }
+
       for (var j = 0; j < n2; j++) {
         self.setState({ selected: left + i });
-
         R[j] = arr[mid + 1 + j];
       }
 
@@ -217,7 +230,6 @@ export class Visualiser extends React.Component {
         await wait(10).then(() => {
           if (L[i] <= R[j]) arr[k++] = L[i++];
           else arr[k++] = R[j++];
-
           self.setState({ items: arr });
         });
       }
@@ -226,7 +238,6 @@ export class Visualiser extends React.Component {
         self.setState({ selected: k });
         await wait(10).then(() => {
           arr[k++] = L[i++];
-
           self.setState({ items: arr });
         });
       }
@@ -234,41 +245,32 @@ export class Visualiser extends React.Component {
         self.setState({ selected: k });
         await wait(10).then(() => {
           arr[k++] = R[j++];
-
           self.setState({ items: arr });
         });
       }
-    }
-
-    async function mergeSort(arr: number[], left: number, right: number) {
-      if (left >= right) return;
-      var mid = left + Math.floor((right - left) / 2);
-      await mergeSort(arr, left, mid);
-      await mergeSort(arr, mid + 1, right);
-      await mergeArrays(arr, left, mid, right);
     }
   }
 
   render() {
     return (
-      <div className="visualiser">
-        <div className="visualiser__buttons">
-          <p className="visualiser__title">
-            {this.state.sorting ? "Sorting..." : "Choose your algorithm"}
+      <div className={VISUALISER.VISUALISER}>
+        <div className={VISUALISER.BUTTONS}>
+          <p className={VISUALISER.TITLE}>
+            {this.state.sorting ? STATUS.SORTING : STATUS.CHOSE_ALGORITHM}
           </p>
-          <Button classNames="visualiser__button" onClick={this.shuffleItems}>
+          <Button classNames={VISUALISER.BUTTON} onClick={this.shuffleItems}>
             Shuffle
           </Button>
           <Dropdown
-            classNames="visualiser__dropdown"
+            classNames={VISUALISER.DROPDOWN}
             onChange={this.changeAlgorithm}
             list={Object.values(SUPPORTED_ALGORITMS)}
           ></Dropdown>
-          <Button classNames="visualiser__button" onClick={this.sort}>
+          <Button classNames={VISUALISER.BUTTON} onClick={this.sort}>
             Sort
           </Button>
         </div>
-        <div className="visualiser__box">
+        <div className={VISUALISER.BOX}>
           {this.state.items.map((num) => (
             <Bar value={num} selected={num === this.state.selected}></Bar>
           ))}
