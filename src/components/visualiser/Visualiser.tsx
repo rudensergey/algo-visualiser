@@ -7,7 +7,7 @@ import { Button } from "../button/Button";
 import { Dropdown } from "../dropdown/Dropdown";
 
 // Types
-import { SUPPORTED_ALGORITMS, TItems, TVisualiserState } from "./types";
+import { SUPPORTED_ALGORITMS, TVisualiserState } from "./types";
 
 // Utils
 import { wait } from "../../utils/common";
@@ -66,7 +66,7 @@ export class Visualiser extends React.Component {
     this.setState({ selected: null, sorting: false });
   }
 
-  async bubble(arr: TItems) {
+  async bubble(arr: number[]) {
     for (let i = 0; i < arr.length; i++) {
       let sorted = true;
 
@@ -90,7 +90,7 @@ export class Visualiser extends React.Component {
     }
   }
 
-  async selection(arr: TItems) {
+  async selection(arr: number[]) {
     for (let i = arr.length - 1; i >= 0; i--) {
       let sorted = true;
       let max = i;
@@ -113,7 +113,7 @@ export class Visualiser extends React.Component {
     }
   }
 
-  async insertion(arr: TItems) {
+  async insertion(arr: number[]) {
     for (let i = 0; i < arr.length; i++) {
       for (let j = i; j > 0; j--) {
         this.setState({ selected: arr[j] });
@@ -130,13 +130,13 @@ export class Visualiser extends React.Component {
     }
   }
 
-  async quick(arr: TItems) {
+  async quick(arr: number[]) {
     const self = this;
 
     await quickSort(arr, 0, arr.length - 1);
 
     async function quickSort(
-      arr: TItems,
+      arr: number[],
       left: number,
       right: number,
     ): Promise<void> {
@@ -149,7 +149,7 @@ export class Visualiser extends React.Component {
     }
 
     async function partition(
-      arr: TItems,
+      arr: number[],
       left: number,
       right: number,
     ): Promise<number> {
@@ -177,6 +177,75 @@ export class Visualiser extends React.Component {
 
         return pivotIndex;
       }
+    }
+  }
+
+  async merge(arr: number[]) {
+    const self = this;
+    await mergeSort(arr, 0, arr.length - 1);
+
+    async function mergeArrays(
+      arr: number[],
+      left: number,
+      mid: number,
+      right: number,
+    ) {
+      var n1 = mid - left + 1;
+      var n2 = right - mid;
+
+      var L = new Array(n1);
+      var R = new Array(n2);
+
+      for (var i = 0; i < n1; i++) {
+        self.setState({ selected: left + i });
+        await wait(10).then(() => {
+          L[i] = arr[left + i];
+        });
+      }
+      for (var j = 0; j < n2; j++) {
+        self.setState({ selected: left + i });
+
+        R[j] = arr[mid + 1 + j];
+      }
+
+      var i = 0;
+      var j = 0;
+      var k = left;
+
+      while (i < n1 && j < n2) {
+        self.setState({ selected: k });
+        await wait(10).then(() => {
+          if (L[i] <= R[j]) arr[k++] = L[i++];
+          else arr[k++] = R[j++];
+
+          self.setState({ items: arr });
+        });
+      }
+
+      while (i < n1) {
+        self.setState({ selected: k });
+        await wait(10).then(() => {
+          arr[k++] = L[i++];
+
+          self.setState({ items: arr });
+        });
+      }
+      while (j < n2) {
+        self.setState({ selected: k });
+        await wait(10).then(() => {
+          arr[k++] = R[j++];
+
+          self.setState({ items: arr });
+        });
+      }
+    }
+
+    async function mergeSort(arr: number[], left: number, right: number) {
+      if (left >= right) return;
+      var mid = left + Math.floor((right - left) / 2);
+      await mergeSort(arr, left, mid);
+      await mergeSort(arr, mid + 1, right);
+      await mergeArrays(arr, left, mid, right);
     }
   }
 

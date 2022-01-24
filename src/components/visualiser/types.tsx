@@ -5,11 +5,10 @@ export type TVisualiserState = Readonly<{
   currentAlgorithm: SUPPORTED_ALGORITMS;
 }>;
 
-export type TItems = { value: number }[];
-
 export enum SUPPORTED_ALGORITMS {
   BUBBLE = "bubble",
   SELECTION = "selection",
   INSERTION = "insertion",
   QUICK = "quick",
+  MERGE = "merge",
 }
