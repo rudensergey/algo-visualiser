@@ -121,6 +121,7 @@ export class Visualiser extends React.Component {
   async insertion(arr: number[]) {
     for (let i = 0; i < arr.length; i++) {
       for (let j = i; j > 0; j--) {
+        let sorted = false;
         this.setState({ selected: arr[j] });
 
         await wait(10).then(() => {
@@ -129,8 +130,12 @@ export class Visualiser extends React.Component {
             arr[j] = arr[j - 1];
             arr[j - 1] = swap;
             this.setState({ items: arr });
+          } else {
+            sorted = true;
           }
         });
+
+        if (sorted) break;
       }
     }
   }
