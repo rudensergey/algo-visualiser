@@ -19,10 +19,18 @@ h6 {
   --light-shadow: rgba(54, 54, 54, 0.2);
   --mid-shadow: rgba(54, 54, 54, 0.5);
   --dark-shadow: rgba(54, 54, 54, 0.8);
+
+  --main: rgb(46, 168, 238);
+  --main-hover: rgb(37, 138, 197);
+  --main-active: rgb(24, 97, 139);
+  --accent: coral;
+  --accent-hover: rgb(216, 107, 67);
+  --accent-active: rgb(170, 85, 53);
+  --box: white;
 }
 
 #root {
   height: 100vh;
   width: 100vw;
-  background-color: rgb(46, 168, 238);
+  background-color: var(--main);
 }
