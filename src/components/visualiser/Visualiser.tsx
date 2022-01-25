@@ -75,7 +75,7 @@ export class Visualiser extends React.Component {
     for (let i = 0; i < arr.length; i++) {
       let sorted = true;
 
-      for (let j = 1; j < arr.length; j++) {
+      for (let j = 1; j < arr.length - i; j++) {
         const prev = arr[j - 1];
         const curr = arr[j];
 
