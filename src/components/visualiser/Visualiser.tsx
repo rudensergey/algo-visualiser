@@ -214,17 +214,8 @@ export class Visualiser extends React.Component {
       var L = new Array(n1);
       var R = new Array(n2);
 
-      for (var i = 0; i < n1; i++) {
-        self.setState({ selected: left + i });
-        await wait(10).then(() => {
-          L[i] = arr[left + i];
-        });
-      }
-
-      for (var j = 0; j < n2; j++) {
-        self.setState({ selected: left + i });
-        R[j] = arr[mid + 1 + j];
-      }
+      for (var i = 0; i < n1; i++) L[i] = arr[left + i];
+      for (var j = 0; j < n2; j++) R[j] = arr[mid + 1 + j];
 
       var i = 0;
       var j = 0;
