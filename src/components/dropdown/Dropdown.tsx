@@ -13,10 +13,10 @@ import "./style.css";
 
 export const Dropdown = <T extends string>({
   list,
-  classNames,
+  classNames = "",
   onChange,
 }: IDropdownProps<T>) => {
-  const [algorithm, setAlgorithm] = React.useState(list[0]);
+  const [dropDownValue, setAlgorithm] = React.useState(list[0]);
   const [hidden, setHiddenStatus] = React.useState(true);
   const [coordinates, setCoordinates] = React.useState({ x: 0, y: 0 });
 
@@ -46,10 +46,10 @@ export const Dropdown = <T extends string>({
     <>
       <button
         ref={buttonRef}
-        className={DROPDOWN.BUTTON + " " + classNames}
+        className={DROPDOWN.BUTTON + (classNames ? " " + classNames : "")}
         onClick={toogleList}
       >
-        {algorithm + " sort"}
+        {dropDownValue}
       </button>
 
       {!hidden && (
@@ -59,7 +59,7 @@ export const Dropdown = <T extends string>({
           className={DROPDOWN.LIST}
         >
           {list.map((value) => (
-            <li onClick={setValue(value)}>{`${value} sort`}</li>
+            <li onClick={setValue(value)}>{value}</li>
           ))}
         </ul>
       )}

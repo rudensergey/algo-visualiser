@@ -15,7 +15,11 @@ import "./style.css";
 export const Menu: TMenu = ({ menuSections, setSection }) => {
   return (
     <div className="menu">
-      <Dropdown list={menuSections} onChange={setSection}></Dropdown>
+      <Dropdown
+        classNames="menu__dropdown"
+        list={menuSections}
+        onChange={setSection}
+      ></Dropdown>
     </div>
   );
 };
