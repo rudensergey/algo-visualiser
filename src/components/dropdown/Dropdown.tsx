@@ -4,15 +4,18 @@ import * as React from "react";
 // Components
 
 // Types
-import { DROPDOWN, TDropdown } from "./types";
-import { SUPPORTED_ALGORITMS } from "../visualiser/types";
+import { DROPDOWN, IDropdownProps } from "./types";
 
 // Utils
 
 // Style
 import "./style.css";
 
-export const Dropdown: TDropdown = ({ list, classNames, onChange }) => {
+export const Dropdown = <T extends string>({
+  list,
+  classNames,
+  onChange,
+}: IDropdownProps<T>) => {
   const [algorithm, setAlgorithm] = React.useState(list[0]);
   const [hidden, setHiddenStatus] = React.useState(true);
   const [coordinates, setCoordinates] = React.useState({ x: 0, y: 0 });
@@ -33,7 +36,7 @@ export const Dropdown: TDropdown = ({ list, classNames, onChange }) => {
     return setHiddenStatus(false);
   };
 
-  const setValue = (value: SUPPORTED_ALGORITMS) => () => {
+  const setValue = (value: T) => () => {
     setAlgorithm(value);
     onChange(value);
     toogleList();
