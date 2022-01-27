@@ -7,7 +7,8 @@
     "app:build": "NODE_ENV=production webpack --config ./webpack/app.config.ts",
     "app:dev": "NODE_ENV=development webpack --config ./webpack/app.config.ts && webpack serve --config ./webpack/app.config.ts",
     "start": "npm run app:dev",
-    "build": "npm run app:build"
+    "build": "npm run app:build",
+    "deploy": "npm run app:build && firebase deploy"
   },
   "author": "rudensergey",
   "license": "ISC",
