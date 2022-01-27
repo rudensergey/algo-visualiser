@@ -2,6 +2,7 @@ import { SUPPORTED_ALGORITMS } from "../visualiser/types";
 
 export interface IDropdownProps<T> {
   list: T[];
+  defaultValue: T;
   classNames?: string;
   onChange: (value: string) => void;
 }

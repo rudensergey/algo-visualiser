@@ -31,6 +31,7 @@ export class Graph extends React.Component {
             {this.state.searching ? STATUS.SEARCHING : STATUS.CHOSE_ALGORITHM}
           </p>
           <Dropdown
+            defaultValue={SUPPORTED_GRAPH_ALGORITMS.BFS}
             classNames={GRAPH.DROPDOWN}
             onChange={() => {}}
             list={Object.values(SUPPORTED_GRAPH_ALGORITMS)}

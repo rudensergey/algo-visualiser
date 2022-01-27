@@ -3,4 +3,8 @@ export enum SECTIONS {
   GRAPHS = "graphs",
 }
 
-export type TMenu = React.FC<{ menuSections: SECTIONS[]; setSection: any }>;
+export type TMenu = React.FC<{
+  menuSections: SECTIONS[];
+  setSection: any;
+  defaultSection: SECTIONS;
+}>;

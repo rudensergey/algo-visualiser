@@ -25,6 +25,7 @@ export const Main = () => {
   return (
     <div id="main" data-theme={section} className="main">
       <Menu
+        defaultSection={SECTIONS.GRAPHS}
         menuSections={Object.values(SECTIONS)}
         setSection={setSection}
       ></Menu>
