@@ -29,9 +29,3 @@ h6 {
   --box: white;
   --selected: tomato;
 }
-
-#root {
-  height: 100vh;
-  width: 100vw;
-  background-color: var(--main);
-}
