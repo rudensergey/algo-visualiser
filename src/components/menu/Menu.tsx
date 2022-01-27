@@ -5,7 +5,7 @@ import * as React from "react";
 import { Dropdown } from "../dropdown/Dropdown";
 
 // Types
-import { SECTIONS, TMenu } from "../main/types";
+import { TMenu } from "../main/types";
 
 // Utils
 
@@ -15,6 +15,7 @@ import "./style.css";
 export const Menu: TMenu = ({ menuSections, setSection, defaultSection }) => {
   return (
     <div className="menu">
+      <p className="menu__section">Section:</p>
       <Dropdown
         classNames="menu__dropdown"
         defaultValue={defaultSection}
