@@ -43,6 +43,10 @@
   background-color: var(--main);
 }
 
+.graph__vertex--blocked {
+  background-color: black;
+}
+
 .graph__vertex--destination {
   background-color: yellow;
 }

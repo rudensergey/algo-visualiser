@@ -23,6 +23,7 @@ export enum VERTEX_STATUS {
   DESTINATION = "destination",
   START = "start",
   PATH = "path",
+  BLOCKED = "blocked",
 }
 
 export type Nullable<T> = T | null;
@@ -30,7 +31,7 @@ export interface IVertex {
   column: number;
   row: number;
   status: Nullable<VERTEX_STATUS>;
-  predecessor: Nullable<IVertex>;
+  predecessor: Nullable<{ row: number; column: number }>;
 }
 
 export type TMatrix = Record<number, Record<number, IVertex>>;

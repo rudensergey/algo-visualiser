@@ -32,6 +32,7 @@ export class Graph extends React.Component {
     super(props);
     this.changeAlgorithm = this.changeAlgorithm.bind(this);
     this.search = this.search.bind(this);
+    this.drawMase = this.drawMase.bind(this);
 
     const matrix = constructMatrix(25);
 
@@ -77,7 +78,6 @@ export class Graph extends React.Component {
     while (rowStack.length) {
       const x = columnStack.shift();
       const y = rowStack.shift();
-
       await exploreNeighbours(x, y);
     }
 
@@ -88,30 +88,39 @@ export class Graph extends React.Component {
 
         if (column < 0 || column >= n) continue;
         if (row < 0 || row >= n) continue;
-        if (self.isVisited(column, row)) continue;
+        if (self.isVisitedOrBlocked(column, row)) continue;
 
         await wait(10).then(() => {
           rowStack.push(row);
           columnStack.push(column);
-          self.setVertexStatus(column, row, VERTEX_STATUS.VISITED);
+          self.setVertexStatus(column, row, VERTEX_STATUS.VISITED, {
+            row: r,
+            column: c,
+          });
         });
       }
     }
   }
 
-  isVisited(c: number, r: number) {
-    return this.state.matrix[r][c].status === VERTEX_STATUS.VISITED;
+  isVisitedOrBlocked(c: number, r: number) {
+    if (c >= 25 || c < 0 || r >= 25 || r < 0)
+      return console.error("isVisited: Missed index!");
+    return (
+      this.state.matrix[r][c].status === VERTEX_STATUS.VISITED ||
+      this.state.matrix[r][c].status === VERTEX_STATUS.BLOCKED
+    );
   }
 
   setVertexStatus(
     c: number,
     r: number,
     status: VERTEX_STATUS,
-    pred: IVertex = null,
+    predecessor?: { column: number; row: number },
   ) {
     const n = this.state.matrix.length;
 
-    if (c >= n || c < 0 || r >= n || r < 0) return;
+    if (c >= n || c < 0 || r >= n || r < 0)
+      return console.error("setVertexStatus: Missed index!");
 
     this.setState({
       matrix: {
@@ -121,11 +130,31 @@ export class Graph extends React.Component {
           [c]: {
             ...this.state.matrix[r][c],
             status,
-            pred,
+            pred: predecessor ? { ...predecessor } : null,
           },
         },
       },
     });
+  }
+
+  async drawMase() {
+    for (let i = 0; i < 23; i++) {
+      await wait(10).then(() => {
+        this.setVertexStatus(3, i, VERTEX_STATUS.BLOCKED);
+      });
+    }
+
+    for (let i = 5; i < 25; i++) {
+      await wait(10).then(() => {
+        this.setVertexStatus(6, i, VERTEX_STATUS.BLOCKED);
+      });
+    }
+
+    for (let i = 3; i < 22; i++) {
+      await wait(10).then(() => {
+        this.setVertexStatus(15, i, VERTEX_STATUS.BLOCKED);
+      });
+    }
   }
 
   render() {
@@ -135,6 +164,9 @@ export class Graph extends React.Component {
           <p className={GRAPH.TITLE}>
             {this.state.searching ? STATUS.SEARCHING : STATUS.CHOSE_ALGORITHM}
           </p>
+          <Button classNames={GRAPH.BUTTON} onClick={this.drawMase}>
+            Draw Mase
+          </Button>
           <Dropdown
             defaultValue={this.state.currentAlgorithm}
             classNames={GRAPH.DROPDOWN}
