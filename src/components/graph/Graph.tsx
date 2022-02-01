@@ -1,26 +1,35 @@
 // Absolute imports
 import * as React from "react";
+
+// Components
+import { Vertex } from "../vertex/Vertex";
 import { Button } from "../button/Button";
 import { Dropdown } from "../dropdown/Dropdown";
 
-// Components
-
 // Types
+import { GRAPH, SUPPORTED_GRAPH_ALGORITMS, STATUS, TMatrix } from "./types";
 
 // Utils
+import { constructMatrix } from "../../utils/common";
 
 // Style
 import "./style.css";
-import { GRAPH, SUPPORTED_GRAPH_ALGORITMS, STATUS } from "./types";
 
 export class Graph extends React.Component {
   state: Readonly<{
     searching: Boolean;
+    matrix: TMatrix;
   }>;
 
   constructor(props) {
     super(props);
-    this.state = { searching: false };
+
+    const matrix = constructMatrix(25);
+
+    this.state = {
+      searching: false,
+      matrix: matrix,
+    };
   }
 
   render() {
@@ -40,7 +49,16 @@ export class Graph extends React.Component {
             Search
           </Button>
         </div>
-        <div className={GRAPH.BOX}></div>
+        <div className={GRAPH.BOX}>
+          {this.state.matrix.map((row) =>
+            row.map((vertex) => (
+              <Vertex
+                statusModificator={vertex.status}
+                mainClass={GRAPH.VERTEX}
+              ></Vertex>
+            )),
+          )}
+        </div>
       </div>
     );
   }

@@ -5,6 +5,7 @@ export enum GRAPH {
   TITLE = "graph__title",
   DROPDOWN = "graph__dropdown",
   BOX = "graph__box",
+  VERTEX = "graph__vertex",
 }
 
 export enum SUPPORTED_GRAPH_ALGORITMS {
@@ -16,3 +17,20 @@ export enum STATUS {
   SEARCHING = "Searching...",
   CHOSE_ALGORITHM = "Choose your algorithm",
 }
+
+export enum VERTEX_STATUS {
+  VISITED = "visited",
+  DESTINATION = "destination",
+  START = "start",
+  PATH = "path",
+}
+
+export type Nullable<T> = T | null;
+export interface IVertex {
+  column: number;
+  row: number;
+  status: Nullable<VERTEX_STATUS>;
+  predecessor: Nullable<IVertex>;
+}
+
+export type TMatrix = IVertex[][];
