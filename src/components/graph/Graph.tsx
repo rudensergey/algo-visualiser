@@ -19,18 +19,36 @@ export class Graph extends React.Component {
   state: Readonly<{
     searching: Boolean;
     matrix: TMatrix;
+    currentAlgorithm: SUPPORTED_GRAPH_ALGORITMS;
   }>;
 
-  constructor(props) {
+  constructor(props: any) {
     super(props);
+    this.changeAlgorithm = this.changeAlgorithm.bind(this);
+    this.search = this.search.bind(this);
 
     const matrix = constructMatrix(25);
 
     this.state = {
       searching: false,
       matrix: matrix,
+      currentAlgorithm: SUPPORTED_GRAPH_ALGORITMS.BFS,
     };
   }
+
+  changeAlgorithm(value: SUPPORTED_GRAPH_ALGORITMS) {
+    this.setState({ currentAlgorithm: value });
+  }
+
+  async search() {
+    if (this.state.searching) return;
+    else this.setState({ searching: true });
+
+    await this?.[this.state.currentAlgorithm as keyof Graph]?.();
+    this.setState({ searching: false });
+  }
+
+  async bfs() {}
 
   render() {
     return (
@@ -40,12 +58,12 @@ export class Graph extends React.Component {
             {this.state.searching ? STATUS.SEARCHING : STATUS.CHOSE_ALGORITHM}
           </p>
           <Dropdown
-            defaultValue={SUPPORTED_GRAPH_ALGORITMS.BFS}
+            defaultValue={this.state.currentAlgorithm}
             classNames={GRAPH.DROPDOWN}
-            onChange={() => {}}
+            onChange={this.changeAlgorithm}
             list={Object.values(SUPPORTED_GRAPH_ALGORITMS)}
           ></Dropdown>
-          <Button classNames={GRAPH.BUTTON} onClick={() => {}}>
+          <Button classNames={GRAPH.BUTTON} onClick={this.search}>
             Search
           </Button>
         </div>

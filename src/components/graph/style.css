@@ -29,14 +29,28 @@
   grid-gap: 2px;
 }
 
-.graph__vertex {
+.graph__vertex,
+.graph__vertex--visited,
+.graph__vertex--destination,
+.graph__vertex--start,
+.graph__vertex--path {
   border-radius: 3px;
-  background-color: var(--main-hover);
+  background-color: grey;
   transition: all;
 }
 
-.graph__verticle:hover {
-  background-color: var(--main-active);
+.graph__vertex--visited {
+  background-color: var(--main);
+}
+
+.graph__vertex--destination {
+  background-color: yellow;
+}
+.graph__vertex--start {
+  background-color: red;
+}
+.graph__vertex--path {
+  background-color: var(--accent);
 }
 
 .graph__buttons {
