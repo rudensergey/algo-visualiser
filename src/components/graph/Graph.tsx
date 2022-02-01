@@ -7,10 +7,16 @@ import { Button } from "../button/Button";
 import { Dropdown } from "../dropdown/Dropdown";
 
 // Types
-import { GRAPH, SUPPORTED_GRAPH_ALGORITMS, STATUS, TMatrix } from "./types";
+import {
+  GRAPH,
+  SUPPORTED_GRAPH_ALGORITMS,
+  STATUS,
+  IVertex,
+  VERTEX_STATUS,
+} from "./types";
 
 // Utils
-import { constructMatrix } from "../../utils/common";
+import { constructMatrix, wait } from "../../utils/common";
 
 // Style
 import "./style.css";
@@ -18,7 +24,7 @@ import "./style.css";
 export class Graph extends React.Component {
   state: Readonly<{
     searching: Boolean;
-    matrix: TMatrix;
+    matrix: any;
     currentAlgorithm: SUPPORTED_GRAPH_ALGORITMS;
   }>;
 
@@ -48,7 +54,79 @@ export class Graph extends React.Component {
     this.setState({ searching: false });
   }
 
-  async bfs() {}
+  async bfs() {
+    const self = this;
+
+    const n = 25;
+
+    const rowStack = [];
+    const columnStack = [];
+
+    const verticalVector = [0, 0, 1, -1];
+    const horizontalVector = [-1, 1, 0, 0];
+
+    const { column, row } = this.state.matrix[0][0];
+
+    rowStack.push(row);
+    columnStack.push(column);
+
+    await wait(10).then(() =>
+      self.setVertexStatus(column, row, VERTEX_STATUS.VISITED),
+    );
+
+    while (rowStack.length) {
+      const x = columnStack.shift();
+      const y = rowStack.shift();
+
+      await exploreNeighbours(x, y);
+    }
+
+    async function exploreNeighbours(c: number, r: number) {
+      for (let i = 0; i < 4; i++) {
+        const row = r + verticalVector[i];
+        const column = c + horizontalVector[i];
+
+        if (column < 0 || column >= n) continue;
+        if (row < 0 || row >= n) continue;
+        if (self.isVisited(column, row)) continue;
+
+        await wait(10).then(() => {
+          rowStack.push(row);
+          columnStack.push(column);
+          self.setVertexStatus(column, row, VERTEX_STATUS.VISITED);
+        });
+      }
+    }
+  }
+
+  isVisited(c: number, r: number) {
+    return this.state.matrix[r][c].status === VERTEX_STATUS.VISITED;
+  }
+
+  setVertexStatus(
+    c: number,
+    r: number,
+    status: VERTEX_STATUS,
+    pred: IVertex = null,
+  ) {
+    const n = this.state.matrix.length;
+
+    if (c >= n || c < 0 || r >= n || r < 0) return;
+
+    this.setState({
+      matrix: {
+        ...this.state.matrix,
+        [r]: {
+          ...this.state.matrix[r],
+          [c]: {
+            ...this.state.matrix[r][c],
+            status,
+            pred,
+          },
+        },
+      },
+    });
+  }
 
   render() {
     return (
@@ -68,8 +146,8 @@ export class Graph extends React.Component {
           </Button>
         </div>
         <div className={GRAPH.BOX}>
-          {this.state.matrix.map((row) =>
-            row.map((vertex) => (
+          {Object.values(this.state.matrix).map((row) =>
+            Object.values(row).map((vertex: IVertex) => (
               <Vertex
                 statusModificator={vertex.status}
                 mainClass={GRAPH.VERTEX}

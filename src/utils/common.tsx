@@ -4,10 +4,10 @@ export const wait = (time: number) =>
   new Promise((res) => setTimeout(res, time));
 
 export function constructMatrix(n: number): TMatrix {
-  const matrix = [];
+  const matrix = {};
 
   for (let r = 0; r < n; r++) {
-    const newRow = [];
+    const newRow = {};
 
     for (let c = 0; c < n; c++) {
       const vertex: IVertex = {
@@ -22,10 +22,10 @@ export function constructMatrix(n: number): TMatrix {
         predecessor: null,
       };
 
-      newRow.push(vertex);
+      newRow[c] = vertex;
     }
 
-    matrix.push(newRow);
+    matrix[r] = newRow;
   }
 
   return matrix;

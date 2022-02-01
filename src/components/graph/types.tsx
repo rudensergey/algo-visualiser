@@ -33,4 +33,4 @@ export interface IVertex {
   predecessor: Nullable<IVertex>;
 }
 
-export type TMatrix = IVertex[][];
+export type TMatrix = Record<number, Record<number, IVertex>>;
