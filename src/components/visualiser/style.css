@@ -1,6 +1,7 @@
 .visualiser {
   flex-grow: 1;
   padding: 20px;
+  height: 80%;
 
   display: flex;
   flex-direction: column;
