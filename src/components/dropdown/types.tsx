@@ -1,10 +1,11 @@
 import { SUPPORTED_ALGORITMS } from "../visualiser/types";
 
-export type TDropdown = React.FC<{
-  list: SUPPORTED_ALGORITMS[];
-  classNames: string;
+export interface IDropdownProps<T> {
+  list: T[];
+  defaultValue: T;
+  classNames?: string;
   onChange: (value: string) => void;
-}>;
+}
 
 export enum DROPDOWN {
   BUTTON = "dropdown__button",

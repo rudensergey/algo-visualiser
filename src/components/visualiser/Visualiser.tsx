@@ -258,6 +258,7 @@ export class Visualiser extends React.Component {
             Shuffle
           </Button>
           <Dropdown
+            defaultValue={SUPPORTED_ALGORITMS.BUBBLE}
             classNames={VISUALISER.DROPDOWN}
             onChange={this.changeAlgorithm}
             list={Object.values(SUPPORTED_ALGORITMS)}

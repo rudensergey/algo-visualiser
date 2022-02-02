@@ -7,5 +7,5 @@
 }
 
 .bar--selected {
-  background-color: tomato;
+  background-color: var(--selected);
 }

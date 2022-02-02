@@ -15,7 +15,7 @@ h6 {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-:root {
+#main[data-theme="sorting"] {
   --light-shadow: rgba(54, 54, 54, 0.2);
   --mid-shadow: rgba(54, 54, 54, 0.5);
   --dark-shadow: rgba(54, 54, 54, 0.8);
@@ -27,10 +27,20 @@ h6 {
   --accent-hover: rgb(216, 107, 67);
   --accent-active: rgb(170, 85, 53);
   --box: white;
+  --selected: tomato;
 }
 
-#root {
-  height: 100vh;
-  width: 100vw;
-  background-color: var(--main);
+#main[data-theme="graphs"] {
+  --light-shadow: rgba(54, 54, 54, 0.2);
+  --mid-shadow: rgba(54, 54, 54, 0.5);
+  --dark-shadow: rgba(54, 54, 54, 0.8);
+
+  --main: rgb(104, 57, 233);
+  --main-hover: rgb(93, 51, 207);
+  --main-active: rgb(76, 42, 170);
+  --accent: rgb(216, 70, 70);
+  --accent-hover: rgb(185, 60, 60);
+  --accent-active: rgb(158, 50, 50);
+  --box: white;
+  --selected: tomato;
 }
