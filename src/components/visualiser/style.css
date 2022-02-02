@@ -14,7 +14,11 @@
 
 .visualiser__box {
   width: 80%;
-  height: 700px;
+
+  flex-basis: 700px;
+  flex-grow: 0;
+  flex-shrink: 1;
+
   padding: 20px;
   margin-top: 20px;
   box-sizing: border-box;
@@ -96,7 +100,6 @@
 @media (max-width: 800px) {
   .visualiser {
     width: 100%;
-    height: 100%;
     padding: 10px;
     box-sizing: border-box;
   }
