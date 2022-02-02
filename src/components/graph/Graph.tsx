@@ -20,7 +20,6 @@ import { constructMatrix, wait } from "../../utils/common";
 
 // Style
 import "./style.css";
-import { HighlightSpanKind } from "typescript";
 
 export class Graph extends React.Component {
   state: Readonly<{

@@ -9,7 +9,6 @@ export enum GRAPH {
 }
 
 export enum SUPPORTED_GRAPH_ALGORITMS {
-  DFS = "dfs",
   BFS = "bfs",
 }
 

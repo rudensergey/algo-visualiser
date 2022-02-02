@@ -36,9 +36,7 @@ export const Vertex: React.FC<{
     else changeStatus(column, row, null);
   };
 
-  const onMouseDown = (event) => {
-    event.preventDefault();
-
+  const onMouseDown = () => {
     if (statusModificator === null)
       changeStatus(column, row, VERTEX_STATUS.BLOCKED);
     else changeStatus(column, row, null);
