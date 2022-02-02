@@ -70,20 +70,17 @@ export class Graph extends React.Component {
 
   async bfs() {
     const self = this;
-
     const n = 25;
 
     const rowStack = [];
     const columnStack = [];
-
     const verticalVector = [0, 0, 1, -1];
     const horizontalVector = [-1, 1, 0, 0];
 
     let destination = null;
 
-    const { column, row } = this.state.matrix[0][0];
-    rowStack.push(row);
-    columnStack.push(column);
+    rowStack.push(0);
+    columnStack.push(0);
 
     while (rowStack.length) {
       const x = columnStack.shift();
@@ -105,28 +102,6 @@ export class Graph extends React.Component {
       });
     }
 
-    function getShortestPath(r: number, c: number) {
-      const matrix = self.state.matrix;
-      const predArr = [];
-
-      let row = r;
-      let column = c;
-
-      console.log(row, column, matrix[row][column]);
-
-      while (matrix[row][column]?.predecessor) {
-        const { row: predRow, column: predColumn } =
-          matrix[row][column]?.predecessor;
-
-        predArr.push({ row, column });
-
-        column = predColumn;
-        row = predRow;
-      }
-
-      return predArr;
-    }
-
     async function exploreNeighbours(c: number, r: number) {
       for (let i = 0; i < 4; i++) {
         const row = r + verticalVector[i];
@@ -134,9 +109,16 @@ export class Graph extends React.Component {
 
         if (column < 0 || column >= n) continue;
         if (row < 0 || row >= n) continue;
-        if (self.isVisitedOrBlocked(column, row)) continue;
+        if (
+          self.checkStatus(column, row, [
+            VERTEX_STATUS.BLOCKED,
+            VERTEX_STATUS.VISITED,
+            VERTEX_STATUS.START,
+          ])
+        )
+          continue;
 
-        if (self.isDestination(column, row)) {
+        if (self.checkStatus(column, row, VERTEX_STATUS.DESTINATION)) {
           destination = { row: r, column: c };
           return;
         }
@@ -151,23 +133,38 @@ export class Graph extends React.Component {
         });
       }
     }
+
+    function getShortestPath(r: number, c: number) {
+      const matrix = self.state.matrix;
+      const predArr = [];
+
+      let row = r;
+      let column = c;
+
+      while (matrix[row][column]?.predecessor) {
+        const { row: predRow, column: predColumn } =
+          matrix[row][column]?.predecessor;
+
+        predArr.push({ row, column });
+        column = predColumn;
+        row = predRow;
+      }
+
+      return predArr;
+    }
   }
 
-  isVisitedOrBlocked(column: number, row: number) {
+  checkStatus(
+    column: number,
+    row: number,
+    targetStatus: VERTEX_STATUS | VERTEX_STATUS[],
+  ) {
     if (column >= 25 || column < 0 || row >= 25 || row < 0)
-      return console.error("isVisited: Missed index!");
+      return console.error("checkStatus: Missed index!");
+
     const status = this.state.matrix[row][column].status;
-    return (
-      status === VERTEX_STATUS.VISITED ||
-      status === VERTEX_STATUS.BLOCKED ||
-      status === VERTEX_STATUS.START
-    );
-  }
-
-  isDestination(column: number, row: number) {
-    if (column >= 25 || column < 0 || row >= 25 || row < 0)
-      return console.error("isDestination: Missed index!");
-    return this.state.matrix[row][column].status === VERTEX_STATUS.DESTINATION;
+    if (!(targetStatus instanceof Array)) return targetStatus === status;
+    return targetStatus.some((s) => s === status);
   }
 
   setVertexStatus(
