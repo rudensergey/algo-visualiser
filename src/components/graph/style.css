@@ -91,6 +91,7 @@
   background-color: var(--main);
   border: 0;
   border-radius: 5px;
+  margin: 0 5px;
   box-shadow: 0px 2px 3px var(--mid-shadow);
 
   color: white;
@@ -104,11 +105,10 @@
 }
 
 .graph__dropdown {
-  padding: 0 15px;
   max-width: 200px;
   flex-basis: 100px;
   flex-grow: 1;
-  margin: 0 20px;
+  margin: 0 5px;
 }
 
 .graph__button:hover {
@@ -160,13 +160,14 @@
     height: 50px;
     padding: 0 5px;
     font-size: 15px;
+    margin: 0 5px;
   }
 
   .graph__dropdown {
     height: 50px;
     padding: 0 15px;
     flex-basis: 100px;
-    margin: 0 10px;
+    margin: 0 5px;
     font-size: 15px;
   }
 

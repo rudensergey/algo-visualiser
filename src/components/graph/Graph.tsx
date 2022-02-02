@@ -20,9 +20,11 @@ import { constructMatrix, wait } from "../../utils/common";
 
 // Style
 import "./style.css";
+import { HighlightSpanKind } from "typescript";
 
 export class Graph extends React.Component {
   state: Readonly<{
+    pressedKey: boolean;
     searching: Boolean;
     matrix: any;
     currentAlgorithm: SUPPORTED_GRAPH_ALGORITMS;
@@ -33,10 +35,15 @@ export class Graph extends React.Component {
     this.changeAlgorithm = this.changeAlgorithm.bind(this);
     this.search = this.search.bind(this);
     this.drawMase = this.drawMase.bind(this);
+    this.clear = this.clear.bind(this);
+    this.onMouseDown = this.onMouseDown.bind(this);
+    this.onMouseUp = this.onMouseUp.bind(this);
+    this.setVertexStatus = this.setVertexStatus.bind(this);
 
     const matrix = constructMatrix(25);
 
     this.state = {
+      pressedKey: false,
       searching: false,
       matrix: matrix,
       currentAlgorithm: SUPPORTED_GRAPH_ALGORITMS.BFS,
@@ -45,6 +52,11 @@ export class Graph extends React.Component {
 
   changeAlgorithm(value: SUPPORTED_GRAPH_ALGORITMS) {
     this.setState({ currentAlgorithm: value });
+  }
+
+  clear() {
+    if (this.state.searching) return;
+    this.setState({ matrix: constructMatrix(25) });
   }
 
   async search() {
@@ -186,6 +198,8 @@ export class Graph extends React.Component {
   }
 
   async drawMase() {
+    if (this.state.searching) return;
+
     for (let i = 0; i < 23; i++) {
       await wait(10).then(() => {
         this.setVertexStatus(3, i, VERTEX_STATUS.BLOCKED);
@@ -217,13 +231,30 @@ export class Graph extends React.Component {
     }
   }
 
+  onMouseDown() {
+    if (this.state.searching) return;
+    this.setState({ pressedKey: true });
+  }
+
+  onMouseUp() {
+    if (this.state.searching) return;
+    this.setState({ pressedKey: false });
+  }
+
   render() {
     return (
-      <div className={GRAPH.GRAPH}>
+      <div
+        className={GRAPH.GRAPH}
+        onMouseDown={this.onMouseDown}
+        onMouseUp={this.onMouseUp}
+      >
         <div className={GRAPH.BUTTONS}>
           <p className={GRAPH.TITLE}>
             {this.state.searching ? STATUS.SEARCHING : STATUS.CHOSE_ALGORITHM}
           </p>
+          <Button classNames={GRAPH.BUTTON} onClick={this.clear}>
+            Clear Board
+          </Button>
           <Button classNames={GRAPH.BUTTON} onClick={this.drawMase}>
             Draw Mase
           </Button>
@@ -238,9 +269,13 @@ export class Graph extends React.Component {
           </Button>
         </div>
         <div className={GRAPH.BOX}>
-          {Object.values(this.state.matrix).map((row) =>
-            Object.values(row).map((vertex: IVertex) => (
+          {Object.values(this.state.matrix).map((row, rowIndex) =>
+            Object.values(row).map((vertex: IVertex, vertexIndex) => (
               <Vertex
+                changeStatus={this.setVertexStatus}
+                row={rowIndex}
+                column={vertexIndex}
+                pressedKey={this.state.pressedKey}
                 statusModificator={vertex.status}
                 mainClass={GRAPH.VERTEX}
               ></Vertex>
