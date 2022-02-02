@@ -66,8 +66,9 @@ export class Graph extends React.Component {
     const verticalVector = [0, 0, 1, -1];
     const horizontalVector = [-1, 1, 0, 0];
 
-    const { column, row } = this.state.matrix[0][0];
+    let destination = null;
 
+    const { column, row } = this.state.matrix[0][0];
     rowStack.push(row);
     columnStack.push(column);
 
@@ -78,7 +79,43 @@ export class Graph extends React.Component {
     while (rowStack.length) {
       const x = columnStack.shift();
       const y = rowStack.shift();
+
+      if (destination) break;
+
       await exploreNeighbours(x, y);
+    }
+
+    if (!destination) return;
+
+    const predArr = getShortestPath(destination.row, destination.column);
+
+    for (let i = 0; i < predArr.length; i++) {
+      const { row, column } = predArr[i];
+      await wait(10).then(() => {
+        self.setVertexStatus(column, row, VERTEX_STATUS.PATH);
+      });
+    }
+
+    function getShortestPath(r: number, c: number) {
+      const matrix = self.state.matrix;
+      const predArr = [];
+
+      let row = r;
+      let column = c;
+
+      console.log(row, column, matrix[row][column]);
+
+      while (matrix[row][column]?.predecessor) {
+        const { row: predRow, column: predColumn } =
+          matrix[row][column]?.predecessor;
+
+        predArr.push({ row, column });
+
+        column = predColumn;
+        row = predRow;
+      }
+
+      return predArr;
     }
 
     async function exploreNeighbours(c: number, r: number) {
@@ -89,6 +126,11 @@ export class Graph extends React.Component {
         if (column < 0 || column >= n) continue;
         if (row < 0 || row >= n) continue;
         if (self.isVisitedOrBlocked(column, row)) continue;
+
+        if (self.isDestination(column, row)) {
+          destination = { row: r, column: c };
+          return;
+        }
 
         await wait(10).then(() => {
           rowStack.push(row);
@@ -102,13 +144,19 @@ export class Graph extends React.Component {
     }
   }
 
-  isVisitedOrBlocked(c: number, r: number) {
-    if (c >= 25 || c < 0 || r >= 25 || r < 0)
+  isVisitedOrBlocked(column: number, row: number) {
+    if (column >= 25 || column < 0 || row >= 25 || row < 0)
       return console.error("isVisited: Missed index!");
     return (
-      this.state.matrix[r][c].status === VERTEX_STATUS.VISITED ||
-      this.state.matrix[r][c].status === VERTEX_STATUS.BLOCKED
+      this.state.matrix[row][column].status === VERTEX_STATUS.VISITED ||
+      this.state.matrix[row][column].status === VERTEX_STATUS.BLOCKED
     );
+  }
+
+  isDestination(column: number, row: number) {
+    if (column >= 25 || column < 0 || row >= 25 || row < 0)
+      return console.error("isDestination: Missed index!");
+    return this.state.matrix[row][column].status === VERTEX_STATUS.DESTINATION;
   }
 
   setVertexStatus(
@@ -130,7 +178,7 @@ export class Graph extends React.Component {
           [c]: {
             ...this.state.matrix[r][c],
             status,
-            pred: predecessor ? { ...predecessor } : null,
+            predecessor: predecessor ? { ...predecessor } : null,
           },
         },
       },
@@ -152,7 +200,19 @@ export class Graph extends React.Component {
 
     for (let i = 3; i < 22; i++) {
       await wait(10).then(() => {
+        this.setVertexStatus(10, i, VERTEX_STATUS.BLOCKED);
+      });
+    }
+
+    for (let i = 0; i < 22; i++) {
+      await wait(10).then(() => {
         this.setVertexStatus(15, i, VERTEX_STATUS.BLOCKED);
+      });
+    }
+
+    for (let i = 3; i < 25; i++) {
+      await wait(10).then(() => {
+        this.setVertexStatus(20, i, VERTEX_STATUS.BLOCKED);
       });
     }
   }
