@@ -55,7 +55,7 @@
   background-color: yellow;
 }
 .graph__vertex--start {
-  background-color: red;
+  background-color: coral;
 }
 .graph__vertex--path {
   background-color: var(--accent);

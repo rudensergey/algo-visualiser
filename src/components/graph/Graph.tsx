@@ -23,6 +23,7 @@ import "./style.css";
 
 export class Graph extends React.Component {
   state: Readonly<{
+    changed: boolean;
     pressedKey: boolean;
     searching: Boolean;
     matrix: any;
@@ -42,6 +43,7 @@ export class Graph extends React.Component {
     const matrix = constructMatrix(25);
 
     this.state = {
+      changed: false,
       pressedKey: false,
       searching: false,
       matrix: matrix,
@@ -55,7 +57,7 @@ export class Graph extends React.Component {
 
   clear() {
     if (this.state.searching) return;
-    this.setState({ matrix: constructMatrix(25) });
+    this.setState({ matrix: constructMatrix(25), changed: false });
   }
 
   async search() {
@@ -82,10 +84,6 @@ export class Graph extends React.Component {
     const { column, row } = this.state.matrix[0][0];
     rowStack.push(row);
     columnStack.push(column);
-
-    await wait(10).then(() =>
-      self.setVertexStatus(column, row, VERTEX_STATUS.VISITED),
-    );
 
     while (rowStack.length) {
       const x = columnStack.shift();
@@ -158,9 +156,11 @@ export class Graph extends React.Component {
   isVisitedOrBlocked(column: number, row: number) {
     if (column >= 25 || column < 0 || row >= 25 || row < 0)
       return console.error("isVisited: Missed index!");
+    const status = this.state.matrix[row][column].status;
     return (
-      this.state.matrix[row][column].status === VERTEX_STATUS.VISITED ||
-      this.state.matrix[row][column].status === VERTEX_STATUS.BLOCKED
+      status === VERTEX_STATUS.VISITED ||
+      status === VERTEX_STATUS.BLOCKED ||
+      status === VERTEX_STATUS.START
     );
   }
 
@@ -182,6 +182,7 @@ export class Graph extends React.Component {
       return console.error("setVertexStatus: Missed index!");
 
     this.setState({
+      changed: true,
       matrix: {
         ...this.state.matrix,
         [r]: {
@@ -198,6 +199,7 @@ export class Graph extends React.Component {
 
   async drawMase() {
     if (this.state.searching) return;
+    else this.setState({ searching: true });
 
     for (let i = 0; i < 23; i++) {
       await wait(10).then(() => {
@@ -228,6 +230,8 @@ export class Graph extends React.Component {
         this.setVertexStatus(20, i, VERTEX_STATUS.BLOCKED);
       });
     }
+
+    this.setState({ searching: false });
   }
 
   onMouseDown() {
@@ -251,11 +255,11 @@ export class Graph extends React.Component {
           <p className={GRAPH.TITLE}>
             {this.state.searching ? STATUS.SEARCHING : STATUS.CHOSE_ALGORITHM}
           </p>
-          <Button classNames={GRAPH.BUTTON} onClick={this.clear}>
-            Clear Board
-          </Button>
-          <Button classNames={GRAPH.BUTTON} onClick={this.drawMase}>
-            Draw Mase
+          <Button
+            classNames={GRAPH.BUTTON}
+            onClick={this.state.changed ? this.clear : this.drawMase}
+          >
+            {this.state.changed ? "Clear Board" : "Draw Mase"}
           </Button>
           <Dropdown
             defaultValue={this.state.currentAlgorithm}
