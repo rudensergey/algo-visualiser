@@ -1,5 +1,7 @@
 import * as path from "path";
+
 import { Configuration, ENTRY_PATH, ENV, OUTPUT_PATH } from "./types";
+
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const isDev = process.env.NODE_ENV === ENV.DEV;

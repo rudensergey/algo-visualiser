@@ -17,9 +17,11 @@ import {
 
 // Utils
 import { constructMatrix, wait } from "../../utils/common";
+import mase from "./mase.json";
 
 // Style
 import "./style.css";
+import { concatMap, delay, filter, from, map, of } from "rxjs";
 
 export class Graph extends React.Component {
   state: Readonly<{
@@ -196,39 +198,19 @@ export class Graph extends React.Component {
 
   async drawMase() {
     if (this.state.searching) return;
-    else this.setState({ searching: true });
+    else this.setState({ searching: true, changed: true });
 
-    for (let i = 0; i < 23; i++) {
-      await wait(10).then(() => {
-        this.setVertexStatus(3, i, VERTEX_STATUS.BLOCKED);
+    from(Object.values(mase))
+      .pipe(
+        concatMap((row) => from(Object.values(row))),
+        filter((x: IVertex) => x.status === VERTEX_STATUS.BLOCKED),
+        map(({ column, row }) => [column, row]),
+        concatMap((val) => of(val).pipe(delay(10))),
+      )
+      .subscribe({
+        next: (c) => this.setVertexStatus(c[0], c[1], VERTEX_STATUS.BLOCKED),
+        complete: () => this.setState({ searching: false }),
       });
-    }
-
-    for (let i = 5; i < 25; i++) {
-      await wait(10).then(() => {
-        this.setVertexStatus(6, i, VERTEX_STATUS.BLOCKED);
-      });
-    }
-
-    for (let i = 3; i < 22; i++) {
-      await wait(10).then(() => {
-        this.setVertexStatus(10, i, VERTEX_STATUS.BLOCKED);
-      });
-    }
-
-    for (let i = 0; i < 22; i++) {
-      await wait(10).then(() => {
-        this.setVertexStatus(15, i, VERTEX_STATUS.BLOCKED);
-      });
-    }
-
-    for (let i = 3; i < 25; i++) {
-      await wait(10).then(() => {
-        this.setVertexStatus(20, i, VERTEX_STATUS.BLOCKED);
-      });
-    }
-
-    this.setState({ searching: false });
   }
 
   onMouseDown() {

@@ -39,8 +39,9 @@
 .graph__vertex--destination,
 .graph__vertex--start,
 .graph__vertex--path {
-  background-color: grey;
+  background-color: var(--light-shadow);
   transition: all;
+  transition-duration: 0.1s;
 }
 
 .graph__vertex--visited {
