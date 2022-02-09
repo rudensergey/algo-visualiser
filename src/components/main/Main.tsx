@@ -24,11 +24,7 @@ export const Main = () => {
 
   return (
     <div id="main" data-theme={section} className="main">
-      <Menu
-        defaultSection={SECTIONS.GRAPHS}
-        menuSections={Object.values(SECTIONS)}
-        setSection={setSection}
-      ></Menu>
+      <Menu defaultSection={SECTIONS.GRAPHS} menuSections={Object.values(SECTIONS)} setSection={setSection}></Menu>
       {mapSectionComponent[section] ?? <h1>No such a section</h1>}
     </div>
   );

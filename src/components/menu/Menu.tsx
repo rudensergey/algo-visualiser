@@ -1,5 +1,5 @@
 // Absolute imports
-import * as React from "react";
+import React from "react";
 
 // Components
 import { Dropdown } from "../dropdown/Dropdown";

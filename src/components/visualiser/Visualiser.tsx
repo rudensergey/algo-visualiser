@@ -1,5 +1,5 @@
 // Absolute imports
-import * as React from "react";
+import React from "react";
 
 // Components
 import { Bar } from "../bar/Bar";
@@ -7,12 +7,7 @@ import { Button } from "../button/Button";
 import { Dropdown } from "../dropdown/Dropdown";
 
 // Types
-import {
-  STATUS,
-  SUPPORTED_ALGORITMS,
-  TVisualiserState,
-  VISUALISER,
-} from "./types";
+import { STATUS, SUPPORTED_ALGORITMS, TVisualiserState, VISUALISER } from "./types";
 
 // Utils
 import { wait } from "../../utils/common";
@@ -20,10 +15,8 @@ import { wait } from "../../utils/common";
 // Style
 import "./style.css";
 
-export class Visualiser extends React.Component {
-  state: TVisualiserState;
-
-  constructor(props: any) {
+export class Visualiser extends React.Component<Record<string, never>, TVisualiserState> {
+  constructor(props: Record<string, never>) {
     super(props);
 
     const items = [];
@@ -145,11 +138,7 @@ export class Visualiser extends React.Component {
 
     await quickSort(arr, 0, arr.length - 1);
 
-    async function quickSort(
-      arr: number[],
-      left: number,
-      right: number,
-    ): Promise<void> {
+    async function quickSort(arr: number[], left: number, right: number): Promise<void> {
       if (left <= right) {
         const pivot = await partition(arr, left, right);
         await quickSort(arr, left, pivot - 1);
@@ -158,13 +147,9 @@ export class Visualiser extends React.Component {
       }
     }
 
-    async function partition(
-      arr: number[],
-      left: number,
-      right: number,
-    ): Promise<number> {
+    async function partition(arr: number[], left: number, right: number): Promise<number> {
       if (left <= right) {
-        let pivot = right;
+        const pivot = right;
         let pivotIndex = left;
 
         for (let i = left; i <= right; i++) {
@@ -196,30 +181,25 @@ export class Visualiser extends React.Component {
 
     async function mergeSort(arr: number[], left: number, right: number) {
       if (left >= right) return;
-      var mid = left + Math.floor((right - left) / 2);
+      const mid = left + Math.floor((right - left) / 2);
       await mergeSort(arr, left, mid);
       await mergeSort(arr, mid + 1, right);
       await mergeArrays(arr, left, mid, right);
     }
 
-    async function mergeArrays(
-      arr: number[],
-      left: number,
-      mid: number,
-      right: number,
-    ) {
-      var n1 = mid - left + 1;
-      var n2 = right - mid;
+    async function mergeArrays(arr: number[], left: number, mid: number, right: number) {
+      const n1 = mid - left + 1;
+      const n2 = right - mid;
 
-      var L = new Array(n1);
-      var R = new Array(n2);
+      const L = new Array(n1);
+      const R = new Array(n2);
 
-      for (var i = 0; i < n1; i++) L[i] = arr[left + i];
-      for (var j = 0; j < n2; j++) R[j] = arr[mid + 1 + j];
+      for (let i = 0; i < n1; i++) L[i] = arr[left + i];
+      for (let j = 0; j < n2; j++) R[j] = arr[mid + 1 + j];
 
-      var i = 0;
-      var j = 0;
-      var k = left;
+      let i = 0;
+      let j = 0;
+      let k = left;
 
       while (i < n1 && j < n2) {
         self.setState({ selected: k });
@@ -251,9 +231,7 @@ export class Visualiser extends React.Component {
     return (
       <div className={VISUALISER.VISUALISER}>
         <div className={VISUALISER.BUTTONS}>
-          <p className={VISUALISER.TITLE}>
-            {this.state.sorting ? STATUS.SORTING : STATUS.CHOSE_ALGORITHM}
-          </p>
+          <p className={VISUALISER.TITLE}>{this.state.sorting ? STATUS.SORTING : STATUS.CHOSE_ALGORITHM}</p>
           <Button classNames={VISUALISER.BUTTON} onClick={this.shuffleItems}>
             Shuffle
           </Button>
@@ -269,7 +247,7 @@ export class Visualiser extends React.Component {
         </div>
         <div className={VISUALISER.BOX}>
           {this.state.items.map((num) => (
-            <Bar value={num} selected={num === this.state.selected}></Bar>
+            <Bar key={num} value={num} selected={num === this.state.selected}></Bar>
           ))}
         </div>
       </div>

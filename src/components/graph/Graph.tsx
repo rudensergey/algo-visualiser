@@ -1,5 +1,5 @@
 // Absolute imports
-import * as React from "react";
+import React from "react";
 
 // Components
 import { Vertex } from "../vertex/Vertex";
@@ -7,13 +7,7 @@ import { Button } from "../button/Button";
 import { Dropdown } from "../dropdown/Dropdown";
 
 // Types
-import {
-  GRAPH,
-  SUPPORTED_GRAPH_ALGORITMS,
-  STATUS,
-  IVertex,
-  VERTEX_STATUS,
-} from "./types";
+import { GRAPH, SUPPORTED_GRAPH_ALGORITMS, STATUS, IVertex, VERTEX_STATUS, IGraphState } from "./types";
 
 // Utils
 import { constructMatrix, wait } from "../../utils/common";
@@ -23,16 +17,8 @@ import mase from "./mase.json";
 import "./style.css";
 import { concatMap, delay, filter, from, map, of } from "rxjs";
 
-export class Graph extends React.Component {
-  state: Readonly<{
-    changed: boolean;
-    pressedKey: boolean;
-    searching: Boolean;
-    matrix: any;
-    currentAlgorithm: SUPPORTED_GRAPH_ALGORITMS;
-  }>;
-
-  constructor(props: any) {
+export class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>> {
+  constructor(props: Record<string, never>) {
     super(props);
     this.changeAlgorithm = this.changeAlgorithm.bind(this);
     this.search = this.search.bind(this);
@@ -42,7 +28,7 @@ export class Graph extends React.Component {
     this.onMouseUp = this.onMouseUp.bind(this);
     this.setVertexStatus = this.setVertexStatus.bind(this);
 
-    const matrix = constructMatrix(25);
+    const matrix = constructMatrix(50);
 
     this.state = {
       changed: false,
@@ -59,7 +45,7 @@ export class Graph extends React.Component {
 
   clear() {
     if (this.state.searching) return;
-    this.setState({ matrix: constructMatrix(25), changed: false });
+    this.setState({ matrix: constructMatrix(50), changed: false });
   }
 
   async search() {
@@ -72,7 +58,7 @@ export class Graph extends React.Component {
 
   async bfs() {
     const self = this;
-    const n = 25;
+    const n = 50;
 
     const rowStack = [];
     const columnStack = [];
@@ -99,7 +85,7 @@ export class Graph extends React.Component {
 
     for (let i = 0; i < predArr.length; i++) {
       const { row, column } = predArr[i];
-      await wait(10).then(() => {
+      await wait(5).then(() => {
         self.setVertexStatus(column, row, VERTEX_STATUS.PATH);
       });
     }
@@ -111,21 +97,16 @@ export class Graph extends React.Component {
 
         if (column < 0 || column >= n) continue;
         if (row < 0 || row >= n) continue;
-        if (
-          self.checkStatus(column, row, [
-            VERTEX_STATUS.BLOCKED,
-            VERTEX_STATUS.VISITED,
-            VERTEX_STATUS.START,
-          ])
-        )
+        if (self.checkStatus(column, row, [VERTEX_STATUS.BLOCKED, VERTEX_STATUS.VISITED, VERTEX_STATUS.START])) {
           continue;
+        }
 
         if (self.checkStatus(column, row, VERTEX_STATUS.DESTINATION)) {
           destination = { row: r, column: c };
           return;
         }
 
-        await wait(10).then(() => {
+        await wait(5).then(() => {
           rowStack.push(row);
           columnStack.push(column);
           self.setVertexStatus(column, row, VERTEX_STATUS.VISITED, {
@@ -144,8 +125,7 @@ export class Graph extends React.Component {
       let column = c;
 
       while (matrix[row][column]?.predecessor) {
-        const { row: predRow, column: predColumn } =
-          matrix[row][column]?.predecessor;
+        const { row: predRow, column: predColumn } = matrix[row][column]?.predecessor;
 
         predArr.push({ row, column });
         column = predColumn;
@@ -156,29 +136,22 @@ export class Graph extends React.Component {
     }
   }
 
-  checkStatus(
-    column: number,
-    row: number,
-    targetStatus: VERTEX_STATUS | VERTEX_STATUS[],
-  ) {
-    if (column >= 25 || column < 0 || row >= 25 || row < 0)
+  checkStatus(column: number, row: number, targetStatus: VERTEX_STATUS | VERTEX_STATUS[]) {
+    if (column >= 50 || column < 0 || row >= 50 || row < 0) {
       return console.error("checkStatus: Missed index!");
+    }
 
     const status = this.state.matrix[row][column].status;
     if (!(targetStatus instanceof Array)) return targetStatus === status;
     return targetStatus.some((s) => s === status);
   }
 
-  setVertexStatus(
-    c: number,
-    r: number,
-    status: VERTEX_STATUS,
-    predecessor?: { column: number; row: number },
-  ) {
-    const n = this.state.matrix.length;
+  setVertexStatus(c: number, r: number, status: VERTEX_STATUS, predecessor?: { column: number; row: number }) {
+    const n = 50;
 
-    if (c >= n || c < 0 || r >= n || r < 0)
+    if (c >= n || c < 0 || r >= n || r < 0) {
       return console.error("setVertexStatus: Missed index!");
+    }
 
     this.setState({
       changed: true,
@@ -205,7 +178,7 @@ export class Graph extends React.Component {
         concatMap((row) => from(Object.values(row))),
         filter((x: IVertex) => x.status === VERTEX_STATUS.BLOCKED),
         map(({ column, row }) => [column, row]),
-        concatMap((val) => of(val).pipe(delay(10))),
+        concatMap((val) => of(val).pipe(delay(10)))
       )
       .subscribe({
         next: (c) => this.setVertexStatus(c[0], c[1], VERTEX_STATUS.BLOCKED),
@@ -225,19 +198,10 @@ export class Graph extends React.Component {
 
   render() {
     return (
-      <div
-        className={GRAPH.GRAPH}
-        onMouseDown={this.onMouseDown}
-        onMouseUp={this.onMouseUp}
-      >
+      <div className={GRAPH.GRAPH} onMouseDown={this.onMouseDown} onMouseUp={this.onMouseUp}>
         <div className={GRAPH.BUTTONS}>
-          <p className={GRAPH.TITLE}>
-            {this.state.searching ? STATUS.SEARCHING : STATUS.CHOSE_ALGORITHM}
-          </p>
-          <Button
-            classNames={GRAPH.BUTTON}
-            onClick={this.state.changed ? this.clear : this.drawMase}
-          >
+          <p className={GRAPH.TITLE}>{this.state.searching ? STATUS.SEARCHING : STATUS.CHOSE_ALGORITHM}</p>
+          <Button classNames={GRAPH.BUTTON} onClick={this.state.changed ? this.clear : this.drawMase}>
             {this.state.changed ? "Clear Board" : "Draw Mase"}
           </Button>
           <Dropdown
@@ -254,6 +218,7 @@ export class Graph extends React.Component {
           {Object.values(this.state.matrix).map((row, rowIndex) =>
             Object.values(row).map((vertex: IVertex, vertexIndex) => (
               <Vertex
+                key={`${row}:${vertexIndex}`}
                 changeStatus={this.setVertexStatus}
                 row={rowIndex}
                 column={vertexIndex}
@@ -261,7 +226,7 @@ export class Graph extends React.Component {
                 statusModificator={vertex.status}
                 mainClass={GRAPH.VERTEX}
               ></Vertex>
-            )),
+            ))
           )}
         </div>
       </div>

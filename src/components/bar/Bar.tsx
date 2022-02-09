@@ -1,5 +1,5 @@
 // Absolute imports
-import * as React from "react";
+import React from "react";
 
 // Components
 
@@ -12,8 +12,5 @@ import { TBar } from "./types";
 import "./style.css";
 
 export const Bar: TBar = ({ value, selected }) => (
-  <div
-    style={{ height: value * 2 + "%" }}
-    className={"bar" + (selected ? " bar--selected" : "")}
-  ></div>
+  <div style={{ height: value * 2 + "%" }} className={"bar" + (selected ? " bar--selected" : "")}></div>
 );

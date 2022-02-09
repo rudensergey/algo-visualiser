@@ -1,0 +1,46 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+
+  "extends": [
+    "standard",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:css-modules/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "css-modules", "@typescript-eslint"],
+  "rules": {
+    "comma-dangle": [
+      "error",
+      {
+        "objects": "always-multiline",
+        "imports": "only-multiline",
+        "arrays": "only-multiline"
+      }
+    ],
+    "semi": ["error", "always"],
+    "quotes": ["error", "double"],
+    "multiline-ternary": "off",
+    "space-before-function-paren": ["error", { "asyncArrow": "always", "anonymous": "never", "named": "never" }],
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
+    "@typescript-eslint/no-this-alias": ["error", { "allowDestructuring": false, "allowedNames": ["self"] }],
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": [
+      "error",
+      { "ignoreTypeReferences": false, "typedefs": false, "enums": false, "functions": false }
+    ]
+  }
+}

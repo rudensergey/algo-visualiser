@@ -11,13 +11,14 @@ Collaborators: [Sergey Rudenko](https://github.com/rudensergey)
 
 Fork the project and then clone your fork. [Read more about Fork & PR strategy](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/working-with-forks)
 
-
 Start application on localhost:9000:
+
 ```
 npm run start
 ```
 
 Build & Deploy application on Firebase:
+
 ```
 npm run deploy
 ```

@@ -33,4 +33,12 @@ export interface IVertex {
   predecessor: Nullable<{ row: number; column: number }>;
 }
 
+export interface IGraphState {
+  changed: boolean;
+  pressedKey: boolean;
+  searching: boolean;
+  matrix: TMatrix;
+  currentAlgorithm: SUPPORTED_GRAPH_ALGORITMS;
+}
+
 export type TMatrix = Record<number, Record<number, IVertex>>;

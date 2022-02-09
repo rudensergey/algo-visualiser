@@ -1,5 +1,5 @@
 // Absolute imports
-import * as React from "react";
+import React from "react";
 
 // Components
 
@@ -11,12 +11,7 @@ import { DROPDOWN, IDropdownProps } from "./types";
 // Style
 import "./style.css";
 
-export const Dropdown = <T extends string>({
-  list,
-  defaultValue,
-  classNames = "",
-  onChange,
-}: IDropdownProps<T>) => {
+export const Dropdown = <T extends string>({ list, defaultValue, classNames = "", onChange }: IDropdownProps<T>) => {
   const [dropDownValue, setAlgorithm] = React.useState(defaultValue);
   const [hidden, setHiddenStatus] = React.useState(true);
   const [coordinates, setCoordinates] = React.useState({ x: 0, y: 0 });
@@ -45,22 +40,16 @@ export const Dropdown = <T extends string>({
 
   return (
     <>
-      <button
-        ref={buttonRef}
-        className={DROPDOWN.BUTTON + (classNames ? " " + classNames : "")}
-        onClick={toogleList}
-      >
+      <button ref={buttonRef} className={DROPDOWN.BUTTON + (classNames ? " " + classNames : "")} onClick={toogleList}>
         {dropDownValue}
       </button>
 
       {!hidden && (
-        <ul
-          ref={listRef}
-          style={{ top: coordinates.y + "px", left: coordinates.x + "px" }}
-          className={DROPDOWN.LIST}
-        >
-          {list.map((value) => (
-            <li onClick={setValue(value)}>{value}</li>
+        <ul ref={listRef} style={{ top: coordinates.y + "px", left: coordinates.x + "px" }} className={DROPDOWN.LIST}>
+          {list.map((value, i) => (
+            <li key={i} onClick={setValue(value)}>
+              {value}
+            </li>
           ))}
         </ul>
       )}

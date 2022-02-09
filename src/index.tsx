@@ -1,11 +1,7 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
-
-import { Menu } from "./components/menu/Menu";
-import { Visualiser } from "./components/visualiser/Visualiser";
-
-import "./app.css";
+import React from "react";
+import ReactDOM from "react-dom";
 import { Main } from "./components/main/Main";
+import "./app.css";
 
 class App extends React.Component {
   render() {

@@ -18,37 +18,28 @@ export const Vertex: React.FC<{
   mainClass: string;
   statusModificator: VERTEX_STATUS;
   changeStatus: (c: number, r: number, status: VERTEX_STATUS) => void;
-}> = ({
-  mainClass,
-  statusModificator,
-  pressedKey,
-  row,
-  column,
-  changeStatus,
-}) => {
+}> = ({ mainClass, statusModificator, pressedKey, row, column, changeStatus }) => {
   const onMouseOver = (event) => {
     event.preventDefault();
 
     if (!pressedKey) return;
 
-    if (statusModificator === null)
+    if (statusModificator === null) {
       changeStatus(column, row, VERTEX_STATUS.BLOCKED);
-    else changeStatus(column, row, null);
+    } else changeStatus(column, row, null);
   };
 
   const onMouseDown = () => {
-    if (statusModificator === null)
+    if (statusModificator === null) {
       changeStatus(column, row, VERTEX_STATUS.BLOCKED);
-    else changeStatus(column, row, null);
+    } else changeStatus(column, row, null);
   };
 
   return (
     <div
       onMouseOver={onMouseOver}
       onMouseDown={onMouseDown}
-      className={
-        mainClass + (statusModificator ? `--${statusModificator}` : "")
-      }
+      className={mainClass + (statusModificator ? `--${statusModificator}` : "")}
     ></div>
   );
 };

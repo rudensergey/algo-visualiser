@@ -1,10 +1,3 @@
-export type TVisualiserState = Readonly<{
-  items: number[];
-  selected: number;
-  sorting: boolean;
-  currentAlgorithm: SUPPORTED_ALGORITMS;
-}>;
-
 export enum SUPPORTED_ALGORITMS {
   BUBBLE = "bubble",
   SELECTION = "selection",
@@ -12,6 +5,13 @@ export enum SUPPORTED_ALGORITMS {
   QUICK = "quick",
   MERGE = "merge",
 }
+
+export type TVisualiserState = Readonly<{
+  items: number[];
+  selected: number;
+  sorting: boolean;
+  currentAlgorithm: SUPPORTED_ALGORITMS;
+}>;
 
 export enum VISUALISER {
   VISUALISER = "visualiser",

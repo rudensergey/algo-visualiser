@@ -1,8 +1,7 @@
-import * as path from "path";
+import path from "path";
+import HtmlWebpackPlugin from "html-webpack-plugin";
 
 import { Configuration, ENTRY_PATH, ENV, OUTPUT_PATH } from "./types";
-
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const isDev = process.env.NODE_ENV === ENV.DEV;
 
@@ -43,16 +42,6 @@ const config: Configuration = {
       template: path.resolve(ENTRY_PATH.APP_HTML),
     }),
   ],
-  optimization: {
-    splitChunks: {
-      chunks: "all",
-    },
-  },
-  performance: {
-    hints: false,
-    maxEntrypointSize: 512000,
-    maxAssetSize: 512000,
-  },
 };
 
 module.exports = config;
