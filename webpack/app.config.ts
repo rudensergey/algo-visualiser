@@ -22,6 +22,11 @@ const config: Configuration = {
     port: 9000,
   },
   resolve: {
+    alias: {
+      "@shared": path.resolve("./src/components/_shared/"),
+      "@templates": path.resolve("./src/components/_templates/"),
+      "@utils": path.resolve("./src/utils/"),
+    },
     extensions: [".ts", ".tsx", ".js", ".json"],
   },
   module: {
@@ -42,6 +47,16 @@ const config: Configuration = {
       template: path.resolve(ENTRY_PATH.APP_HTML),
     }),
   ],
+  optimization: {
+    splitChunks: {
+      chunks: "all",
+    },
+  },
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
+  },
 };
 
 module.exports = config;
