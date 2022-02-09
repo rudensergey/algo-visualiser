@@ -1,23 +1,25 @@
 // Absolute imports
 import React from "react";
+import { concatMap, delay, filter, from, map, of } from "rxjs";
 
 // Components
-import { Vertex } from "../vertex/Vertex";
-import { Button } from "../button/Button";
-import { Dropdown } from "../dropdown/Dropdown";
+import Button from "@shared/Button";
+import Dropdown from "@shared/Dropdown";
+import Vertex from "@shared/Vertex";
 
 // Types
 import { GRAPH, SUPPORTED_GRAPH_ALGORITMS, STATUS, IVertex, VERTEX_STATUS, IGraphState } from "./types";
 
 // Utils
-import { constructMatrix, wait } from "../../utils/common";
+import { constructMatrix, wait } from "@utils/common";
+
+// Mock
 import mase from "./mase.json";
 
 // Style
 import "./style.css";
-import { concatMap, delay, filter, from, map, of } from "rxjs";
 
-export class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>> {
+class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>> {
   constructor(props: Record<string, never>) {
     super(props);
     this.changeAlgorithm = this.changeAlgorithm.bind(this);
@@ -233,3 +235,5 @@ export class Graph extends React.Component<Record<string, never>, Readonly<IGrap
     );
   }
 }
+
+export default Graph;

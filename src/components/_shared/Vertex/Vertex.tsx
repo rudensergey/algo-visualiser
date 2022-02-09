@@ -1,17 +1,13 @@
 // Absolute imports
-import * as React from "react";
-
-// Components
+import React from "react";
 
 // Types
-import { VERTEX_STATUS } from "../graph/types";
-
-// Utils
+import { VERTEX_STATUS } from "@templates/Graph/types";
 
 // Style
 import "./style.css";
 
-export const Vertex: React.FC<{
+const Vertex: React.FC<{
   row: number;
   column: number;
   pressedKey: boolean;
@@ -43,3 +39,5 @@ export const Vertex: React.FC<{
     ></div>
   );
 };
+
+export default Vertex;

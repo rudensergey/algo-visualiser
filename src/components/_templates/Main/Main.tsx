@@ -1,20 +1,18 @@
 // Absolute imports
-import * as React from "react";
+import React from "react";
 
 // Components
-import { Graph } from "../graph/Graph";
-import { Menu } from "../menu/Menu";
-import { Visualiser } from "../visualiser/Visualiser";
+import Graph from "@templates/Graph";
+import Visualiser from "@templates/Visualiser";
+import Menu from "@templates/Menu";
 
 // Types
 import { SECTIONS } from "./types";
 
-// Utils
-
 // Style
 import "./style.css";
 
-export const Main = () => {
+const Main = () => {
   const [section, setSection] = React.useState(SECTIONS.GRAPHS);
 
   const mapSectionComponent: Record<SECTIONS, JSX.Element> = {
@@ -29,3 +27,5 @@ export const Main = () => {
     </div>
   );
 };
+
+export default Main;

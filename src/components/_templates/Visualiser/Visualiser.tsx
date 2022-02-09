@@ -2,20 +2,20 @@
 import React from "react";
 
 // Components
-import { Bar } from "../bar/Bar";
-import { Button } from "../button/Button";
-import { Dropdown } from "../dropdown/Dropdown";
+import Button from "@shared/Button";
+import Dropdown from "@shared/Dropdown";
+import Bar from "@templates/Bar";
 
 // Types
 import { STATUS, SUPPORTED_ALGORITMS, TVisualiserState, VISUALISER } from "./types";
 
 // Utils
-import { wait } from "../../utils/common";
+import { wait } from "@utils/common";
 
 // Style
 import "./style.css";
 
-export class Visualiser extends React.Component<Record<string, never>, TVisualiserState> {
+class Visualiser extends React.Component<Record<string, never>, TVisualiserState> {
   constructor(props: Record<string, never>) {
     super(props);
 
@@ -254,3 +254,5 @@ export class Visualiser extends React.Component<Record<string, never>, TVisualis
     );
   }
 }
+
+export default Visualiser;

@@ -1,17 +1,13 @@
 // Absolute imports
 import React from "react";
 
-// Components
-
 // Types
 import { DROPDOWN, IDropdownProps } from "./types";
-
-// Utils
 
 // Style
 import "./style.css";
 
-export const Dropdown = <T extends string>({ list, defaultValue, classNames = "", onChange }: IDropdownProps<T>) => {
+const Dropdown = <T extends string>({ list, defaultValue, classNames = "", onChange }: IDropdownProps<T>) => {
   const [dropDownValue, setAlgorithm] = React.useState(defaultValue);
   const [hidden, setHiddenStatus] = React.useState(true);
   const [coordinates, setCoordinates] = React.useState({ x: 0, y: 0 });
@@ -56,3 +52,5 @@ export const Dropdown = <T extends string>({ list, defaultValue, classNames = ""
     </>
   );
 };
+
+export default Dropdown;

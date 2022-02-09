@@ -2,17 +2,15 @@
 import React from "react";
 
 // Components
-import { Dropdown } from "../dropdown/Dropdown";
+import Dropdown from "@shared/Dropdown";
 
 // Types
-import { TMenu } from "../main/types";
-
-// Utils
+import { TMenu } from "../Main/types";
 
 // Style
 import "./style.css";
 
-export const Menu: TMenu = ({ menuSections, setSection, defaultSection }) => {
+const Menu: TMenu = ({ menuSections, setSection, defaultSection }) => {
   return (
     <div className="menu">
       <p className="menu__section">Section:</p>
@@ -25,3 +23,5 @@ export const Menu: TMenu = ({ menuSections, setSection, defaultSection }) => {
     </div>
   );
 };
+
+export default Menu;

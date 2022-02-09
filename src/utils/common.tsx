@@ -1,4 +1,4 @@
-import { IVertex, TMatrix, VERTEX_STATUS } from "../components/graph/types";
+import { IVertex, TMatrix, VERTEX_STATUS } from "@templates/Graph/types";
 
 export const wait = (time: number) => new Promise((resolve) => setTimeout(resolve, time));
 
