@@ -1,18 +1,19 @@
 // Absolute imports
 import React from "react";
-import Link from "next/link";
 
 // Components
-import { Button, Wrapper } from "./Main.styled";
+import { Wrapper, Button, Title } from "./Main.styled";
+
 const MainTemplate = () => {
   return (
     <Wrapper>
-      <Link href={"/graphs"}>
-        <Button>Graphs</Button>
-      </Link>
-      <Link href={"/sorting"}>
-        <Button>Sorting</Button>
-      </Link>
+      <Title>Alogrithms visualiser</Title>
+      <Button href={"/graphs"} asHref={"/graps"} color={"rgb(46, 168, 238)"}>
+        Graphs
+      </Button>
+      <Button href={"/sorting"} asHref={"/sorting"} color={"rgb(104, 57, 233)"}>
+        Sorting
+      </Button>
     </Wrapper>
   );
 };

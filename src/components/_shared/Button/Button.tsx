@@ -1,13 +1,28 @@
 // Absolute imports
+import Link from "next/link";
 import React from "react";
+import { Button } from "./Button.styled";
 
-// Types
-import { TButton } from "./types";
+interface IButtonProps {
+  className?: string;
+  children: React.ReactNode | string;
+  href?: string;
+  asHref?: string;
+  onClick?: () => void;
+}
 
-const Button: TButton = ({ classNames, onClick, children }) => (
-  <button className={classNames} onClick={onClick}>
-    {children}
-  </button>
-);
+const ButtonComponent: React.FC<IButtonProps> = ({ className, onClick, children, href, asHref }) => {
+  return href && asHref ? (
+    <Link href={href} as={asHref}>
+      <Button className={className} onClick={onClick}>
+        {children}
+      </Button>
+    </Link>
+  ) : (
+    <Button className={className} onClick={onClick}>
+      {children}
+    </Button>
+  );
+};
 
-export default Button;
+export default ButtonComponent;
