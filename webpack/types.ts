@@ -6,10 +6,6 @@ export enum ENTRY_PATH {
   APP_HTML = "./src/index.html",
 }
 
-export enum OUTPUT_PATH {
-  APP = "build/app",
-}
-
 export enum ENV {
   PROD = "production",
   DEV = "development",

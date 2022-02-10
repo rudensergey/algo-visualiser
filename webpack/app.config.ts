@@ -1,7 +1,7 @@
 import path from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 
-import { Configuration, ENTRY_PATH, ENV, OUTPUT_PATH } from "./types";
+import { Configuration, ENTRY_PATH, ENV } from "./types";
 
 const isDev = process.env.NODE_ENV === ENV.DEV;
 
@@ -13,10 +13,10 @@ const config: Configuration = {
   },
   output: {
     clean: true,
-    path: path.resolve(OUTPUT_PATH.APP),
+    path: path.resolve("build"),
   },
   devServer: {
-    contentBase: path.resolve(OUTPUT_PATH.APP),
+    contentBase: path.resolve("build"),
     compress: false,
     hot: true,
     port: 9000,

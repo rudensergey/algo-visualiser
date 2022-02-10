@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  lint:
+  build_and_lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -18,30 +18,18 @@ jobs:
       - name: Run linting
         run: yarn lint
 
-  build:
-    needs: lint
+  build_and_deploy:
+    needs: build_and_lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: "14"
       - name: Install all dependencies
         run: yarn install --frozen-lockfile
       - name: Run build
         run: yarn build
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          node-version: "14"
-      - name: Install all dependencies
-        run: yarn install --frozen-lockfile
-      - name: Run build
-        run: yarn build
-      - name: Run deploy
-        run: yarn deploy
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_VISUALISATOR }}"
+          channelId: live
+          projectId: visualisator
