@@ -1,31 +1,20 @@
 // Absolute imports
 import React from "react";
+import Link from "next/link";
 
 // Components
-import Graph from "@templates/Graph";
-import Visualiser from "@templates/Visualiser";
-import Menu from "@templates/Menu";
-
-// Types
-import { SECTIONS } from "./types";
-
-// Style
-import "./style.css";
-
-const Main = () => {
-  const [section, setSection] = React.useState(SECTIONS.GRAPHS);
-
-  const mapSectionComponent: Record<SECTIONS, JSX.Element> = {
-    [SECTIONS.GRAPHS]: <Graph></Graph>,
-    [SECTIONS.SORTING]: <Visualiser></Visualiser>,
-  };
-
+import { Button, Wrapper } from "./Main.styled";
+const MainTemplate = () => {
   return (
-    <div id="main" data-theme={section} className="main">
-      <Menu defaultSection={SECTIONS.GRAPHS} menuSections={Object.values(SECTIONS)} setSection={setSection}></Menu>
-      {mapSectionComponent[section] ?? <h1>No such a section</h1>}
-    </div>
+    <Wrapper>
+      <Link href={"/graphs"}>
+        <Button>Graphs</Button>
+      </Link>
+      <Link href={"/sorting"}>
+        <Button>Sorting</Button>
+      </Link>
+    </Wrapper>
   );
 };
 
-export default Main;
+export default MainTemplate;
