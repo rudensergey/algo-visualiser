@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build_and_lint:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -19,7 +19,7 @@ jobs:
         run: yarn lint
 
   build_and_deploy:
-    needs: build_and_lint
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
