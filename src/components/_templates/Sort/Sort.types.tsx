@@ -6,20 +6,20 @@ export enum SUPPORTED_ALGORITMS {
   MERGE = "merge",
 }
 
-export type TVisualiserState = Readonly<{
+export type TSortState = Readonly<{
   items: number[];
   selected: number;
   sorting: boolean;
   currentAlgorithm: SUPPORTED_ALGORITMS;
 }>;
 
-export enum VISUALISER {
-  VISUALISER = "visualiser",
-  BUTTONS = "visualiser__buttons",
-  BUTTON = "visualiser__button",
-  TITLE = "visualiser__title",
-  DROPDOWN = "visualiser__dropdown",
-  BOX = "visualiser__box",
+export enum SORT {
+  SORT = "sort",
+  BUTTONS = "sort__buttons",
+  BUTTON = "sort__button",
+  TITLE = "sort__title",
+  DROPDOWN = "sort__dropdown",
+  BOX = "sort__box",
 }
 
 export enum STATUS {

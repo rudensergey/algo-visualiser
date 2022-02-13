@@ -3,7 +3,7 @@ import GraphTemplate from "@templates/Graph";
 
 const Graph = () => (
   <>
-    <Meta title="Visualisator: graphs"></Meta> <GraphTemplate></GraphTemplate>
+    <Meta title="Visualisator: graph"></Meta> <GraphTemplate></GraphTemplate>
   </>
 );
 

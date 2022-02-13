@@ -199,7 +199,6 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
   render() {
     return (
       <div className={GRAPH.GRAPH} onMouseDown={this.onMouseDown} onMouseUp={this.onMouseUp}>
-        <Meta title="Visualisator: graphs"></Meta>
         <div className={GRAPH.BUTTONS}>
           <p className={GRAPH.TITLE}>{this.state.searching ? STATUS.SEARCHING : STATUS.CHOSE_ALGORITHM}</p>
           <Button className={GRAPH.BUTTON} onClick={this.state.changed ? this.clear : this.drawMase}>

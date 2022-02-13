@@ -4,18 +4,15 @@ import React from "react";
 // Components
 import Button from "@shared/Button";
 import Dropdown from "@shared/Dropdown";
-import Bar from "@templates/Bar";
+import Bar from "@shared/Bar";
 
 // Types
-import { STATUS, SUPPORTED_ALGORITMS, TVisualiserState, VISUALISER } from "./types";
+import { STATUS, SUPPORTED_ALGORITMS, TSortState, SORT } from "./Sort.types";
 
 // Utils
 import { wait } from "@utils/common";
 
-// Style
-import "./style.css";
-
-class Visualiser extends React.Component<Record<string, never>, TVisualiserState> {
+class Sort extends React.Component<Record<string, never>, TSortState> {
   constructor(props: Record<string, never>) {
     super(props);
 
@@ -59,7 +56,7 @@ class Visualiser extends React.Component<Record<string, never>, TVisualiserState
     else this.setState({ sorting: true });
 
     const arr = this.state?.items?.slice() || [];
-    await this?.[this.state.currentAlgorithm as keyof Visualiser]?.(arr);
+    await this?.[this.state.currentAlgorithm as keyof Sort]?.(arr);
 
     this.setState({ selected: null, sorting: false });
   }
@@ -229,23 +226,23 @@ class Visualiser extends React.Component<Record<string, never>, TVisualiserState
 
   render() {
     return (
-      <div className={VISUALISER.VISUALISER}>
-        <div className={VISUALISER.BUTTONS}>
-          <p className={VISUALISER.TITLE}>{this.state.sorting ? STATUS.SORTING : STATUS.CHOSE_ALGORITHM}</p>
-          <Button className={VISUALISER.BUTTON} onClick={this.shuffleItems}>
+      <div className={SORT.SORT}>
+        <div className={SORT.BUTTONS}>
+          <p className={SORT.TITLE}>{this.state.sorting ? STATUS.SORTING : STATUS.CHOSE_ALGORITHM}</p>
+          <Button className={SORT.BUTTON} onClick={this.shuffleItems}>
             Shuffle
           </Button>
           <Dropdown
             defaultValue={SUPPORTED_ALGORITMS.BUBBLE}
-            classNames={VISUALISER.DROPDOWN}
+            classNames={SORT.DROPDOWN}
             onChange={this.changeAlgorithm}
             list={Object.values(SUPPORTED_ALGORITMS)}
           ></Dropdown>
-          <Button className={VISUALISER.BUTTON} onClick={this.sort}>
+          <Button className={SORT.BUTTON} onClick={this.sort}>
             Sort
           </Button>
         </div>
-        <div className={VISUALISER.BOX}>
+        <div className={SORT.BOX}>
           {this.state.items.map((num) => (
             <Bar key={num} value={num} selected={num === this.state.selected}></Bar>
           ))}
@@ -255,4 +252,4 @@ class Visualiser extends React.Component<Record<string, never>, TVisualiserState
   }
 }
 
-export default Visualiser;
+export default Sort;

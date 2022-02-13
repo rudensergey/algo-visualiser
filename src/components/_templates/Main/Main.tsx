@@ -8,10 +8,10 @@ const MainTemplate = () => {
   return (
     <div className="main">
       <p className="main__title">Alogrithms visualiser</p>
-      <Button className="main__button main__button--graph" href={"/graphs"} asHref={"/graphs"}>
+      <Button className="main__button main__button--graph" href={"/graph"} asHref={"/graph"}>
         Graphs
       </Button>
-      <Button className="main__button main__button--sorting" href={"/sorting"} asHref={"/sorting"}>
+      <Button className="main__button main__button--sorting" href={"/sort"} asHref={"/sort"}>
         Sorting
       </Button>
     </div>
