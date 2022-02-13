@@ -15,7 +15,7 @@ import { constructMatrix, wait } from "@utils/common";
 
 // Mock
 import mase from "./mase.json";
-import Meta from "@shared/Meta/Meta";
+import { BUTTON_TYPE } from "@shared/Button/Button.types";
 
 class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>> {
   constructor(props: Record<string, never>) {
@@ -200,19 +200,19 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
     return (
       <div className={GRAPH.GRAPH} onMouseDown={this.onMouseDown} onMouseUp={this.onMouseUp}>
         <div className={GRAPH.BUTTONS}>
+          <Button href={"/"} asHref={"/"} type={BUTTON_TYPE.GREEN}>
+            {"< Back"}
+          </Button>
           <p className={GRAPH.TITLE}>{this.state.searching ? STATUS.SEARCHING : STATUS.CHOSE_ALGORITHM}</p>
-          <Button className={GRAPH.BUTTON} onClick={this.state.changed ? this.clear : this.drawMase}>
+          <Button onClick={this.state.changed ? this.clear : this.drawMase}>
             {this.state.changed ? "Clear Board" : "Draw Mase"}
           </Button>
           <Dropdown
             defaultValue={this.state.currentAlgorithm}
-            classNames={GRAPH.DROPDOWN}
             onChange={this.changeAlgorithm}
             list={Object.values(SUPPORTED_GRAPH_ALGORITMS)}
           ></Dropdown>
-          <Button className={GRAPH.BUTTON} onClick={this.search}>
-            Search
-          </Button>
+          <Button onClick={this.search}>Search</Button>
         </div>
         <div className={GRAPH.BOX}>
           {Object.values(this.state.matrix).map((row, rowIndex) =>

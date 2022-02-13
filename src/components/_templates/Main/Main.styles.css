@@ -10,6 +10,9 @@
   align-content: flex-start;
   flex-wrap: wrap;
   gap: 30px;
+
+  animation-name: section-appearing;
+  animation-duration: 0.2s;
 }
 
 .main__button {

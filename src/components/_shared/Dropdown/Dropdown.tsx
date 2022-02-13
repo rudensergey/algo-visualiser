@@ -1,10 +1,11 @@
 // Absolute imports
+
 import React from "react";
 
 // Types
 import { DROPDOWN, IDropdownProps } from "./types";
 
-const Dropdown = <T extends string>({ list, defaultValue, classNames = "", onChange }: IDropdownProps<T>) => {
+const Dropdown = <T extends string>({ list, defaultValue, onChange }: IDropdownProps<T>) => {
   const [dropDownValue, setAlgorithm] = React.useState(defaultValue);
   const [hidden, setHiddenStatus] = React.useState(true);
   const [coordinates, setCoordinates] = React.useState({ x: 0, y: 0 });
@@ -33,7 +34,7 @@ const Dropdown = <T extends string>({ list, defaultValue, classNames = "", onCha
 
   return (
     <>
-      <button ref={buttonRef} className={DROPDOWN.BUTTON + (classNames ? " " + classNames : "")} onClick={toogleList}>
+      <button ref={buttonRef} className={DROPDOWN.BUTTON} onClick={toogleList}>
         {dropDownValue}
       </button>
 

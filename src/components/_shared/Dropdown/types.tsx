@@ -1,7 +1,6 @@
 export interface IDropdownProps<T> {
   list: T[];
   defaultValue: T;
-  classNames?: string;
   onChange: any;
 }
 

@@ -9,7 +9,7 @@
   align-items: center;
 
   animation: section-appearing;
-  animation-duration: 0.4s;
+  animation-duration: 0.2s;
 }
 
 .sort__box {
@@ -154,10 +154,10 @@
 @keyframes section-appearing {
   0% {
     opacity: 0;
-    transform: translateY(15px);
+    transform: scale(0.9);
   }
   100% {
     opacity: 1;
-    transform: translateY(0px);
+    transform: scale(1);
   }
 }

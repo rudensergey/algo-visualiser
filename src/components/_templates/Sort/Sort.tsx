@@ -234,7 +234,6 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
           </Button>
           <Dropdown
             defaultValue={SUPPORTED_ALGORITMS.BUBBLE}
-            classNames={SORT.DROPDOWN}
             onChange={this.changeAlgorithm}
             list={Object.values(SUPPORTED_ALGORITMS)}
           ></Dropdown>

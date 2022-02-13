@@ -2,23 +2,19 @@
 import Link from "next/link";
 import React from "react";
 
-interface IButtonProps {
-  className?: string;
-  children: React.ReactNode | string;
-  href?: string;
-  asHref?: string;
-  onClick?: () => void;
-}
+import { BUTTON, IButtonProps, mapTypeToClass } from "./Button.types";
 
-const ButtonComponent: React.FC<IButtonProps> = ({ className, onClick, children, href, asHref }) => {
+const ButtonComponent: React.FC<IButtonProps> = ({ type, className, onClick, children, href, asHref }) => {
+  const classNames = React.useMemo(() => className ?? (type ? mapTypeToClass[type] : BUTTON.BUTTON), [type, className]);
+
   return href && asHref ? (
     <Link href={href} as={asHref}>
-      <button className={className} onClick={onClick}>
+      <button className={classNames} onClick={onClick}>
         {children}
       </button>
     </Link>
   ) : (
-    <button className={className} onClick={onClick}>
+    <button className={classNames} onClick={onClick}>
       {children}
     </button>
   );
