@@ -14,7 +14,7 @@ const MainTemplate = () => {
       <Button className={MAIN.BUTTON_GRAPH} href="/graph" asHref="/graph">
         Graphs
       </Button>
-      <Button className={MAIN.BUTTON_SORT} href="/graph" asHref="/graph">
+      <Button className={MAIN.BUTTON_SORT} href="/sort" asHref="/sort">
         Sorting
       </Button>
     </div>
