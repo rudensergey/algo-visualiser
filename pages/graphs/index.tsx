@@ -1,3 +1,10 @@
-import GraphTempalte from "@templates/Graph";
+import Meta from "@shared/Meta/Meta";
+import GraphTemplate from "@templates/Graph";
 
-export default GraphTempalte;
+const Graph = () => (
+  <>
+    <Meta title="Visualisator: graphs"></Meta> <GraphTemplate></GraphTemplate>
+  </>
+);
+
+export default Graph;

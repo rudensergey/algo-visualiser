@@ -26,12 +26,24 @@
   cursor: pointer;
 
   transition: all;
-  transition-duration: 0.1s;
+  transition-duration: 0.2s;
+}
+
+.main__button--graph {
+  background-color: #ab66f7;
+}
+
+.main__button--sorting {
+  background-color: var(--main);
 }
 
 .main__button:hover {
   background-color: coral;
+}
+
+.main__button:active {
   transform: scale(99%);
+  box-shadow: 0 0 0 rgba(54, 54, 54, 0.5);
 }
 
 .main__title {
