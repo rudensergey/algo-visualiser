@@ -6,9 +6,11 @@ import { concatMap, delay, filter, from, map, of } from "rxjs";
 import Button from "@shared/Button";
 import Dropdown from "@shared/Dropdown";
 import Vertex from "@shared/Vertex";
+import Menu from "@shared/Menu";
 
 // Types
 import { GRAPH, SUPPORTED_GRAPH_ALGORITMS, STATUS, IVertex, VERTEX_STATUS, IGraphState } from "./Graph.types";
+import { VISUAL_BOX_TYPES } from "@shared/VisualBox/VisualBox.types";
 import { BUTTON_TYPE } from "@shared/Button/Button.types";
 
 // Utils
@@ -16,6 +18,7 @@ import { constructMatrix, wait } from "@utils/common";
 
 // Mock
 import mase from "./mase.json";
+import VisualBox from "@shared/VisualBox";
 
 class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>> {
   constructor(props: Record<string, never>) {
@@ -199,7 +202,7 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
   render() {
     return (
       <div className={GRAPH.GRAPH} onMouseDown={this.onMouseDown} onMouseUp={this.onMouseUp}>
-        <div className={GRAPH.BUTTONS}>
+        <Menu>
           <Button href="/" asHref="/" type={BUTTON_TYPE.GREEN}>
             {"< Back"}
           </Button>
@@ -211,23 +214,23 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
             defaultValue={this.state.currentAlgorithm}
             onChange={this.changeAlgorithm}
             list={Object.values(SUPPORTED_GRAPH_ALGORITMS)}
-          />
+          ></Dropdown>
           <Button onClick={this.search}>Search</Button>
-        </div>
-        <div className={GRAPH.BOX}>
-          {Object.values(this.state.matrix).map((row, rowIndex) =>
-            Object.values(row).map((vertex: IVertex, vertexIndex) => (
+        </Menu>
+        <VisualBox type={VISUAL_BOX_TYPES.GRAPH}>
+          {Object.values(this.state.matrix).map((row, r) =>
+            Object.values(row).map((vertex: IVertex, c) => (
               <Vertex
-                key={`${row}:${vertexIndex}`}
                 changeStatus={this.setVertexStatus}
-                row={rowIndex}
-                column={vertexIndex}
                 pressedKey={this.state.pressedKey}
                 statusModificator={vertex.status}
+                key={`${r}:${c}`}
+                column={c}
+                row={r}
               />
             ))
           )}
-        </div>
+        </VisualBox>
       </div>
     );
   }

@@ -5,10 +5,13 @@ import React from "react";
 import Button from "@shared/Button";
 import Dropdown from "@shared/Dropdown";
 import Bar from "@shared/Bar";
+import Menu from "@shared/Menu";
+import VisualBox from "@shared/VisualBox";
 
 // Types
 import { STATUS, SUPPORTED_ALGORITMS, TSortState, SORT } from "./Sort.types";
 import { BUTTON_TYPE } from "@shared/Button/Button.types";
+import { VISUAL_BOX_TYPES } from "@shared/VisualBox/VisualBox.types";
 
 // Utils
 import { wait } from "@utils/common";
@@ -228,7 +231,7 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
   render() {
     return (
       <div className={SORT.SORT}>
-        <div className={SORT.BUTTONS}>
+        <Menu>
           <Button href="/" asHref="/" type={BUTTON_TYPE.GREEN}>
             {"< Back"}
           </Button>
@@ -240,12 +243,12 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
             list={Object.values(SUPPORTED_ALGORITMS)}
           />
           <Button onClick={this.sort}>Sort</Button>
-        </div>
-        <div className={SORT.BOX}>
+        </Menu>
+        <VisualBox type={VISUAL_BOX_TYPES.SORT}>
           {this.state.items.map((num) => (
             <Bar key={num} value={num} selected={num === this.state.selected} />
           ))}
-        </div>
+        </VisualBox>
       </div>
     );
   }

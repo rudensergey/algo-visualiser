@@ -1,11 +1,7 @@
 export enum GRAPH {
   GRAPH = "graph",
-  BUTTONS = "graph__buttons",
-  BUTTON = "graph__button",
   TITLE = "graph__title",
-  DROPDOWN = "graph__dropdown",
   BOX = "graph__box",
-  VERTEX = "graph__vertex",
 }
 
 export enum SUPPORTED_GRAPH_ALGORITMS {
