@@ -9,13 +9,13 @@ import Vertex from "@shared/Vertex";
 
 // Types
 import { GRAPH, SUPPORTED_GRAPH_ALGORITMS, STATUS, IVertex, VERTEX_STATUS, IGraphState } from "./Graph.types";
+import { BUTTON_TYPE } from "@shared/Button/Button.types";
 
 // Utils
 import { constructMatrix, wait } from "@utils/common";
 
 // Mock
 import mase from "./mase.json";
-import { BUTTON_TYPE } from "@shared/Button/Button.types";
 
 class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>> {
   constructor(props: Record<string, never>) {
@@ -200,7 +200,7 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
     return (
       <div className={GRAPH.GRAPH} onMouseDown={this.onMouseDown} onMouseUp={this.onMouseUp}>
         <div className={GRAPH.BUTTONS}>
-          <Button href={"/"} asHref={"/"} type={BUTTON_TYPE.GREEN}>
+          <Button href="/" asHref="/" type={BUTTON_TYPE.GREEN}>
             {"< Back"}
           </Button>
           <p className={GRAPH.TITLE}>{this.state.searching ? STATUS.SEARCHING : STATUS.CHOSE_ALGORITHM}</p>
@@ -211,7 +211,7 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
             defaultValue={this.state.currentAlgorithm}
             onChange={this.changeAlgorithm}
             list={Object.values(SUPPORTED_GRAPH_ALGORITMS)}
-          ></Dropdown>
+          />
           <Button onClick={this.search}>Search</Button>
         </div>
         <div className={GRAPH.BOX}>
@@ -224,7 +224,7 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
                 column={vertexIndex}
                 pressedKey={this.state.pressedKey}
                 statusModificator={vertex.status}
-              ></Vertex>
+              />
             ))
           )}
         </div>

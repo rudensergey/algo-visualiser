@@ -10,7 +10,7 @@ interface IImageProps {
 const ImageComponent: React.FunctionComponent<IImageProps> = ({ className, src }) => {
   return (
     <div className={className}>
-      <Image src={src} layout="fill"></Image>
+      <Image src={src} layout="fill" />
     </div>
   );
 };

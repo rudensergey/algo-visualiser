@@ -16,9 +16,7 @@ export type TSortState = Readonly<{
 export enum SORT {
   SORT = "sort",
   BUTTONS = "sort__buttons",
-  BUTTON = "sort__button",
   TITLE = "sort__title",
-  DROPDOWN = "sort__dropdown",
   BOX = "sort__box",
 }
 

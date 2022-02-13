@@ -1,5 +1,4 @@
 // Absolute imports
-
 import React from "react";
 
 // Types

@@ -2,10 +2,10 @@
 import React from "react";
 
 // Types
-import { TBar } from "./types";
+import { BAR, IBarProps } from "./types";
 
-const Bar: TBar = ({ value, selected }) => (
-  <div style={{ height: value * 2 + "%" }} className={"bar" + (selected ? " bar--selected" : "")}></div>
+const Bar: React.FC<IBarProps> = ({ value, selected }) => (
+  <div style={{ height: value * 2 + "%" }} className={selected ? BAR.SELECTED : BAR.BAR}></div>
 );
 
 export default Bar;

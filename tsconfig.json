@@ -8,12 +8,13 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "baseUrl": "./",
-    "rootDirs": ["/"],
+    "rootDirs": ["./src"],
     "paths": {
       "@shared/*": ["./src/components/_shared/*"],
       "@templates/*": ["./src/components/_templates/*"],
       "@utils/*": ["./src/utils/*"],
-      "@public/*": ["./public/*"]
+      "@public/*": ["./public/*"],
+      "@constants": ["./src/constants.ts"]
     },
     "lib": ["dom", "dom.iterable", "esnext"],
     "skipLibCheck": true,

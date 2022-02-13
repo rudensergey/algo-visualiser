@@ -238,12 +238,12 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
             defaultValue={SUPPORTED_ALGORITMS.BUBBLE}
             onChange={this.changeAlgorithm}
             list={Object.values(SUPPORTED_ALGORITMS)}
-          ></Dropdown>
+          />
           <Button onClick={this.sort}>Sort</Button>
         </div>
         <div className={SORT.BOX}>
           {this.state.items.map((num) => (
-            <Bar key={num} value={num} selected={num === this.state.selected}></Bar>
+            <Bar key={num} value={num} selected={num === this.state.selected} />
           ))}
         </div>
       </div>

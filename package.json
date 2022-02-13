@@ -1,6 +1,6 @@
 {
-  "name": "sorting-app",
-  "version": "0.0.3",
+  "name": "visualisator",
+  "version": "1.0.0",
   "description": "",
   "main": "index.ts",
   "scripts": {
@@ -16,14 +16,11 @@
   "devDependencies": {
     "@types/react": "17.0.14",
     "@types/react-dom": "17.0.9",
-    "@types/webpack": "5.28.0",
-    "@types/webpack-dev-server": "3.11.5",
     "@typescript-eslint/eslint-plugin": "5.11.0",
     "@typescript-eslint/parser": "5.11.0",
-    "babel-plugin-styled-components": "2.0.2",
     "eslint": "8.8.0",
     "eslint-config-standard": "16.0.3",
-    "eslint-plugin-css-modules": "2.11.0",
+    "eslint-plugin-css-modules": "^2.11.0",
     "eslint-plugin-import": "2.25.4",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "5.2.0",
