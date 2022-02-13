@@ -8,6 +8,7 @@ import Bar from "@shared/Bar";
 
 // Types
 import { STATUS, SUPPORTED_ALGORITMS, TSortState, SORT } from "./Sort.types";
+import { BUTTON_TYPE } from "@shared/Button/Button.types";
 
 // Utils
 import { wait } from "@utils/common";
@@ -228,18 +229,17 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
     return (
       <div className={SORT.SORT}>
         <div className={SORT.BUTTONS}>
-          <p className={SORT.TITLE}>{this.state.sorting ? STATUS.SORTING : STATUS.CHOSE_ALGORITHM}</p>
-          <Button className={SORT.BUTTON} onClick={this.shuffleItems}>
-            Shuffle
+          <Button href="/" asHref="/" type={BUTTON_TYPE.GREEN}>
+            {"< Back"}
           </Button>
+          <p className={SORT.TITLE}>{this.state.sorting ? STATUS.SORTING : STATUS.CHOSE_ALGORITHM}</p>
+          <Button onClick={this.shuffleItems}>Shuffle</Button>
           <Dropdown
             defaultValue={SUPPORTED_ALGORITMS.BUBBLE}
             onChange={this.changeAlgorithm}
             list={Object.values(SUPPORTED_ALGORITMS)}
           ></Dropdown>
-          <Button className={SORT.BUTTON} onClick={this.sort}>
-            Sort
-          </Button>
+          <Button onClick={this.sort}>Sort</Button>
         </div>
         <div className={SORT.BOX}>
           {this.state.items.map((num) => (
