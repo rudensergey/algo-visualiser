@@ -28,6 +28,6 @@ h6 {
   --accent: coral;
   --accent-hover: rgb(216, 107, 67);
   --accent-active: rgb(170, 85, 53);
-  --box: white;
+  --box: rgb(255, 255, 255);
   --selected: tomato;
 }
