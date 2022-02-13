@@ -1,10 +1,9 @@
 .graph {
   position: sticky;
   width: 100vw;
+  min-width: 800px;
   height: 100vh;
-
-  padding-top: 80px;
-  box-sizing: border-box;
+  min-height: 910px;
 
   display: flex;
   flex-direction: column;
@@ -58,39 +57,4 @@
   font-size: 18px;
   font-weight: bold;
   color: var(--dark-shadow);
-}
-
-.graph__dropdown {
-  max-width: 100px;
-  flex-basis: 100px;
-  flex-grow: 1;
-  margin: 0 5px;
-}
-
-.graph__vertex,
-.graph__vertex--visited,
-.graph__vertex--destination,
-.graph__vertex--start,
-.graph__vertex--path {
-  background-color: var(--light-shadow);
-  transition: all;
-  transition-duration: 0.1s;
-}
-
-.graph__vertex--visited {
-  background-color: var(--main);
-}
-
-.graph__vertex--blocked {
-  background-color: black;
-}
-
-.graph__vertex--destination {
-  background-color: yellow;
-}
-.graph__vertex--start {
-  background-color: coral;
-}
-.graph__vertex--path {
-  background-color: var(--accent);
 }

@@ -224,7 +224,6 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
                 column={vertexIndex}
                 pressedKey={this.state.pressedKey}
                 statusModificator={vertex.status}
-                mainClass={GRAPH.VERTEX}
               ></Vertex>
             ))
           )}

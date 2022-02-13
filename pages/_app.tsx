@@ -1,10 +1,14 @@
 import "../src/app.css";
 
+// templates
 import "@templates/Main/Main.styles.css";
 import "@templates/Graph/Graph.styles.css";
 import "@templates/Sort/Sort.styles.css";
 
+// shared
 import "@shared/Dropdown/Dropdown.styles.css";
+import "@shared/Error/Error.styles.css";
+import "@shared/Vertex/Vertex.styles.css";
 import "@shared/Bar/Bar.styles.css";
 import "@shared/Button/Button.styles.css";
 

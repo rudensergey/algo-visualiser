@@ -1,0 +1,27 @@
+.vertex,
+.vertex--visited,
+.vertex--destination,
+.vertex--start,
+.vertex--path {
+  background-color: var(--light-shadow);
+  transition: all;
+  transition-duration: 0.1s;
+}
+
+.vertex--visited {
+  background-color: var(--main);
+}
+
+.vertex--blocked {
+  background-color: black;
+}
+
+.vertex--destination {
+  background-color: yellow;
+}
+.vertex--start {
+  background-color: coral;
+}
+.vertex--path {
+  background-color: var(--accent);
+}
