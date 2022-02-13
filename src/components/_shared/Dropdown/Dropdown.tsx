@@ -4,9 +4,6 @@ import React from "react";
 // Types
 import { DROPDOWN, IDropdownProps } from "./types";
 
-// Style
-import "./style.css";
-
 const Dropdown = <T extends string>({ list, defaultValue, classNames = "", onChange }: IDropdownProps<T>) => {
   const [dropDownValue, setAlgorithm] = React.useState(defaultValue);
   const [hidden, setHiddenStatus] = React.useState(true);

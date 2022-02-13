@@ -1,7 +1,6 @@
 // Absolute imports
 import Link from "next/link";
 import React from "react";
-import { Button } from "./Button.styled";
 
 interface IButtonProps {
   className?: string;
@@ -14,14 +13,14 @@ interface IButtonProps {
 const ButtonComponent: React.FC<IButtonProps> = ({ className, onClick, children, href, asHref }) => {
   return href && asHref ? (
     <Link href={href} as={asHref}>
-      <Button className={className} onClick={onClick}>
+      <button className={className} onClick={onClick}>
         {children}
-      </Button>
+      </button>
     </Link>
   ) : (
-    <Button className={className} onClick={onClick}>
+    <button className={className} onClick={onClick}>
       {children}
-    </Button>
+    </button>
   );
 };
 

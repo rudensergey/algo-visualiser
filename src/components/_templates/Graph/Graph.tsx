@@ -8,16 +8,13 @@ import Dropdown from "@shared/Dropdown";
 import Vertex from "@shared/Vertex";
 
 // Types
-import { GRAPH, SUPPORTED_GRAPH_ALGORITMS, STATUS, IVertex, VERTEX_STATUS, IGraphState } from "./types";
+import { GRAPH, SUPPORTED_GRAPH_ALGORITMS, STATUS, IVertex, VERTEX_STATUS, IGraphState } from "./Graph.types";
 
 // Utils
 import { constructMatrix, wait } from "@utils/common";
 
 // Mock
 import mase from "./mase.json";
-
-// Style
-import "./style.css";
 
 class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>> {
   constructor(props: Record<string, never>) {
@@ -203,7 +200,7 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
       <div className={GRAPH.GRAPH} onMouseDown={this.onMouseDown} onMouseUp={this.onMouseUp}>
         <div className={GRAPH.BUTTONS}>
           <p className={GRAPH.TITLE}>{this.state.searching ? STATUS.SEARCHING : STATUS.CHOSE_ALGORITHM}</p>
-          <Button classNames={GRAPH.BUTTON} onClick={this.state.changed ? this.clear : this.drawMase}>
+          <Button className={GRAPH.BUTTON} onClick={this.state.changed ? this.clear : this.drawMase}>
             {this.state.changed ? "Clear Board" : "Draw Mase"}
           </Button>
           <Dropdown
@@ -212,7 +209,7 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
             onChange={this.changeAlgorithm}
             list={Object.values(SUPPORTED_GRAPH_ALGORITMS)}
           ></Dropdown>
-          <Button classNames={GRAPH.BUTTON} onClick={this.search}>
+          <Button className={GRAPH.BUTTON} onClick={this.search}>
             Search
           </Button>
         </div>

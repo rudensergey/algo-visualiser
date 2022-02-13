@@ -2,10 +2,7 @@
 import React from "react";
 
 // Types
-import { VERTEX_STATUS } from "@templates/Graph/types";
-
-// Style
-import "./style.css";
+import { VERTEX_STATUS } from "@templates/Graph/Graph.types";
 
 const Vertex: React.FC<{
   row: number;

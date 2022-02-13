@@ -232,7 +232,7 @@ class Visualiser extends React.Component<Record<string, never>, TVisualiserState
       <div className={VISUALISER.VISUALISER}>
         <div className={VISUALISER.BUTTONS}>
           <p className={VISUALISER.TITLE}>{this.state.sorting ? STATUS.SORTING : STATUS.CHOSE_ALGORITHM}</p>
-          <Button classNames={VISUALISER.BUTTON} onClick={this.shuffleItems}>
+          <Button className={VISUALISER.BUTTON} onClick={this.shuffleItems}>
             Shuffle
           </Button>
           <Dropdown
@@ -241,7 +241,7 @@ class Visualiser extends React.Component<Record<string, never>, TVisualiserState
             onChange={this.changeAlgorithm}
             list={Object.values(SUPPORTED_ALGORITMS)}
           ></Dropdown>
-          <Button classNames={VISUALISER.BUTTON} onClick={this.sort}>
+          <Button className={VISUALISER.BUTTON} onClick={this.sort}>
             Sort
           </Button>
         </div>

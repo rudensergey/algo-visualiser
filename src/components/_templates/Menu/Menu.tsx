@@ -5,12 +5,11 @@ import React from "react";
 import Dropdown from "@shared/Dropdown";
 
 // Types
-import { TMenu } from "../Main/types";
 
 // Style
 import "./style.css";
 
-const Menu: TMenu = ({ menuSections, setSection, defaultSection }) => {
+const Menu = ({ menuSections, setSection, defaultSection }) => {
   return (
     <div className="menu">
       <p className="menu__section">Section:</p>

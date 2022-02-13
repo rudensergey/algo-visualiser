@@ -1,20 +1,18 @@
 // Absolute imports
+import Button from "@shared/Button";
 import React from "react";
-
-// Components
-import { Wrapper, Button, Title } from "./Main.styled";
 
 const MainTemplate = () => {
   return (
-    <Wrapper>
-      <Title>Alogrithms visualiser</Title>
-      <Button href={"/graphs"} asHref={"/graps"} color={"rgb(46, 168, 238)"}>
+    <div className="main">
+      <p className="main__title">Alogrithms visualiser</p>
+      <Button className="main__button" href={"/graphs"} asHref={"/graphs"}>
         Graphs
       </Button>
-      <Button href={"/sorting"} asHref={"/sorting"} color={"rgb(104, 57, 233)"}>
+      <Button className="main__button" href={"/sorting"} asHref={"/sorting"}>
         Sorting
       </Button>
-    </Wrapper>
+    </div>
   );
 };
 
