@@ -61,7 +61,7 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
 
   async bfs() {
     const self = this;
-    const n = 50;
+    const size = 50;
 
     const rowStack = [];
     const columnStack = [];
@@ -93,19 +93,19 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
       });
     }
 
-    async function exploreNeighbours(c: number, r: number) {
+    async function exploreNeighbours(predColumn: number, predRow: number) {
       for (let i = 0; i < 4; i++) {
-        const row = r + verticalVector[i];
-        const column = c + horizontalVector[i];
+        const row = predRow + verticalVector[i];
+        const column = predColumn + horizontalVector[i];
 
-        if (column < 0 || column >= n) continue;
-        if (row < 0 || row >= n) continue;
+        if (column < 0 || column >= size) continue;
+        if (row < 0 || row >= size) continue;
         if (self.checkStatus(column, row, [VERTEX_STATUS.BLOCKED, VERTEX_STATUS.VISITED, VERTEX_STATUS.START])) {
           continue;
         }
 
         if (self.checkStatus(column, row, VERTEX_STATUS.DESTINATION)) {
-          destination = { row: r, column: c };
+          destination = { row: predRow, column: predColumn };
           return;
         }
 
@@ -113,19 +113,19 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
           rowStack.push(row);
           columnStack.push(column);
           self.setVertexStatus(column, row, VERTEX_STATUS.VISITED, {
-            row: r,
-            column: c,
+            row: predRow,
+            column: predColumn,
           });
         });
       }
     }
 
-    function getShortestPath(r: number, c: number) {
+    function getShortestPath(startRow: number, startColumn: number) {
       const matrix = self.state.matrix;
       const predArr = [];
 
-      let row = r;
-      let column = c;
+      let row = startRow;
+      let column = startColumn;
 
       while (matrix[row][column]?.predecessor) {
         const { row: predRow, column: predColumn } = matrix[row][column]?.predecessor;
@@ -144,15 +144,15 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
       return console.error("checkStatus: Missed index!");
     }
 
-    const status = this.state.matrix[row][column].status;
-    if (!(targetStatus instanceof Array)) return targetStatus === status;
-    return targetStatus.some((s) => s === status);
+    const vartexStatus = this.state.matrix[row][column].status;
+    if (!(targetStatus instanceof Array)) return targetStatus === vartexStatus;
+    return targetStatus.some((target) => target === vartexStatus);
   }
 
-  setVertexStatus(c: number, r: number, status: VERTEX_STATUS, predecessor?: { column: number; row: number }) {
-    const n = 50;
+  setVertexStatus(column: number, row: number, status: VERTEX_STATUS, predecessor?: { column: number; row: number }) {
+    const size = 50;
 
-    if (c >= n || c < 0 || r >= n || r < 0) {
+    if (column >= size || column < 0 || row >= size || row < 0) {
       return console.error("setVertexStatus: Missed index!");
     }
 
@@ -160,10 +160,10 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
       changed: true,
       matrix: {
         ...this.state.matrix,
-        [r]: {
-          ...this.state.matrix[r],
-          [c]: {
-            ...this.state.matrix[r][c],
+        [row]: {
+          ...this.state.matrix[row],
+          [column]: {
+            ...this.state.matrix[row][column],
             status,
             predecessor: predecessor ? { ...predecessor } : null,
           },
@@ -179,12 +179,12 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
     from(Object.values(mase))
       .pipe(
         concatMap((row) => from(Object.values(row))),
-        filter((x: IVertex) => x.status === VERTEX_STATUS.BLOCKED),
+        filter((vertex: IVertex) => vertex.status === VERTEX_STATUS.BLOCKED),
         map(({ column, row }) => [column, row]),
         concatMap((val) => of(val).pipe(delay(10)))
       )
       .subscribe({
-        next: (c) => this.setVertexStatus(c[0], c[1], VERTEX_STATUS.BLOCKED),
+        next: (column) => this.setVertexStatus(column[0], column[1], VERTEX_STATUS.BLOCKED),
         complete: () => this.setState({ searching: false }),
       });
   }
@@ -218,15 +218,15 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
           <Button onClick={this.search}>Search</Button>
         </Menu>
         <VisualBox type={VISUAL_BOX_TYPES.GRAPH}>
-          {Object.values(this.state.matrix).map((row, r) =>
-            Object.values(row).map((vertex: IVertex, c) => (
+          {Object.values(this.state.matrix).map((row, rIdx) =>
+            Object.values(row).map((vertex: IVertex, cIdx) => (
               <Vertex
                 changeStatus={this.setVertexStatus}
                 pressedKey={this.state.pressedKey}
                 statusModificator={vertex.status}
-                key={`${r}:${c}`}
-                column={c}
-                row={r}
+                key={`${rIdx}:${cIdx}`}
+                column={cIdx}
+                row={rIdx}
               />
             ))
           )}

@@ -192,36 +192,36 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
       const n1 = mid - left + 1;
       const n2 = right - mid;
 
-      const L = new Array(n1);
-      const R = new Array(n2);
+      const leftArr = new Array(n1);
+      const rightArr = new Array(n2);
 
-      for (let i = 0; i < n1; i++) L[i] = arr[left + i];
-      for (let j = 0; j < n2; j++) R[j] = arr[mid + 1 + j];
+      for (let i = 0; i < n1; i++) leftArr[i] = arr[left + i];
+      for (let j = 0; j < n2; j++) rightArr[j] = arr[mid + 1 + j];
 
       let i = 0;
       let j = 0;
-      let k = left;
+      let curr = left;
 
       while (i < n1 && j < n2) {
-        self.setState({ selected: k });
+        self.setState({ selected: curr });
         await wait(10).then(() => {
-          if (L[i] <= R[j]) arr[k++] = L[i++];
-          else arr[k++] = R[j++];
+          if (leftArr[i] <= rightArr[j]) arr[curr++] = leftArr[i++];
+          else arr[curr++] = rightArr[j++];
           self.setState({ items: arr });
         });
       }
 
       while (i < n1) {
-        self.setState({ selected: k });
+        self.setState({ selected: curr });
         await wait(10).then(() => {
-          arr[k++] = L[i++];
+          arr[curr++] = leftArr[i++];
           self.setState({ items: arr });
         });
       }
       while (j < n2) {
-        self.setState({ selected: k });
+        self.setState({ selected: curr });
         await wait(10).then(() => {
-          arr[k++] = R[j++];
+          arr[curr++] = rightArr[j++];
           self.setState({ items: arr });
         });
       }

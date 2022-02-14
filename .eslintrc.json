@@ -29,6 +29,7 @@
         "arrays": "only-multiline"
       }
     ],
+    "id-length": ["error", { "min": 2, "exceptionPatterns": ["i", "j", "x", "y"] }],
     "semi": ["error", "always"],
     "quotes": ["error", "double"],
     "multiline-ternary": "off",
