@@ -1,6 +1,9 @@
 name: lint-build-deploy
 
 on:
+  pull_request:
+    branches:
+      - main
   push:
     branches:
       - main
@@ -18,7 +21,7 @@ jobs:
       - name: Run linting
         run: yarn lint
 
-  build_and_deploy:
+  build:
     needs: lint
     runs-on: ubuntu-latest
     steps:
@@ -27,9 +30,17 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Run build
         run: yarn build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: deploy site to vercel
+        uses: amondnet/vercel-action@v20
         with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_VISUALISATOR }}"
-          channelId: live
-          projectId: visualisator
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-args: "--prod"
+          vercel-org-id: ${{ secrets.ORG_ID}}
+          vercel-project-id: ${{ secrets.PROJECT_ID}}
