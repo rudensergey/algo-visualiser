@@ -6,6 +6,7 @@ export enum GRAPH {
 
 export enum SUPPORTED_GRAPH_ALGORITMS {
   BFS = "bfs",
+  DFS = "dfs",
 }
 
 export enum STATUS {
@@ -38,3 +39,13 @@ export interface IGraphState {
 }
 
 export type TMatrix = Record<number, Record<number, IVertex>>;
+
+export interface IVertors {
+  HORIZONTAL: [-1, 1, 0, 0];
+  VERTICAL: [0, 0, 1, -1];
+}
+
+export const VECTOR: IVertors = {
+  HORIZONTAL: [-1, 1, 0, 0],
+  VERTICAL: [0, 0, 1, -1],
+};

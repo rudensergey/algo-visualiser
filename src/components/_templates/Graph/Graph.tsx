@@ -7,6 +7,7 @@ import Button from "@shared/Button";
 import Dropdown from "@shared/Dropdown";
 import Vertex from "@shared/Vertex";
 import Menu from "@shared/Menu";
+import VisualBox from "@shared/VisualBox";
 
 // Types
 import {
@@ -16,6 +17,7 @@ import {
   IVertex,
   VERTEX_STATUS,
   IGraphState,
+  VECTOR,
 } from "./Graph.types";
 import { VISUAL_BOX_TYPES } from "@shared/VisualBox/VisualBox.types";
 import { BUTTON_TYPE } from "@shared/Button/Button.types";
@@ -25,7 +27,6 @@ import { constructMatrix, wait } from "@utils/common";
 
 // Mock
 import mase from "./mase.json";
-import VisualBox from "@shared/VisualBox";
 
 class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>> {
   constructor(props: Record<string, never>) {
@@ -66,14 +67,47 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
     this.setState({ searching: false });
   }
 
+  async dfs() {
+    const self = this;
+    const size = 50;
+
+    let destination = null;
+    await exploreNeighbours(0, 0);
+    if (!destination) return;
+
+    const predArr = self.getShortestPath(destination.row, destination.column);
+    self.drawShortestPath(predArr);
+
+    async function exploreNeighbours(predColumn: number, predRow: number) {
+      for (let i = 0; i < 4; i++) {
+        if (destination) return;
+
+        const row = predRow + VECTOR.VERTICAL[i];
+        const column = predColumn + VECTOR.HORIZONTAL[i];
+
+        if (!self.isValidVertex(row, column, size)) continue;
+        if (self.checkStatus(column, row, VERTEX_STATUS.DESTINATION)) {
+          destination = { row: predRow, column: predColumn };
+          return;
+        }
+
+        await wait(5).then(async () => {
+          self.setVertexStatus(column, row, VERTEX_STATUS.VISITED, {
+            row: predRow,
+            column: predColumn,
+          });
+          await exploreNeighbours(column, row);
+        });
+      }
+    }
+  }
+
   async bfs() {
     const self = this;
     const size = 50;
 
     const rowStack = [];
     const columnStack = [];
-    const verticalVector = [0, 0, 1, -1];
-    const horizontalVector = [-1, 1, 0, 0];
 
     let destination = null;
 
@@ -91,32 +125,15 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
 
     if (!destination) return;
 
-    const predArr = getShortestPath(destination.row, destination.column);
-
-    for (let i = 0; i < predArr.length; i++) {
-      const { row, column } = predArr[i];
-      await wait(5).then(() => {
-        self.setVertexStatus(column, row, VERTEX_STATUS.PATH);
-      });
-    }
+    const predArr = self.getShortestPath(destination.row, destination.column);
+    self.drawShortestPath(predArr);
 
     async function exploreNeighbours(predColumn: number, predRow: number) {
       for (let i = 0; i < 4; i++) {
-        const row = predRow + verticalVector[i];
-        const column = predColumn + horizontalVector[i];
+        const row = predRow + VECTOR.VERTICAL[i];
+        const column = predColumn + VECTOR.HORIZONTAL[i];
 
-        if (column < 0 || column >= size) continue;
-        if (row < 0 || row >= size) continue;
-        if (
-          self.checkStatus(column, row, [
-            VERTEX_STATUS.BLOCKED,
-            VERTEX_STATUS.VISITED,
-            VERTEX_STATUS.START,
-          ])
-        ) {
-          continue;
-        }
-
+        if (!self.isValidVertex(row, column, size)) continue;
         if (self.checkStatus(column, row, VERTEX_STATUS.DESTINATION)) {
           destination = { row: predRow, column: predColumn };
           return;
@@ -132,24 +149,54 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
         });
       }
     }
+  }
 
-    function getShortestPath(startRow: number, startColumn: number) {
-      const matrix = self.state.matrix;
-      const predArr = [];
-
-      let row = startRow;
-      let column = startColumn;
-
-      while (matrix[row][column]?.predecessor) {
-        const { row: predRow, column: predColumn } = matrix[row][column]?.predecessor;
-
-        predArr.push({ row, column });
-        column = predColumn;
-        row = predRow;
-      }
-
-      return predArr;
+  isValidVertex(row: number, column: number, size: number) {
+    if (column < 0 || column >= size) return false;
+    if (row < 0 || row >= size) return false;
+    if (
+      this.checkStatus(column, row, [
+        VERTEX_STATUS.BLOCKED,
+        VERTEX_STATUS.VISITED,
+        VERTEX_STATUS.START,
+      ])
+    ) {
+      return false;
     }
+
+    return true;
+  }
+
+  async drawShortestPath(
+    predArr: {
+      row: number;
+      column: number;
+    }[]
+  ) {
+    for (let i = 0; i < predArr.length; i++) {
+      const { row, column } = predArr[i];
+      await wait(5).then(() => {
+        this.setVertexStatus(column, row, VERTEX_STATUS.PATH);
+      });
+    }
+  }
+
+  getShortestPath(startRow: number, startColumn: number): { row: number; column: number }[] {
+    const matrix = this.state.matrix;
+    const predArr = [];
+
+    let row = startRow;
+    let column = startColumn;
+
+    while (matrix[row][column]?.predecessor) {
+      const { row: predRow, column: predColumn } = matrix[row][column]?.predecessor;
+
+      predArr.push({ row, column });
+      column = predColumn;
+      row = predRow;
+    }
+
+    return predArr;
   }
 
   checkStatus(column: number, row: number, targetStatus: VERTEX_STATUS | VERTEX_STATUS[]) {
@@ -199,7 +246,7 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
         concatMap((row) => from(Object.values(row))),
         filter((vertex: IVertex) => vertex.status === VERTEX_STATUS.BLOCKED),
         map(({ column, row }) => [column, row]),
-        concatMap((val) => of(val).pipe(delay(10)))
+        concatMap((val) => of(val).pipe(delay(5)))
       )
       .subscribe({
         next: (column) => this.setVertexStatus(column[0], column[1], VERTEX_STATUS.BLOCKED),
