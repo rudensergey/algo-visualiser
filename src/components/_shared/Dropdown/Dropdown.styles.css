@@ -25,7 +25,7 @@
 .dropdown__button:active {
   background-color: var(--main-active);
   box-shadow: 0px 0px 0px var(--mid-shadow);
-  transform: scale(99%);
+  transform: scale(0.99);
 }
 
 .dropdown__list {
