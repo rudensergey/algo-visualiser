@@ -204,7 +204,7 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
       <div className={GRAPH.GRAPH} onMouseDown={this.onMouseDown} onMouseUp={this.onMouseUp}>
         <Menu>
           <Button href="/" asHref="/" type={BUTTON_TYPE.GREEN}>
-            {"< Back"}
+            &lt; Back
           </Button>
           <p className={GRAPH.TITLE}>{this.state.searching ? STATUS.SEARCHING : STATUS.CHOSE_ALGORITHM}</p>
           <Button onClick={this.state.changed ? this.clear : this.drawMase}>

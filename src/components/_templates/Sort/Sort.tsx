@@ -233,7 +233,7 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
       <div className={SORT.SORT}>
         <Menu>
           <Button href="/" asHref="/" type={BUTTON_TYPE.GREEN}>
-            {"< Back"}
+            &lt; Back
           </Button>
           <p className={SORT.TITLE}>{this.state.sorting ? STATUS.SORTING : STATUS.CHOSE_ALGORITHM}</p>
           <Button onClick={this.shuffleItems}>Shuffle</Button>
