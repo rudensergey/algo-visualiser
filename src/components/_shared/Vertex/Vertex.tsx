@@ -5,8 +5,17 @@ import React from "react";
 import { VERTEX_STATUS } from "@templates/Graph/Graph.types";
 import { IVertexProps, VERTEX } from "./types";
 
-const Vertex: React.FC<IVertexProps> = ({ statusModificator: modificator, pressedKey, row, column, changeStatus }) => {
-  const classNames = React.useMemo(() => VERTEX.VERTEX + (modificator ? `--${modificator}` : ""), [modificator]);
+const Vertex: React.FC<IVertexProps> = ({
+  statusModificator: modificator,
+  pressedKey,
+  row,
+  column,
+  changeStatus,
+}) => {
+  const classNames = React.useMemo(
+    () => VERTEX.VERTEX + (modificator ? `--${modificator}` : ""),
+    [modificator]
+  );
 
   const onMouseOver = (event) => {
     event.preventDefault();

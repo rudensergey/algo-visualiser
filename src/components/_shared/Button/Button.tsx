@@ -4,8 +4,18 @@ import React from "react";
 
 import { BUTTON, IButtonProps, mapTypeToClass } from "./Button.types";
 
-const ButtonComponent: React.FC<IButtonProps> = ({ type, className, onClick, children, href, asHref }) => {
-  const classNames = React.useMemo(() => className ?? (type ? mapTypeToClass[type] : BUTTON.BUTTON), [type, className]);
+const ButtonComponent: React.FC<IButtonProps> = ({
+  type,
+  className,
+  onClick,
+  children,
+  href,
+  asHref,
+}) => {
+  const classNames = React.useMemo(
+    () => className ?? (type ? mapTypeToClass[type] : BUTTON.BUTTON),
+    [type, className]
+  );
 
   return href && asHref ? (
     <Link href={href} as={asHref}>

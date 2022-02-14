@@ -9,7 +9,14 @@ import Vertex from "@shared/Vertex";
 import Menu from "@shared/Menu";
 
 // Types
-import { GRAPH, SUPPORTED_GRAPH_ALGORITMS, STATUS, IVertex, VERTEX_STATUS, IGraphState } from "./Graph.types";
+import {
+  GRAPH,
+  SUPPORTED_GRAPH_ALGORITMS,
+  STATUS,
+  IVertex,
+  VERTEX_STATUS,
+  IGraphState,
+} from "./Graph.types";
 import { VISUAL_BOX_TYPES } from "@shared/VisualBox/VisualBox.types";
 import { BUTTON_TYPE } from "@shared/Button/Button.types";
 
@@ -100,7 +107,13 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
 
         if (column < 0 || column >= size) continue;
         if (row < 0 || row >= size) continue;
-        if (self.checkStatus(column, row, [VERTEX_STATUS.BLOCKED, VERTEX_STATUS.VISITED, VERTEX_STATUS.START])) {
+        if (
+          self.checkStatus(column, row, [
+            VERTEX_STATUS.BLOCKED,
+            VERTEX_STATUS.VISITED,
+            VERTEX_STATUS.START,
+          ])
+        ) {
           continue;
         }
 
@@ -149,7 +162,12 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
     return targetStatus.some((target) => target === vartexStatus);
   }
 
-  setVertexStatus(column: number, row: number, status: VERTEX_STATUS, predecessor?: { column: number; row: number }) {
+  setVertexStatus(
+    column: number,
+    row: number,
+    status: VERTEX_STATUS,
+    predecessor?: { column: number; row: number }
+  ) {
     const size = 50;
 
     if (column >= size || column < 0 || row >= size || row < 0) {
@@ -206,7 +224,9 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
           <Button href="/" asHref="/" type={BUTTON_TYPE.GREEN}>
             &lt; Back
           </Button>
-          <p className={GRAPH.TITLE}>{this.state.searching ? STATUS.SEARCHING : STATUS.CHOSE_ALGORITHM}</p>
+          <p className={GRAPH.TITLE}>
+            {this.state.searching ? STATUS.SEARCHING : STATUS.CHOSE_ALGORITHM}
+          </p>
           <Button onClick={this.state.changed ? this.clear : this.drawMase}>
             {this.state.changed ? "Clear Board" : "Draw Mase"}
           </Button>

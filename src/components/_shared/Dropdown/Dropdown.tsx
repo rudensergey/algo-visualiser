@@ -38,7 +38,11 @@ const Dropdown = <T extends string>({ list, defaultValue, onChange }: IDropdownP
       </button>
 
       {!hidden && (
-        <ul ref={listRef} style={{ top: coordinates.y + "px", left: coordinates.x + "px" }} className={DROPDOWN.LIST}>
+        <ul
+          ref={listRef}
+          style={{ top: coordinates.y + "px", left: coordinates.x + "px" }}
+          className={DROPDOWN.LIST}
+        >
           {list.map((value, i) => (
             <li key={i} onClick={setValue(value)}>
               {value}
