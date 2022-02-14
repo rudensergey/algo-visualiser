@@ -2,30 +2,23 @@
 import React from "react";
 
 // Components
-import Graph from "@templates/Graph";
-import Visualiser from "@templates/Visualiser";
-import Menu from "@templates/Menu";
+import Button from "@shared/Button";
 
 // Types
-import { SECTIONS } from "./types";
+import { MAIN } from "./Main.types";
 
-// Style
-import "./style.css";
-
-const Main = () => {
-  const [section, setSection] = React.useState(SECTIONS.GRAPHS);
-
-  const mapSectionComponent: Record<SECTIONS, JSX.Element> = {
-    [SECTIONS.GRAPHS]: <Graph></Graph>,
-    [SECTIONS.SORTING]: <Visualiser></Visualiser>,
-  };
-
+const MainTemplate = () => {
   return (
-    <div id="main" data-theme={section} className="main">
-      <Menu defaultSection={SECTIONS.GRAPHS} menuSections={Object.values(SECTIONS)} setSection={setSection}></Menu>
-      {mapSectionComponent[section] ?? <h1>No such a section</h1>}
+    <div className={MAIN.MAIN}>
+      <p className={MAIN.TITLE}>Alogrithms visualiser</p>
+      <Button className={MAIN.BUTTON_GRAPH} href="/graph" asHref="/graph">
+        Graphs
+      </Button>
+      <Button className={MAIN.BUTTON_SORT} href="/sort" asHref="/sort">
+        Sorting
+      </Button>
     </div>
   );
 };
 
-export default Main;
+export default MainTemplate;

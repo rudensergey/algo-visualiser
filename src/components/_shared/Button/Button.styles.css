@@ -1,0 +1,66 @@
+.button {
+  flex-basis: max-content;
+  white-space: nowrap;
+  padding: 0 15px;
+  min-height: 40px;
+  background-color: var(--main);
+  border: 0;
+  margin: 0 10px;
+  box-shadow: 0px 1px 2px var(--light-shadow);
+
+  color: white;
+  font-size: 18px;
+  border-radius: 2px;
+  font-weight: thin;
+
+  transition: all;
+  transition-duration: 0.1s;
+
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: var(--main-hover);
+}
+
+.button:active {
+  background-color: var(--main-active);
+  box-shadow: 0px 0px 0px var(--mid-shadow);
+  transform: scale(99%);
+}
+
+.button--error {
+  background-color: rgb(231, 62, 62);
+}
+
+.button--error:hover {
+  background-color: rgb(201, 53, 53);
+}
+
+.button--error:active {
+  background-color: rgb(170, 37, 37);
+}
+
+.button--warning {
+  background-color: rgb(231, 214, 62);
+}
+
+.button--warning:hover {
+  background-color: rgb(214, 198, 57);
+}
+
+.button--warning:active {
+  background-color: rgb(207, 192, 56);
+}
+
+.button--green {
+  background-color: #3bcf3b;
+}
+
+.button--green:hover {
+  background-color: #35b935;
+}
+
+.button--green:active {
+  background-color: #31aa31;
+}

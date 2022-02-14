@@ -1,26 +1,30 @@
-import { IVertex, TMatrix, VERTEX_STATUS } from "@templates/Graph/types";
+import { IVertex, TMatrix, VERTEX_STATUS } from "@templates/Graph/Graph.types";
 
 export const wait = (time: number) => new Promise((resolve) => setTimeout(resolve, time));
 
-export function constructMatrix(n: number): TMatrix {
+export function constructMatrix(size: number): TMatrix {
   const matrix = {};
 
-  for (let r = 0; r < n; r++) {
+  for (let row = 0; row < size; row++) {
     const newRow = {};
 
-    for (let c = 0; c < n; c++) {
+    for (let column = 0; column < size; column++) {
       const vertex: IVertex = {
-        column: c,
-        row: r,
+        column,
+        row,
         status:
-          c === 0 && r === 0 ? VERTEX_STATUS.START : c === n - 1 && r === n - 1 ? VERTEX_STATUS.DESTINATION : null,
+          column === 0 && row === 0
+            ? VERTEX_STATUS.START
+            : column === size - 1 && row === size - 1
+              ? VERTEX_STATUS.DESTINATION
+              : null,
         predecessor: null,
       };
 
-      newRow[c] = vertex;
+      newRow[column] = vertex;
     }
 
-    matrix[r] = newRow;
+    matrix[row] = newRow;
   }
 
   return matrix;

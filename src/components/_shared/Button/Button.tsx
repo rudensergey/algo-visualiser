@@ -1,13 +1,33 @@
 // Absolute imports
+import Link from "next/link";
 import React from "react";
 
-// Types
-import { TButton } from "./types";
+import { BUTTON, IButtonProps, mapTypeToClass } from "./Button.types";
 
-const Button: TButton = ({ classNames, onClick, children }) => (
-  <button className={classNames} onClick={onClick}>
-    {children}
-  </button>
-);
+const ButtonComponent: React.FC<IButtonProps> = ({
+  type,
+  className,
+  onClick,
+  children,
+  href,
+  asHref,
+}) => {
+  const classNames = React.useMemo(
+    () => className ?? (type ? mapTypeToClass[type] : BUTTON.BUTTON),
+    [type, className]
+  );
 
-export default Button;
+  return href && asHref ? (
+    <Link href={href} as={asHref}>
+      <button className={classNames} onClick={onClick}>
+        {children}
+      </button>
+    </Link>
+  ) : (
+    <button className={classNames} onClick={onClick}>
+      {children}
+    </button>
+  );
+};
+
+export default ButtonComponent;

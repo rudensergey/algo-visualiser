@@ -2,18 +2,30 @@
   "compilerOptions": {
     "outDir": "./build",
     "target": "es5",
-    "jsx": "react",
+    "jsx": "preserve",
     "allowJs": true,
     "sourceMap": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "baseUrl": "./",
-    "rootDirs": ["src"],
+    "rootDirs": ["./src"],
     "paths": {
       "@shared/*": ["./src/components/_shared/*"],
       "@templates/*": ["./src/components/_templates/*"],
-      "@utils/*": ["./src/utils/*"]
-    }
+      "@utils/*": ["./src/utils/*"],
+      "@public/*": ["./public/*"],
+      "@constants": ["./src/constants.ts"]
+    },
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "incremental": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "isolatedModules": true
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
 }

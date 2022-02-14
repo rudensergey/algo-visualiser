@@ -6,18 +6,26 @@ import { concatMap, delay, filter, from, map, of } from "rxjs";
 import Button from "@shared/Button";
 import Dropdown from "@shared/Dropdown";
 import Vertex from "@shared/Vertex";
+import Menu from "@shared/Menu";
 
 // Types
-import { GRAPH, SUPPORTED_GRAPH_ALGORITMS, STATUS, IVertex, VERTEX_STATUS, IGraphState } from "./types";
+import {
+  GRAPH,
+  SUPPORTED_GRAPH_ALGORITMS,
+  STATUS,
+  IVertex,
+  VERTEX_STATUS,
+  IGraphState,
+} from "./Graph.types";
+import { VISUAL_BOX_TYPES } from "@shared/VisualBox/VisualBox.types";
+import { BUTTON_TYPE } from "@shared/Button/Button.types";
 
 // Utils
 import { constructMatrix, wait } from "@utils/common";
 
 // Mock
 import mase from "./mase.json";
-
-// Style
-import "./style.css";
+import VisualBox from "@shared/VisualBox";
 
 class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>> {
   constructor(props: Record<string, never>) {
@@ -60,7 +68,7 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
 
   async bfs() {
     const self = this;
-    const n = 50;
+    const size = 50;
 
     const rowStack = [];
     const columnStack = [];
@@ -92,19 +100,25 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
       });
     }
 
-    async function exploreNeighbours(c: number, r: number) {
+    async function exploreNeighbours(predColumn: number, predRow: number) {
       for (let i = 0; i < 4; i++) {
-        const row = r + verticalVector[i];
-        const column = c + horizontalVector[i];
+        const row = predRow + verticalVector[i];
+        const column = predColumn + horizontalVector[i];
 
-        if (column < 0 || column >= n) continue;
-        if (row < 0 || row >= n) continue;
-        if (self.checkStatus(column, row, [VERTEX_STATUS.BLOCKED, VERTEX_STATUS.VISITED, VERTEX_STATUS.START])) {
+        if (column < 0 || column >= size) continue;
+        if (row < 0 || row >= size) continue;
+        if (
+          self.checkStatus(column, row, [
+            VERTEX_STATUS.BLOCKED,
+            VERTEX_STATUS.VISITED,
+            VERTEX_STATUS.START,
+          ])
+        ) {
           continue;
         }
 
         if (self.checkStatus(column, row, VERTEX_STATUS.DESTINATION)) {
-          destination = { row: r, column: c };
+          destination = { row: predRow, column: predColumn };
           return;
         }
 
@@ -112,19 +126,19 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
           rowStack.push(row);
           columnStack.push(column);
           self.setVertexStatus(column, row, VERTEX_STATUS.VISITED, {
-            row: r,
-            column: c,
+            row: predRow,
+            column: predColumn,
           });
         });
       }
     }
 
-    function getShortestPath(r: number, c: number) {
+    function getShortestPath(startRow: number, startColumn: number) {
       const matrix = self.state.matrix;
       const predArr = [];
 
-      let row = r;
-      let column = c;
+      let row = startRow;
+      let column = startColumn;
 
       while (matrix[row][column]?.predecessor) {
         const { row: predRow, column: predColumn } = matrix[row][column]?.predecessor;
@@ -143,15 +157,20 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
       return console.error("checkStatus: Missed index!");
     }
 
-    const status = this.state.matrix[row][column].status;
-    if (!(targetStatus instanceof Array)) return targetStatus === status;
-    return targetStatus.some((s) => s === status);
+    const vartexStatus = this.state.matrix[row][column].status;
+    if (!(targetStatus instanceof Array)) return targetStatus === vartexStatus;
+    return targetStatus.some((target) => target === vartexStatus);
   }
 
-  setVertexStatus(c: number, r: number, status: VERTEX_STATUS, predecessor?: { column: number; row: number }) {
-    const n = 50;
+  setVertexStatus(
+    column: number,
+    row: number,
+    status: VERTEX_STATUS,
+    predecessor?: { column: number; row: number }
+  ) {
+    const size = 50;
 
-    if (c >= n || c < 0 || r >= n || r < 0) {
+    if (column >= size || column < 0 || row >= size || row < 0) {
       return console.error("setVertexStatus: Missed index!");
     }
 
@@ -159,10 +178,10 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
       changed: true,
       matrix: {
         ...this.state.matrix,
-        [r]: {
-          ...this.state.matrix[r],
-          [c]: {
-            ...this.state.matrix[r][c],
+        [row]: {
+          ...this.state.matrix[row],
+          [column]: {
+            ...this.state.matrix[row][column],
             status,
             predecessor: predecessor ? { ...predecessor } : null,
           },
@@ -178,12 +197,12 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
     from(Object.values(mase))
       .pipe(
         concatMap((row) => from(Object.values(row))),
-        filter((x: IVertex) => x.status === VERTEX_STATUS.BLOCKED),
+        filter((vertex: IVertex) => vertex.status === VERTEX_STATUS.BLOCKED),
         map(({ column, row }) => [column, row]),
         concatMap((val) => of(val).pipe(delay(10)))
       )
       .subscribe({
-        next: (c) => this.setVertexStatus(c[0], c[1], VERTEX_STATUS.BLOCKED),
+        next: (column) => this.setVertexStatus(column[0], column[1], VERTEX_STATUS.BLOCKED),
         complete: () => this.setState({ searching: false }),
       });
   }
@@ -201,36 +220,37 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
   render() {
     return (
       <div className={GRAPH.GRAPH} onMouseDown={this.onMouseDown} onMouseUp={this.onMouseUp}>
-        <div className={GRAPH.BUTTONS}>
-          <p className={GRAPH.TITLE}>{this.state.searching ? STATUS.SEARCHING : STATUS.CHOSE_ALGORITHM}</p>
-          <Button classNames={GRAPH.BUTTON} onClick={this.state.changed ? this.clear : this.drawMase}>
+        <Menu>
+          <Button href="/" asHref="/" type={BUTTON_TYPE.GREEN}>
+            &lt; Back
+          </Button>
+          <p className={GRAPH.TITLE}>
+            {this.state.searching ? STATUS.SEARCHING : STATUS.CHOSE_ALGORITHM}
+          </p>
+          <Button onClick={this.state.changed ? this.clear : this.drawMase}>
             {this.state.changed ? "Clear Board" : "Draw Mase"}
           </Button>
           <Dropdown
             defaultValue={this.state.currentAlgorithm}
-            classNames={GRAPH.DROPDOWN}
             onChange={this.changeAlgorithm}
             list={Object.values(SUPPORTED_GRAPH_ALGORITMS)}
           ></Dropdown>
-          <Button classNames={GRAPH.BUTTON} onClick={this.search}>
-            Search
-          </Button>
-        </div>
-        <div className={GRAPH.BOX}>
-          {Object.values(this.state.matrix).map((row, rowIndex) =>
-            Object.values(row).map((vertex: IVertex, vertexIndex) => (
+          <Button onClick={this.search}>Search</Button>
+        </Menu>
+        <VisualBox type={VISUAL_BOX_TYPES.GRAPH}>
+          {Object.values(this.state.matrix).map((row, rIdx) =>
+            Object.values(row).map((vertex: IVertex, cIdx) => (
               <Vertex
-                key={`${row}:${vertexIndex}`}
                 changeStatus={this.setVertexStatus}
-                row={rowIndex}
-                column={vertexIndex}
                 pressedKey={this.state.pressedKey}
                 statusModificator={vertex.status}
-                mainClass={GRAPH.VERTEX}
-              ></Vertex>
+                key={`${rIdx}:${cIdx}`}
+                column={cIdx}
+                row={rIdx}
+              />
             ))
           )}
-        </div>
+        </VisualBox>
       </div>
     );
   }
