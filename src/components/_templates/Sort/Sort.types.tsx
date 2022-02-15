@@ -7,6 +7,7 @@ export enum SUPPORTED_ALGORITMS {
 }
 
 export type TSortState = Readonly<{
+  counter: number;
   items: number[];
   selected: number;
   sorting: boolean;

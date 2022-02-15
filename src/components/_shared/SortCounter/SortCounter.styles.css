@@ -1,0 +1,10 @@
+.counter {
+  color: white;
+  font-size: 30px;
+  font-weight: 200;
+  margin-bottom: 20px;
+}
+
+.counter span {
+  font-weight: 500;
+}

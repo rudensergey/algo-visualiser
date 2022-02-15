@@ -10,6 +10,8 @@
 }
 
 .visual-box--sort {
+  height: 750px;
+
   display: flex;
   flex-direction: row;
   justify-content: space-between;
