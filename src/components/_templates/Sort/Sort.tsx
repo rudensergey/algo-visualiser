@@ -7,6 +7,7 @@ import Dropdown from "@shared/Dropdown";
 import Bar from "@shared/Bar";
 import Menu from "@shared/Menu";
 import VisualBox from "@shared/VisualBox";
+import SortCounter from "@shared/SortCounter";
 
 // Types
 import { STATUS, SUPPORTED_ALGORITMS, TSortState, SORT } from "./Sort.types";
@@ -24,6 +25,7 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
     for (let i = 1; i <= 50; i++) items.push(i);
 
     this.state = {
+      counter: 0,
       items: items,
       selected: null,
       sorting: false,
@@ -48,7 +50,7 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
       items[randomIndex] = swap;
     }
 
-    this.setState({ items: items });
+    this.setState({ items: items, counter: 0 });
   }
 
   changeAlgorithm(value: SUPPORTED_ALGORITMS) {
@@ -57,11 +59,11 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
 
   async sort() {
     if (this.state.sorting) return;
-    else this.setState({ sorting: true });
 
+    await wait(0).then(() => this.setState({ counter: 0, sorting: true }));
     const arr = this.state?.items?.slice() || [];
-    await this?.[this.state.currentAlgorithm as keyof Sort]?.(arr);
 
+    await this?.[this.state.currentAlgorithm as keyof Sort]?.(arr);
     this.setState({ selected: null, sorting: false });
   }
 
@@ -73,14 +75,14 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
         const prev = arr[j - 1];
         const curr = arr[j];
 
-        this.setState({ selected: curr });
+        this.setState({ selected: curr, counter: this.state.counter + 1 });
 
         await wait(10).then(() => {
           if (prev >= curr) {
             sorted = false;
             arr[j] = prev;
             arr[j - 1] = curr;
-            this.setState({ items: arr });
+            this.setState({ items: arr, counter: this.state.counter + 1 });
           }
         });
       }
@@ -95,7 +97,7 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
       let max = i;
 
       for (let j = i; j >= 0; j--) {
-        this.setState({ selected: arr[j] });
+        this.setState({ selected: arr[j], counter: this.state.counter + 1 });
         await wait(10).then(() => {
           if (arr[j] > arr[max]) max = j;
           if (arr[j] > arr[j + 1]) sorted = false;
@@ -106,7 +108,7 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
       arr[i] = arr[max];
       arr[max] = swap;
 
-      this.setState({ items: arr });
+      this.setState({ items: arr, counter: this.state.counter + 1 });
 
       if (sorted) break;
     }
@@ -116,14 +118,14 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
     for (let i = 0; i < arr.length; i++) {
       for (let j = i; j > 0; j--) {
         let sorted = false;
-        this.setState({ selected: arr[j] });
+        this.setState({ selected: arr[j], counter: this.state.counter + 1 });
 
         await wait(10).then(() => {
           if (arr[j - 1] > arr[j]) {
             const swap = arr[j];
             arr[j] = arr[j - 1];
             arr[j - 1] = swap;
-            this.setState({ items: arr });
+            this.setState({ items: arr, counter: this.state.counter + 1 });
           } else {
             sorted = true;
           }
@@ -154,7 +156,7 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
         let pivotIndex = left;
 
         for (let i = left; i <= right; i++) {
-          self.setState({ selected: arr[i] });
+          self.setState({ selected: arr[i], counter: self.state.counter + 1 });
 
           await wait(10).then(() => {
             if (arr[i] < arr[pivot]) {
@@ -195,15 +197,21 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
       const leftArr = new Array(n1);
       const rightArr = new Array(n2);
 
-      for (let i = 0; i < n1; i++) leftArr[i] = arr[left + i];
-      for (let j = 0; j < n2; j++) rightArr[j] = arr[mid + 1 + j];
+      for (let i = 0; i < n1; i++) {
+        self.setState({ counter: self.state.counter + 1 });
+        leftArr[i] = arr[left + i];
+      }
+      for (let j = 0; j < n2; j++) {
+        self.setState({ counter: self.state.counter + 1 });
+        rightArr[j] = arr[mid + 1 + j];
+      }
 
       let i = 0;
       let j = 0;
       let curr = left;
 
       while (i < n1 && j < n2) {
-        self.setState({ selected: curr });
+        self.setState({ selected: curr, counter: self.state.counter + 1 });
         await wait(10).then(() => {
           if (leftArr[i] <= rightArr[j]) arr[curr++] = leftArr[i++];
           else arr[curr++] = rightArr[j++];
@@ -215,14 +223,14 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
         self.setState({ selected: curr });
         await wait(10).then(() => {
           arr[curr++] = leftArr[i++];
-          self.setState({ items: arr });
+          self.setState({ items: arr, counter: self.state.counter + 1 });
         });
       }
       while (j < n2) {
         self.setState({ selected: curr });
         await wait(10).then(() => {
           arr[curr++] = rightArr[j++];
-          self.setState({ items: arr });
+          self.setState({ items: arr, counter: self.state.counter + 1 });
         });
       }
     }
@@ -246,9 +254,10 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
           />
           <Button onClick={this.sort}>Sort</Button>
         </Menu>
+        <SortCounter counter={this.state.counter} algorithm={this.state.currentAlgorithm} />
         <VisualBox type={VISUAL_BOX_TYPES.SORT}>
-          {this.state.items.map((num) => (
-            <Bar key={num} value={num} selected={num === this.state.selected} />
+          {this.state.items.map((num, i) => (
+            <Bar key={i} value={num} selected={num === this.state.selected} />
           ))}
         </VisualBox>
       </div>

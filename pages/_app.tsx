@@ -6,6 +6,7 @@ import "@templates/Graph/Graph.styles.css";
 import "@templates/Sort/Sort.styles.css";
 
 // shared
+import "@shared/SortCounter/SortCounter.styles.css";
 import "@shared/Menu/Menu.styles.css";
 import "@shared/Dropdown/Dropdown.styles.css";
 import "@shared/Error/Error.styles.css";
