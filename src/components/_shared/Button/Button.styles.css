@@ -30,37 +30,37 @@
 }
 
 .button--error {
-  background-color: rgb(231, 62, 62);
+  background-color: var(--error);
 }
 
 .button--error:hover {
-  background-color: rgb(201, 53, 53);
+  background-color: var(--error-hover);
 }
 
 .button--error:active {
-  background-color: rgb(170, 37, 37);
+  background-color: var(--error-error);
 }
 
 .button--warning {
-  background-color: rgb(231, 214, 62);
+  background-color: var(--warning);
 }
 
 .button--warning:hover {
-  background-color: rgb(214, 198, 57);
+  background-color: var(--warning-hover);
 }
 
 .button--warning:active {
-  background-color: rgb(207, 192, 56);
+  background-color: var(--warning-active);
 }
 
 .button--green {
-  background-color: #3bcf3b;
+  background-color: var(--agree);
 }
 
 .button--green:hover {
-  background-color: #35b935;
+  background-color: var(--agree-hover);
 }
 
 .button--green:active {
-  background-color: #31aa31;
+  background-color: var(--accent-active);
 }

@@ -1,11 +1,11 @@
 .bar {
   flex-basis: 0px;
   flex-grow: 1;
-  background-color: rgb(49, 49, 49);
+  background-color: var(--sort-bar);
   border-radius: 3px;
   margin: 0 1px;
 }
 
 .bar--selected {
-  background-color: var(--selected);
+  background-color: var(--accent);
 }
