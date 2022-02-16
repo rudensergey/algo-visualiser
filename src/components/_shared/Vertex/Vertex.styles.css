@@ -13,15 +13,15 @@
 }
 
 .vertex--blocked {
-  background-color: black;
+  background-color: var(--graph-blocked);
 }
 
 .vertex--destination {
-  background-color: yellow;
+  background-color: var(--graph-finish);
 }
 .vertex--start {
-  background-color: coral;
+  background-color: var(--graph-start);
 }
 .vertex--path {
-  background-color: var(--accent);
+  background-color: var(--graph-path);
 }

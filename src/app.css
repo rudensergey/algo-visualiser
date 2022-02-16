@@ -16,8 +16,6 @@ h6 {
 }
 
 #app {
-  background-color: #2c4050;
-
   --light-shadow: rgba(54, 54, 54, 0.2);
   --mid-shadow: rgba(54, 54, 54, 0.5);
   --dark-shadow: rgba(54, 54, 54, 0.8);
@@ -25,9 +23,34 @@ h6 {
   --main: rgb(46, 168, 238);
   --main-hover: rgb(37, 138, 197);
   --main-active: rgb(24, 97, 139);
-  --accent: coral;
+
+  --accent: rgb(255, 127, 80);
   --accent-hover: rgb(216, 107, 67);
   --accent-active: rgb(170, 85, 53);
+
+  --agree: rgb(59, 207, 59);
+  --agree-hover: rgb(53, 185, 53);
+  --agree-active: rgb(49, 170, 49);
+
+  --warn: rgb(231, 214, 62);
+  --warn-hover: rgb(214, 198, 57);
+  --warn-active: rgb(207, 192, 56);
+
+  --error: rgb(231, 62, 62);
+  --error-hover: rgb(201, 53, 53);
+  --error-active: rgb(170, 37, 37);
+
   --box: rgb(255, 255, 255);
-  --selected: tomato;
+  --background: rgb(44 64 80);
+
+  --sort: rgb(46, 168, 238);
+  --sort-bar: rgb(49, 49, 49);
+
+  --graph: rgb(171 102 247);
+  --graph-start: rgb(255, 127, 80);
+  --graph-finish: rgb(255, 223, 80);
+  --graph-path: rgb(255, 127, 80);
+  --graph-blocked: rgb(61, 61, 61);
+
+  background-color: var(--background);
 }

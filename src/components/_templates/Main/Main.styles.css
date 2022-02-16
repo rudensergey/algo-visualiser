@@ -20,7 +20,7 @@
   border: 0;
   margin: 15px;
 
-  background-color: coral;
+  background-color: var(--accent);
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(54, 54, 54, 0.5);
   color: white;
@@ -33,7 +33,7 @@
 }
 
 .main__button--graph {
-  background-color: #ab66f7;
+  background-color: var(--graph);
 }
 
 .main__button--sorting {
@@ -41,12 +41,12 @@
 }
 
 .main__button:hover {
-  background-color: coral;
+  background-color: var(--accent);
 }
 
 .main__button:active {
   transform: scale(0.99);
-  box-shadow: 0 0 0 rgba(54, 54, 54, 0.5);
+  box-shadow: 0 0 0 var(--mid-shadow);
 }
 
 .main__title {
