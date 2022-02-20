@@ -4,6 +4,7 @@ export enum SUPPORTED_ALGORITMS {
   INSERTION = "insertion",
   QUICK = "quick",
   MERGE = "merge",
+  HEAP = "heap",
 }
 
 export type TSortState = Readonly<{
