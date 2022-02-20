@@ -3,7 +3,10 @@
 **CI/CD**: auto lint/test/build/deploy powered by GitHub actions and Vercel
 <br/>**Main stack**: TypeScript, React, Next
 <br/>**Collaborators**: [Jay Rudenko](https://github.com/rudensergey)
-<br/>**Supported algorithms**: buble, selection, insertion, quick, merge, bfs, dfs
+<br/>
+### Supported Algorithms
+**[sort]**: buble, selection, insertion, quick, merge, heap
+<br/>**[graph]**: bfs, dfs
 
 
 ```
