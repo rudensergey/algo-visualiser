@@ -70,6 +70,7 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
   async bubble(arr: number[]) {
     for (let i = 0; i < arr.length; i++) {
       let sorted = true;
+      this.setState({ counter: this.state.counter + 1 });
 
       for (let j = 1; j < arr.length - i; j++) {
         const prev = arr[j - 1];
@@ -82,7 +83,7 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
             sorted = false;
             arr[j] = prev;
             arr[j - 1] = curr;
-            this.setState({ items: arr, counter: this.state.counter + 1 });
+            this.setState({ items: arr });
           }
         });
       }
@@ -116,6 +117,8 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
 
   async insertion(arr: number[]) {
     for (let i = 0; i < arr.length; i++) {
+      this.setState({ counter: this.state.counter + 1 });
+
       for (let j = i; j > 0; j--) {
         let sorted = false;
         this.setState({ selected: arr[j], counter: this.state.counter + 1 });
@@ -125,7 +128,7 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
             const swap = arr[j];
             arr[j] = arr[j - 1];
             arr[j - 1] = swap;
-            this.setState({ items: arr, counter: this.state.counter + 1 });
+            this.setState({ items: arr });
           } else {
             sorted = true;
           }
@@ -231,6 +234,44 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
         await wait(10).then(() => {
           arr[curr++] = rightArr[j++];
           self.setState({ items: arr, counter: self.state.counter + 1 });
+        });
+      }
+    }
+  }
+
+  async heap(arr: number[]) {
+    const arrLength = arr.length;
+    const self = this;
+
+    for (let i = arrLength >> (1 - 1); i >= 0; i--) {
+      this.setState({ selected: i, counter: this.state.counter + 1 });
+      await heapify(arr, arrLength, i);
+    }
+
+    for (let i = arrLength - 1; i >= 0; i--) {
+      const swap = arr[0];
+      arr[0] = arr[i];
+      arr[i] = swap;
+      this.setState({ selected: i, counter: this.state.counter + 1 });
+      await heapify(arr, i, 0);
+    }
+
+    this.setState({ items: arr });
+
+    async function heapify(arr: number[], length: number, i: number) {
+      let largest = i;
+      const left = largest * 2 + 1;
+      const right = largest * 2 + 2;
+
+      if (left < length && arr[largest] < arr[left]) largest = left;
+      if (right < length && arr[largest] < arr[right]) largest = right;
+      if (largest !== i) {
+        await wait(10).then(async () => {
+          const swap = arr[largest];
+          arr[largest] = arr[i];
+          arr[i] = swap;
+          self.setState({ items: arr, selected: largest, counter: self.state.counter + 1 });
+          await heapify(arr, length, largest);
         });
       }
     }
