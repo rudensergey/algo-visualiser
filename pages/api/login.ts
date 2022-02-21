@@ -5,17 +5,28 @@ import { NextApiRequest, NextApiResponse } from "next";
 // Models
 import { mockUser } from "@models/user";
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { body } = req;
-  const username = JSON.parse(body.username);
-  const password = JSON.parse(body.password);
+const loginHandler = (req: NextApiRequest, res: NextApiResponse): Promise<void> =>
+  new Promise((resolve) => {
+    if (req.method !== "POST") {
+      res.status(403).send("Method Not Allowed");
+      resolve();
+    }
 
-  if (username === mockUser.username && password === mockUser.password) {
+    const body = JSON.parse(req.body);
+
+    const { username } = body;
+    const { password } = body;
+
+    if (username !== mockUser.username || password !== mockUser.password) {
+      res.status(401).send("Login failed");
+      resolve();
+    }
+
     jwt.sign({ mockUser }, process.env.JSW_PRIVATE_KEY, { expiresIn: "10m" }, (err, token) => {
       if (err) console.error(err);
-      res.send(token);
+      res.status(200).send({ token });
+      resolve();
     });
-  } else {
-    res.status(200).send({ message: "username or password are incorrect" });
-  }
-}
+  });
+
+export default loginHandler;
