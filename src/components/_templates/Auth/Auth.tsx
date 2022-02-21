@@ -40,19 +40,23 @@ const AuthTemplate = () => {
 
   return (
     <div className={AUTH.WRAPPER}>
-      <p>Auth</p>
-      <div>
+      <div className={AUTH.LOGIN}>
         {loading ? (
           <p>Fetching</p>
         ) : (
-          <form onSubmit={onSubmit}>
-            <input type="text" {...bindUserName} />
-            <input type="text" {...bindPassword} />
-            <Button>Submit!</Button>
-          </form>
+          <>
+            <p className={AUTH.TITLE}>Authentication</p>
+            <div>
+              <form className={AUTH.FORM} onSubmit={onSubmit}>
+                <input className="auth__input" type="text" {...bindUserName} />
+                <input className="auth__input" type="password" {...bindPassword} />
+                <Button type={BUTTON_TYPE.GREEN}>Sign in</Button>
+              </form>
+            </div>
+          </>
         )}
       </div>
-      <Button href="/" asHref="/" type={BUTTON_TYPE.GREEN}>
+      <Button href="/" asHref="/">
         &lt; Back
       </Button>
     </div>

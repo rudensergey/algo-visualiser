@@ -1,5 +1,5 @@
 export interface IMenuProps {
-  children: JSX.Element[];
+  children: JSX.Element[] | JSX.Element;
 }
 
 export enum MENU {
