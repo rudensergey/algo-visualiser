@@ -7,3 +7,7 @@ export declare global {
     }
   }
 }
+
+export type HTMLElementEvent<T extends HTMLElement> = Event & {
+  target: T;
+};

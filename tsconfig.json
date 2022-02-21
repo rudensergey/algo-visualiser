@@ -13,8 +13,8 @@
       "@shared/*": ["./src/components/_shared/*"],
       "@templates/*": ["./src/components/_templates/*"],
       "@utils/*": ["./src/utils/*"],
+      "@hooks/*": ["./src/hooks/*"],
       "@public/*": ["./public/*"],
-      "@constants": ["./src/constants.ts"],
       "@models/*": ["./src/models/*"]
     },
     "lib": ["dom", "dom.iterable", "esnext"],
