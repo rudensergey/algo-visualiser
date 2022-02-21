@@ -4,6 +4,7 @@ import "../src/app.css";
 import "@templates/Main/Main.styles.css";
 import "@templates/Graph/Graph.styles.css";
 import "@templates/Sort/Sort.styles.css";
+import "@templates/Auth/Auth.styles.css";
 
 // shared
 import "@shared/SortCounter/SortCounter.styles.css";

@@ -1,0 +1,14 @@
+.auth {
+  height: 100vh;
+  width: 100vw;
+  padding: 100px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  animation-name: section-appearing;
+  animation-duration: 0.2s;
+}
