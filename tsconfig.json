@@ -14,7 +14,8 @@
       "@templates/*": ["./src/components/_templates/*"],
       "@utils/*": ["./src/utils/*"],
       "@public/*": ["./public/*"],
-      "@constants": ["./src/constants.ts"]
+      "@constants": ["./src/constants.ts"],
+      "@models/*": ["./src/models/*"]
     },
     "lib": ["dom", "dom.iterable", "esnext"],
     "skipLibCheck": true,
