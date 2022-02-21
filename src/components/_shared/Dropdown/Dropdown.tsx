@@ -12,11 +12,17 @@ const Dropdown = <T extends string>({ list, defaultValue, onChange }: IDropdownP
   const listRef = React.useRef(null);
 
   React.useEffect(() => {
-    const { bottom, left, width } = buttonRef.current.getBoundingClientRect();
+    function onResize() {
+      const { bottom, left, width } = buttonRef.current.getBoundingClientRect();
 
-    if (!listRef.current) return;
-    listRef.current.style.top = bottom + document.documentElement.scrollTop + "px";
-    listRef.current.style.left = left + width / 2 - 100 + "px";
+      if (!listRef.current) return;
+      listRef.current.style.top = bottom + document.documentElement.scrollTop + "px";
+      listRef.current.style.left = left + width / 2 - 100 + "px";
+    }
+
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => removeEventListener("resize", onResize);
   });
 
   const toogleList = () => setHiddenStatus(!hidden);
