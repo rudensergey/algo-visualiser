@@ -9,6 +9,8 @@ import Vertex from "@shared/Vertex";
 import Menu from "@shared/Menu";
 import VisualBox from "@shared/VisualBox";
 
+import { NotificationContext } from "@shared/Notification/Notification";
+
 // Types
 import {
   GRAPH,
@@ -21,6 +23,7 @@ import {
 } from "./Graph.types";
 import { VISUAL_BOX_TYPES } from "@shared/VisualBox/VisualBox.types";
 import { BUTTON_TYPE } from "@shared/Button/Button.types";
+import { NOTIFICATION_TYPES, TShowNotification } from "@shared/Notification/Notification.types";
 
 // Utils
 import { constructMatrix, wait } from "@utils/common";
@@ -28,8 +31,11 @@ import { constructMatrix, wait } from "@utils/common";
 // Mock
 import mase from "./mase.json";
 
-class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>> {
-  constructor(props: Record<string, never>) {
+class Graph extends React.Component<
+  { showNotification: TShowNotification },
+  Readonly<IGraphState>
+> {
+  constructor(props: { showNotification: TShowNotification }) {
     super(props);
     this.changeAlgorithm = this.changeAlgorithm.bind(this);
     this.search = this.search.bind(this);
@@ -52,19 +58,25 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
 
   changeAlgorithm(value: SUPPORTED_GRAPH_ALGORITMS) {
     this.setState({ currentAlgorithm: value });
+    this.props.showNotification(`Algorithm was changed to ${value}`, NOTIFICATION_TYPES.APPROVE);
   }
 
   clear() {
     if (this.state.searching) return;
     this.setState({ matrix: constructMatrix(50), changed: false });
+    this.props.showNotification("Cleared!");
   }
 
   async search() {
     if (this.state.searching) return;
     else this.setState({ searching: true });
 
+    this.props.showNotification("Start searching");
+
     await this?.[this.state.currentAlgorithm as keyof Graph]?.();
     this.setState({ searching: false });
+
+    this.props.showNotification("Finish", NOTIFICATION_TYPES.APPROVE);
   }
 
   async dfs() {
@@ -241,6 +253,8 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
     if (this.state.searching) return;
     else this.setState({ searching: true, changed: true });
 
+    this.props.showNotification("Start drawing!");
+
     from(Object.values(mase))
       .pipe(
         concatMap((row) => from(Object.values(row))),
@@ -303,4 +317,10 @@ class Graph extends React.Component<Record<string, never>, Readonly<IGraphState>
   }
 }
 
-export default Graph;
+const GraphComponent = () => (
+  <NotificationContext.Consumer>
+    {(showNotification: TShowNotification) => <Graph showNotification={showNotification} />}
+  </NotificationContext.Consumer>
+);
+
+export default GraphComponent;

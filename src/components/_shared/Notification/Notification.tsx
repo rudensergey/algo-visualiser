@@ -17,18 +17,18 @@ const Notification: React.FC<INotificationProps> = ({ children }) => {
 
   const showNotification: TShowNotification = (text, type = NOTIFICATION_TYPES.DEFAULT) => {
     setNotifications((notificatons) => [
+      ...notificatons,
       {
         id: Date.now(),
         text,
         type,
       },
-      ...notificatons,
     ]);
 
     setTimeout(() => {
       setNotifications((prevNotifications) => {
         const newNotifications = [...prevNotifications];
-        newNotifications.pop();
+        newNotifications.shift();
         return newNotifications;
       });
     }, 2000);

@@ -20,4 +20,4 @@ export const mapNotificationTypes = {
   [NOTIFICATION_TYPES.APPROVE]: "notification__text notification__text--approve",
 };
 
-export type TShowNotification = (text: string, type: NOTIFICATION_TYPES.DEFAULT) => void;
+export type TShowNotification = (text: string, type?: NOTIFICATION_TYPES) => void;
