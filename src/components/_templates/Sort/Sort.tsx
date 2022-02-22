@@ -16,9 +16,11 @@ import { VISUAL_BOX_TYPES } from "@shared/VisualBox/VisualBox.types";
 
 // Utils
 import { wait } from "@utils/common";
+import { NotificationContext } from "@shared/Notification/Notification";
+import { NOTIFICATION_TYPES, TShowNotification } from "@shared/Notification/Notification.types";
 
-class Sort extends React.Component<Record<string, never>, TSortState> {
-  constructor(props: Record<string, never>) {
+class Sort extends React.Component<{ showNotification: TShowNotification }, TSortState> {
+  constructor(props: { showNotification: TShowNotification }) {
     super(props);
 
     const items = [];
@@ -51,20 +53,27 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
     }
 
     this.setState({ items: items, counter: 0 });
+    this.props.showNotification("Shuffled!");
   }
 
   changeAlgorithm(value: SUPPORTED_ALGORITMS) {
     this.setState({ currentAlgorithm: value });
+    this.props.showNotification(
+      `Algorithm was changed to ${value} sort`,
+      NOTIFICATION_TYPES.APPROVE
+    );
   }
 
   async sort() {
     if (this.state.sorting) return;
+    this.props.showNotification("Start sorting!");
 
     await wait(0).then(() => this.setState({ counter: 0, sorting: true }));
     const arr = this.state?.items?.slice() || [];
 
     await this?.[this.state.currentAlgorithm as keyof Sort]?.(arr);
     this.setState({ selected: null, sorting: false });
+    this.props.showNotification("Sorted!", NOTIFICATION_TYPES.APPROVE);
   }
 
   async bubble(arr: number[]) {
@@ -306,4 +315,10 @@ class Sort extends React.Component<Record<string, never>, TSortState> {
   }
 }
 
-export default Sort;
+const SortComponent = () => (
+  <NotificationContext.Consumer>
+    {(showNotification: TShowNotification) => <Sort showNotification={showNotification} />}
+  </NotificationContext.Consumer>
+);
+
+export default SortComponent;
