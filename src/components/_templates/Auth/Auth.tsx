@@ -13,6 +13,7 @@ import useInput from "@hooks/useInput";
 import { AUTH } from "./Auth.types";
 import { BUTTON_TYPE } from "@shared/Button/Button.types";
 import { NOTIFICATION_TYPES, TShowNotification } from "@shared/Notification/Notification.types";
+import Meta from "@shared/Meta";
 
 const Auth = ({ showNotification }) => {
   const { value: username, reset: resetUserName, bind: bindUserName } = useInput();
@@ -49,6 +50,7 @@ const Auth = ({ showNotification }) => {
 
   return (
     <div className={AUTH.WRAPPER}>
+      <Meta title="Visualiser: authentication"></Meta>
       <div className={AUTH.LOGIN}>
         {loading ? (
           <p>Fetching</p>
