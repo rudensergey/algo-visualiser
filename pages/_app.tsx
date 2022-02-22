@@ -7,6 +7,7 @@ import "@templates/Sort/Sort.styles.css";
 import "@templates/Auth/Auth.styles.css";
 
 // shared
+import "@shared/Input/Input.styles.css";
 import "@shared/SortCounter/SortCounter.styles.css";
 import "@shared/Menu/Menu.styles.css";
 import "@shared/Dropdown/Dropdown.styles.css";

@@ -3,7 +3,7 @@ import React from "react";
 
 const useInput = (initialValue = "") => {
   const [value, setValue] = React.useState(initialValue);
-  const onInput = (event) => setValue(event.target.value);
+  const onInput = (event: React.ChangeEvent<HTMLInputElement>) => setValue(event.target.value);
 
   return {
     value,

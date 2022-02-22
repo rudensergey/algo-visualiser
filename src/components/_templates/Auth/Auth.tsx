@@ -3,6 +3,7 @@ import React, { FormEvent } from "react";
 
 // Components
 import Button from "@shared/Button";
+import Input from "@shared/Input";
 
 // Hooks
 import useInput from "@hooks/useInput";
@@ -48,8 +49,8 @@ const AuthTemplate = () => {
             <p className={AUTH.TITLE}>Authentication</p>
             <div>
               <form className={AUTH.FORM} onSubmit={onSubmit}>
-                <input className="auth__input" type="text" {...bindUserName} />
-                <input className="auth__input" type="password" {...bindPassword} />
+                <Input type="text" {...bindUserName} />
+                <Input type="password" {...bindPassword} />
                 <Button type={BUTTON_TYPE.GREEN}>Sign in</Button>
               </form>
             </div>
