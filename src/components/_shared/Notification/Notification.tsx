@@ -5,16 +5,17 @@ import React from "react";
 import {
   INotificationProps,
   mapNotificationTypes,
-  NOTIFICATION_TYPES,
   NOTIFICATION,
+  NOTIFICATION_TYPES,
+  TShowNotification,
 } from "./Notification.types";
 
-const NotificationContext = React.createContext({});
+export const NotificationContext = React.createContext({});
 
 const Notification: React.FC<INotificationProps> = ({ children }) => {
   const [notificatons, setNotifications] = React.useState([]);
 
-  const showNotification = (text: string, type = NOTIFICATION_TYPES.DEFAULT): void => {
+  const showNotification: TShowNotification = (text, type = NOTIFICATION_TYPES.DEFAULT) => {
     setNotifications((notificatons) => [
       {
         id: Date.now(),

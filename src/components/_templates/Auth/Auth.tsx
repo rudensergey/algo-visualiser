@@ -4,6 +4,7 @@ import React, { FormEvent } from "react";
 // Components
 import Button from "@shared/Button";
 import Input from "@shared/Input";
+import { NotificationContext } from "@shared/Notification/Notification";
 
 // Hooks
 import useInput from "@hooks/useInput";
@@ -11,8 +12,9 @@ import useInput from "@hooks/useInput";
 // Types
 import { AUTH } from "./Auth.types";
 import { BUTTON_TYPE } from "@shared/Button/Button.types";
+import { NOTIFICATION_TYPES, TShowNotification } from "@shared/Notification/Notification.types";
 
-const AuthTemplate = () => {
+const Auth = ({ showNotification }) => {
   const { value: username, reset: resetUserName, bind: bindUserName } = useInput();
   const { value: password, reset: resetPassword, bind: bindPassword } = useInput();
   const [loading, setLoading] = React.useState(false);
@@ -34,6 +36,12 @@ const AuthTemplate = () => {
       console.log(data);
       resetUserName();
       resetPassword();
+      showNotification("Successful authentication!", NOTIFICATION_TYPES.APPROVE);
+    } else {
+      showNotification(
+        responce.status === 401 ? "Invalid username or/and password" : "Something went wrong",
+        NOTIFICATION_TYPES.WARNING
+      );
     }
 
     setLoading(false);
@@ -64,4 +72,10 @@ const AuthTemplate = () => {
   );
 };
 
-export default AuthTemplate;
+const AuthComponent = () => (
+  <NotificationContext.Consumer>
+    {(showNotification: TShowNotification) => <Auth showNotification={showNotification}></Auth>}
+  </NotificationContext.Consumer>
+);
+
+export default AuthComponent;
