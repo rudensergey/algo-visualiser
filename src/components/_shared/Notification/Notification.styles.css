@@ -1,0 +1,62 @@
+.notification {
+  position: fixed;
+  width: 250px;
+  right: 0px;
+  margin: 30px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.notification__text {
+  margin-bottom: 10px;
+  padding: 10px;
+  height: 25px;
+
+  color: var(--dark-grey);
+  font-size: 20px;
+  font-weight: 300;
+  background-color: var(--box);
+  border-radius: 2px;
+  box-shadow: 0px 1px 2px var(--dark-shadow);
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  animation-name: notification-appearing;
+  animation-duration: 0.3s;
+}
+
+.notification__text--warning {
+  background-color: var(--warn);
+}
+
+.notification__text--error {
+  background-color: var(--error);
+}
+
+@keyframes notification-appearing {
+  0% {
+    margin-bottom: 0px;
+    padding: 0px;
+    height: 0px;
+
+    opacity: 0;
+    color: var(--box);
+
+    transform: scale(0.9);
+  }
+  25% {
+    color: var(--box);
+  }
+  100% {
+    margin-bottom: 10px;
+    padding: 10px;
+    height: 25px;
+
+    opacity: 1;
+    color: var(--dark-grey);
+
+    transform: scale(1);
+  }
+}
