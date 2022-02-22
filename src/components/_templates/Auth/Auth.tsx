@@ -52,20 +52,20 @@ const Auth = ({ showNotification }) => {
     <div className={AUTH.WRAPPER}>
       <Meta title="Visualiser: authentication"></Meta>
       <div className={AUTH.LOGIN}>
-        {loading ? (
-          <p>Fetching</p>
-        ) : (
+        {
           <>
             <p className={AUTH.TITLE}>Authentication</p>
             <div>
               <form className={AUTH.FORM} onSubmit={onSubmit}>
-                <Input type="text" {...bindUserName} />
-                <Input type="password" {...bindPassword} />
-                <Button type={BUTTON_TYPE.GREEN}>Sign in</Button>
+                <Input type="text" disabled={loading} {...bindUserName} />
+                <Input type="password" disabled={loading} {...bindPassword} />
+                <Button type={BUTTON_TYPE.GREEN} disabled={loading}>
+                  Sign in
+                </Button>
               </form>
             </div>
           </>
-        )}
+        }
       </div>
       <Button href="/" asHref="/">
         &lt; Back

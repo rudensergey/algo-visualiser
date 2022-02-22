@@ -1,30 +1,32 @@
-// Absolute imports
+// absolute imports
 import Link from "next/link";
 import React from "react";
 
+// types
 import { BUTTON, IButtonProps, mapTypeToClass } from "./Button.types";
 
 const ButtonComponent: React.FC<IButtonProps> = ({
-  type,
   className,
-  onClick,
+  disabled,
   children,
-  href,
+  onClick,
   asHref,
+  href,
+  type,
 }) => {
   const classNames = React.useMemo(
-    () => className ?? (type ? mapTypeToClass[type] : BUTTON.BUTTON),
+    () => className ?? (disabled ? BUTTON.DISABLED : type ? mapTypeToClass[type] : BUTTON.WRAPPER),
     [type, className]
   );
 
   return href && asHref ? (
     <Link href={href} as={asHref}>
-      <button className={classNames} onClick={onClick}>
+      <button disabled={disabled} className={classNames} onClick={onClick}>
         {children}
       </button>
     </Link>
   ) : (
-    <button className={classNames} onClick={onClick}>
+    <button disabled={disabled} className={classNames} onClick={onClick}>
       {children}
     </button>
   );

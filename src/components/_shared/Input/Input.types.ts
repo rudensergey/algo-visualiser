@@ -22,11 +22,14 @@ export interface IInputProps {
     | "time"
     | "url"
     | "week";
-  className?: string;
+
   value: string | number;
+  disabled?: boolean;
+  className?: string;
   onInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export enum INPUT {
   WRAPPER = "input",
+  WRAPPER_DISABLED = "input input--disabled",
 }

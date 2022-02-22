@@ -1,5 +1,6 @@
 export enum BUTTON {
-  BUTTON = "button",
+  WRAPPER = "button",
+  DISABLED = "button button--disabled",
 }
 
 export enum BUTTON_TYPE {
@@ -23,4 +24,5 @@ export interface IButtonProps {
   href?: string;
   asHref?: string;
   onClick?: () => void;
+  disabled?: boolean;
 }

@@ -64,3 +64,15 @@
 .button--green:active {
   background-color: var(--agree-active);
 }
+
+.button--disabled {
+  background-color: var(--light-shadow);
+}
+
+.button--disabled:hover {
+  background-color: var(--light-shadow);
+}
+
+.button--disabled:active {
+  background-color: var(--light-shadow);
+}
