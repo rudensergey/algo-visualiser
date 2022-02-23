@@ -33,7 +33,7 @@
   padding: 3px 10px;
   font-size: 20px;
   color: var(--mid-shadow);
-  background-color: var(--box);
+
   border-radius: 15px;
 
   transform: translateY(-57px) translateX(3px);
@@ -51,6 +51,7 @@
 
   font-size: 12px;
   font-weight: bold;
+  background-color: var(--box);
 
   transform: translateY(-74px) translateX(10px);
 }
