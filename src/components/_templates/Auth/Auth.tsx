@@ -57,8 +57,8 @@ const Auth = ({ showNotification }) => {
             <p className={AUTH.TITLE}>Authentication</p>
             <div>
               <form className={AUTH.FORM} onSubmit={onSubmit}>
-                <Input type="text" disabled={loading} {...bindUserName} />
-                <Input type="password" disabled={loading} {...bindPassword} />
+                <Input type="text" title="username" disabled={loading} {...bindUserName} />
+                <Input type="password" title="password" disabled={loading} {...bindPassword} />
                 <Button type={BUTTON_TYPE.GREEN} disabled={loading}>
                   Sign in
                 </Button>

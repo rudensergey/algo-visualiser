@@ -24,12 +24,17 @@ export interface IInputProps {
     | "week";
 
   value: string | number;
+  title?: string;
   disabled?: boolean;
   className?: string;
   onInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
+export const PLACEHOLDER = " ";
+
 export enum INPUT {
   WRAPPER = "input",
-  WRAPPER_DISABLED = "input input--disabled",
+  FIELD = "input__field",
+  FIELD_DISABLED = "input__field input__field--disabled",
+  TITLE = "input__title",
 }
