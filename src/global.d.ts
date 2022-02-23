@@ -3,6 +3,7 @@ export declare global {
     interface ProcessEnv {
       MONGODB_PASSWORD: string;
       MONGODB_USER: string;
+      MONGODB_CLUSTER: string;
       JSW_PRIVATE_KEY: string;
     }
   }
