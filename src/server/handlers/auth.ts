@@ -2,6 +2,9 @@
 import jwt from "jsonwebtoken";
 import { NextApiRequest, NextApiResponse } from "next";
 
+// db
+import mongoApi from "@database/api";
+
 // mock
 import { mockUser } from "../user";
 
@@ -22,7 +25,7 @@ export const authHandler = (req: NextApiRequest, res: NextApiResponse): Promise<
       resolve();
     }
 
-    jwt.sign({ mockUser }, process.env.JSW_PRIVATE_KEY, { expiresIn: "10m" }, (err, token) => {
+    jwt.sign({ mockUser }, process.env.JSW_PRIVATE_KEY, async (err, token) => {
       if (err) console.error(err);
       res.status(200).send({ token });
       resolve();

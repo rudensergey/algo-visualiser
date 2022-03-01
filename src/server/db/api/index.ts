@@ -1,4 +1,5 @@
 import { connect } from "mongoose";
+import { UserModel } from "src/server/models/user";
 
 class MongoAPI {
   private _user: string;
@@ -23,6 +24,21 @@ class MongoAPI {
           resolve(false);
         });
     });
+  }
+
+  addUser(username: string, password: string): Promise<boolean> {
+    return new Promise((resolve) =>
+      new UserModel({ username, password })
+        .save()
+        .then(() => {
+          this.log(`User ${username} added!`);
+          resolve(true);
+        })
+        .catch((error: string) => {
+          this.logError(`Error while adding user: ${error}`);
+          resolve(false);
+        })
+    );
   }
 
   log = (test: string) => console.log("\x1b[36m%s\x1b[0m", `MongoAPI: ${test}`);
