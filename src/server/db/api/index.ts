@@ -44,6 +44,21 @@ class MongoAPI {
     );
   }
 
+  getUser(username: string): Promise<{ username: string; password: string }> {
+    return new Promise((resolve) => {
+      UserModel.find({ username })
+        .then((data) => {
+          if (data.length) return resolve(data[0]);
+          this.logError("User doesent exist");
+          resolve(null);
+        })
+        .catch((error) => {
+          this.logError(`Error during accessing to the database: ${error}`);
+          resolve(null);
+        });
+    });
+  }
+
   log = (test: string) => console.log("\x1b[36m%s\x1b[0m", `MongoAPI: ${test}`);
   logError = (test: string) => console.log("\x1b[31m%s\x1b[0m", `MongoAPI: ${test}`);
 }

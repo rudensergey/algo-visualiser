@@ -6,37 +6,38 @@ import { NextApiRequest, NextApiResponse } from "next";
 // db
 import mongoApi from "@database/api";
 
-// mock
-import { mockUser } from "../user";
-
 export const authHandler = (req: NextApiRequest, res: NextApiResponse): Promise<void> =>
   new Promise((resolve) => {
     if (req.method !== "POST") {
-      res.status(403).send("Method Not Allowed");
-      resolve();
+      res.status(403);
+      res.send("Method Not Allowed");
+      return resolve();
     }
 
-    const body = JSON.parse(req.body);
+    const { username, password } = JSON.parse(req.body);
 
-    const { username } = body;
-    const { password } = body;
+    mongoApi
+      .getUser(username)
+      .then((data) => {
+        if (data && username === data.username && password === data.password) return data;
+        res.status(401);
+        res.send("Login failed");
+        resolve();
+      })
+      .then((data) => {
+        jwt.sign({ data }, process.env.JWT_PRIVATE_KEY, async (err, token) => {
+          if (err) console.error(err);
 
-    if (username !== mockUser.username || password !== mockUser.password) {
-      res.status(401).send("Login failed");
-      resolve();
-    }
+          setCookie({ res }, "token", token, {
+            secure: true,
+            maxAge: 72576000,
+            httpOnly: true,
+            path: "/",
+          });
 
-    jwt.sign({ mockUser }, process.env.JWT_PRIVATE_KEY, async (err, token) => {
-      if (err) console.error(err);
-
-      setCookie({ res }, "token", token, {
-        secure: true,
-        maxAge: 72576000,
-        httpOnly: true,
-        path: "/",
+          res.status(200);
+          res.end();
+          resolve();
+        });
       });
-
-      res.status(200).end();
-      resolve();
-    });
   });

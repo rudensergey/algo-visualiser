@@ -5,6 +5,6 @@ const userSchema = new Schema({
   password: String,
 });
 
-const UserModel = models.UserModel || model("UserModel", userSchema);
+const UserModel = models.UserModel || model("user", userSchema);
 
 export default UserModel;
