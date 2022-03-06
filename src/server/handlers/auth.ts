@@ -25,7 +25,7 @@ export const authHandler = (req: NextApiRequest, res: NextApiResponse): Promise<
       resolve();
     }
 
-    jwt.sign({ mockUser }, process.env.JSW_PRIVATE_KEY, async (err, token) => {
+    jwt.sign({ mockUser }, process.env.JWT_PRIVATE_KEY, async (err, token) => {
       if (err) console.error(err);
       res.status(200).send({ token });
       resolve();

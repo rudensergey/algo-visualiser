@@ -5,4 +5,5 @@ export enum MAIN {
   LOGIN = "main__login",
   BUTTON_GRAPH = "main__button main__button--graph",
   BUTTON_SORT = "main__button main__button--sorting",
+  BUTTON_CRM = "main__button main__button--crm",
 }

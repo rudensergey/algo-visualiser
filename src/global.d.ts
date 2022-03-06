@@ -4,7 +4,7 @@ export declare global {
       MONGODB_PASSWORD: string;
       MONGODB_USER: string;
       MONGODB_CLUSTER: string;
-      JSW_PRIVATE_KEY: string;
+      JWT_PRIVATE_KEY: string;
     }
   }
 }

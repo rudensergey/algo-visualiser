@@ -9,7 +9,7 @@ export function dataHandler(req: NextApiRequest, res: NextApiResponse) {
     const bearer = header.split(" ");
     const token = bearer[1];
 
-    jwt.verify(token, process.env.JSW_PRIVATE_KEY, (err, authorizedData) => {
+    jwt.verify(token, process.env.JWT_PRIVATE_KEY, (err, authorizedData) => {
       if (err) {
         res.status(403).end();
         console.log(`ERROR: Could not connect to the protected route, ${err}`);

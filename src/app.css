@@ -52,5 +52,7 @@ h6 {
   --graph-path: rgb(255, 127, 80);
   --graph-blocked: rgb(61, 61, 61);
 
+  --crm: rgb(58, 197, 190);
+
   background-color: var(--background);
 }
