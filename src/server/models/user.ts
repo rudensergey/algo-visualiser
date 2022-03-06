@@ -1,8 +1,10 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, models } from "mongoose";
 
-export const userSchema = new Schema({
+const userSchema = new Schema({
   username: String,
   password: String,
 });
 
-export const UserModel = model("Blog", userSchema);
+const UserModel = models.UserModel || model("UserModel", userSchema);
+
+export default UserModel;

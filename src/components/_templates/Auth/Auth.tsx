@@ -33,8 +33,6 @@ const Auth = ({ showNotification }) => {
     });
 
     if (responce.ok) {
-      const data = await responce.json();
-      console.log(data);
       resetUserName();
       resetPassword();
       showNotification("Successful authentication!", NOTIFICATION_TYPES.APPROVE);

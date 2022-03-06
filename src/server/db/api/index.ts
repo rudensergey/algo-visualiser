@@ -1,5 +1,8 @@
+// Absolute
 import { connect } from "mongoose";
-import { UserModel } from "src/server/models/user";
+
+// Models
+import UserModel from "@models/user";
 
 class MongoAPI {
   private _user: string;

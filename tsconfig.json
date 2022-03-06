@@ -17,7 +17,8 @@
       "@public/*": ["./public/*"],
       "@database/*": ["src/server/db/*"],
       "@middlewares/*": ["src/server/middlewares/*"],
-      "@handlers/*": ["src/server/handlers/*"]
+      "@handlers/*": ["src/server/handlers/*"],
+      "@models/*": ["src/server/models/*"]
     },
     "lib": ["dom", "dom.iterable", "esnext"],
     "skipLibCheck": true,

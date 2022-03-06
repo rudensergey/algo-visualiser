@@ -1,5 +1,6 @@
 // absolute
 import jwt from "jsonwebtoken";
+import { setCookie } from "nookies";
 import { NextApiRequest, NextApiResponse } from "next";
 
 // db
@@ -27,7 +28,15 @@ export const authHandler = (req: NextApiRequest, res: NextApiResponse): Promise<
 
     jwt.sign({ mockUser }, process.env.JWT_PRIVATE_KEY, async (err, token) => {
       if (err) console.error(err);
-      res.status(200).send({ token });
+
+      setCookie({ res }, "token", token, {
+        secure: true,
+        maxAge: 72576000,
+        httpOnly: true,
+        path: "/",
+      });
+
+      res.status(200).end();
       resolve();
     });
   });
