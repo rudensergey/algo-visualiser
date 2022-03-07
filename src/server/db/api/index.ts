@@ -9,15 +9,16 @@ class MongoAPI {
   private _password: string;
   private _cluster: string;
 
-  constructor(user: string, password: string, cluster: string) {
+  constructor(user: string, password: string) {
     this._user = user;
     this._password = password;
-    this._cluster = cluster;
   }
 
   connectMongoDB(): Promise<boolean> {
     return new Promise((resolve) => {
-      connect(`mongodb+srv://${this._user}:${this._password}@${this._cluster}`)
+      connect(
+        `mongodb+srv://${this._user}:${this._password}@cluster0.qhkki.mongodb.net/visualiser?retryWrites=true&w=majority`
+      )
         .then(() => {
           this.log("Database connected!");
           resolve(true);
@@ -63,8 +64,4 @@ class MongoAPI {
   logError = (test: string) => console.log("\x1b[31m%s\x1b[0m", `MongoAPI: ${test}`);
 }
 
-export default new MongoAPI(
-  process.env.MONGODB_USER,
-  process.env.MONGODB_PASSWORD,
-  process.env.MONGODB_CLUSTER
-);
+export default new MongoAPI(process.env.MONGODB_USER, process.env.MONGODB_PASSWORD);
