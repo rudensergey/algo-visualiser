@@ -34,10 +34,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set env
+<<<<<<< HEAD
         run: |
           echo "JWT_PRIVATE_KEY=$(${{ secrets.JWT_PRIVATE_KEY }})" >> $GITHUB_ENV
           echo "MONGODB_PASSWORD=$(${{ secrets.MONGODB_PASSWORD }})" >> $GITHUB_ENV
           echo "MONGODB_USER=$(${{ secrets.MONGODB_USER }})" >> $GITHUB_ENV
+=======
+        run: echo "JWT_PRIVATE_KEY=$(${{ secrets.JWT_PRIVATE_KEY }})" >> $GITHUB_ENV
+        run: echo "MONGODB_PASSWORD=$(${{ secrets.MONGODB_PASSWORD }})" >> $GITHUB_ENV
+        run: echo "MONGODB_USER=$(${{ secrets.MONGODB_USER }})" >> $GITHUB_ENV
+>>>>>>> b45ae5e0101b683269d011c7020ccaaf1976b700
       - name: deploy site to vercel
         uses: amondnet/vercel-action@v20
         with:
