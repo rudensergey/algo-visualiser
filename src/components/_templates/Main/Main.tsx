@@ -18,6 +18,9 @@ const MainTemplate = () => {
         <Button className={MAIN.BUTTON_SORT} href="/sort" asHref="/sort">
           Sorting
         </Button>
+        <Button className={MAIN.BUTTON_CRM} href="/crm" asHref="/crm">
+          CRM
+        </Button>
       </div>
       <div className={MAIN.LOGIN}>
         <Button href="/auth" asHref="/auth">

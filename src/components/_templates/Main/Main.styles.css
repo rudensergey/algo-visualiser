@@ -40,6 +40,10 @@
   background-color: var(--main);
 }
 
+.main__button--crm {
+  background-color: var(--crm);
+}
+
 .main__button:hover {
   background-color: var(--accent);
 }

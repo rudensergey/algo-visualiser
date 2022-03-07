@@ -14,8 +14,10 @@ import { AUTH } from "./Auth.types";
 import { BUTTON_TYPE } from "@shared/Button/Button.types";
 import { NOTIFICATION_TYPES, TShowNotification } from "@shared/Notification/Notification.types";
 import Meta from "@shared/Meta";
+import { useRouter } from "next/router";
 
 const Auth = ({ showNotification }) => {
+  const router = useRouter();
   const { value: username, reset: resetUserName, bind: bindUserName } = useInput();
   const { value: password, reset: resetPassword, bind: bindPassword } = useInput();
   const [loading, setLoading] = React.useState(false);
@@ -33,11 +35,11 @@ const Auth = ({ showNotification }) => {
     });
 
     if (responce.ok) {
-      const data = await responce.json();
-      console.log(data);
       resetUserName();
       resetPassword();
       showNotification("Successful authentication!", NOTIFICATION_TYPES.APPROVE);
+
+      router.push("/");
     } else {
       showNotification(
         responce.status === 401 ? "Invalid username or/and password" : "Something went wrong",

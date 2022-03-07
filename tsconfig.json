@@ -15,7 +15,10 @@
       "@utils/*": ["./src/utils/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@public/*": ["./public/*"],
-      "@models/*": ["./src/models/*"]
+      "@database/*": ["src/server/db/*"],
+      "@middlewares/*": ["src/server/middlewares/*"],
+      "@handlers/*": ["src/server/handlers/*"],
+      "@models/*": ["src/server/models/*"]
     },
     "lib": ["dom", "dom.iterable", "esnext"],
     "skipLibCheck": true,
