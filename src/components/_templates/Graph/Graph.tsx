@@ -1,6 +1,5 @@
 // Absolute imports
 import React from "react";
-import { concatMap, delay, filter, from, map, of } from "rxjs";
 
 // Components
 import Button from "@shared/Button";
@@ -29,7 +28,7 @@ import { NOTIFICATION_TYPES, TShowNotification } from "@shared/Notification/Noti
 import { constructMatrix, wait } from "@utils/common";
 
 // Mock
-import mase from "./mase.json";
+import { mase } from "./mase";
 
 class Graph extends React.Component<
   { showNotification: TShowNotification },
@@ -251,21 +250,9 @@ class Graph extends React.Component<
 
   async drawMase() {
     if (this.state.searching) return;
-    else this.setState({ searching: true, changed: true });
+    else this.setState({ changed: true, matrix: mase });
 
-    this.props.showNotification("Start drawing!");
-
-    from(Object.values(mase))
-      .pipe(
-        concatMap((row) => from(Object.values(row))),
-        filter((vertex: IVertex) => vertex.status === VERTEX_STATUS.BLOCKED),
-        map(({ column, row }) => [column, row]),
-        concatMap((val) => of(val).pipe(delay(5)))
-      )
-      .subscribe({
-        next: (column) => this.setVertexStatus(column[0], column[1], VERTEX_STATUS.BLOCKED),
-        complete: () => this.setState({ searching: false }),
-      });
+    this.props.showNotification("Mase finished!");
   }
 
   onMouseDown() {
